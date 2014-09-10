@@ -37,8 +37,8 @@ class icinga2::server (
   validate_bool($server_install_nagios_plugins)
 
   #Pick set the right path where we can find the DB schema based on the OS...
-  case $::operatingsystem {
-    'RedHat', 'CentOS': {
+  case $::osfamily {
+    'RedHat': {
       #...and database that the user picks
       case $server_db_type {
         'mysql': { $server_db_schema_path = '/usr/share/icinga2-ido-mysql/schema/mysql.sql' }
@@ -46,8 +46,7 @@ class icinga2::server (
       }
     }
 
-    #Debian/Ubuntu systems:
-    'Debian', 'Ubuntu': {
+    'Debian': {
       #Pick set the right path where we can find the DB schema
       case $server_db_type {
         'mysql': { $server_db_schema_path = '/usr/share/icinga2-ido-mysql/schema/mysql.sql' }
@@ -56,7 +55,7 @@ class icinga2::server (
     }
 
     #Fail if we're on any other OS:
-    default: { fail("${::operatingsystem} is not supported!") }
+    default: { fail("${::osfamily} is not supported!") }
   }
 
 

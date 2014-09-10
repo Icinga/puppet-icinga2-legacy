@@ -208,20 +208,7 @@ class icinga2::params {
   ##################
   # Icinga 2 server service settings 
 
-  case $::operatingsystem {
-    #Icinga 2 server daemon names for Red Had/CentOS systems:
-    'RedHat', 'CentOS': {
-      $icinga2_server_service_name = 'icinga2'
-    }
-    
-    #Icinga 2 server daemon names for Debian/Ubuntu systems:
-    'Debian', 'Ubuntu': {
-      $icinga2_server_service_name = 'icinga2'
-    }
-    
-    #Fail if we're on any other OS:
-    default: { fail("${::operatingsystem} is not supported!") }
-  }
+  $icinga2_server_service_name = 'icinga2'
 
   ##############################
   # Icinga 2 client parameters
@@ -239,17 +226,15 @@ class icinga2::params {
   #Note: because we use .join in the nrpe.cfg.erb template, this value *must* be an array 
   $nrpe_allowed_hosts      = ['127.0.0.1',]
    
-  case $::operatingsystem {
-    #File and template variable names for Red Had/CentOS systems:
-    'RedHat', 'CentOS': {
+  case $::osfamily {
+    'RedHat': {
       $nrpe_config_basedir = "/etc/nagios"
       $nrpe_plugin_liddir  = "/usr/lib64/nagios/plugins"
       $nrpe_pid_file_path  = "/var/run/nrpe/nrpe.pid"
       $nrpe_user           = "nrpe"
       $nrpe_group          = "nrpe"
     }
-    #File and template variable names for Debian/Ubuntu systems:
-    'Debian', 'Ubuntu': {
+    'Debian': {
       $nrpe_config_basedir  = "/etc/nagios"
       $nrpe_plugin_liddir   = "/usr/lib/nagios/plugins"
       $nrpe_pid_file_path   = "/var/run/nagios/nrpe.pid"
@@ -257,7 +242,7 @@ class icinga2::params {
       $nrpe_group           = "nagios"
     }
     #Fail if we're on any other OS:
-    default: { fail("${::operatingsystem} is not supported!") }
+    default: { fail("${::osfamily} is not supported!") }
   }
 
   ##################
@@ -289,19 +274,16 @@ class icinga2::params {
 
   ##################
   # Icinga 2 client service parameters
-  case $::operatingsystem {
-    #Daemon names for Red Had/CentOS systems:
-    'RedHat', 'CentOS': {
+  case $::osfamily {
+    'RedHat': {
       $nrpe_daemon_name = 'nrpe'
     }
-    
-    #Daemon names for Debian/Ubuntu systems:
-    'Debian', 'Ubuntu': {
-      $nrpe_daemon_name     = 'nagios-nrpe-server'
+    'Debian': {
+      $nrpe_daemon_name = 'nagios-nrpe-server'
     }
-    
+
     #Fail if we're on any other OS:
-    default: { fail("${::operatingsystem} is not supported!") }
+    default: { fail("${::osfamily} is not supported!") }
   }
 
 }
