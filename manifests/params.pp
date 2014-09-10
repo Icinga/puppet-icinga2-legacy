@@ -40,28 +40,15 @@ class icinga2::params {
   # Icinga 2 server package parameters
 
   #Pick the right package parameters based on the OS:
-  case $::operatingsystem {
-    #Red Hat/CentOS systems:
-    'RedHat', 'CentOS': {
+  case $::osfamily {
+    'RedHat': {
       #Icinga 2 server package
       $icinga2_server_package = 'icinga2'
       $icinga2_server_plugin_packages = ["nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
     }
-    
-    #Ubuntu systems: 
-    'Ubuntu': {
-      case $::operatingsystemrelease {
-        #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
-        '12.04': {
-          $icinga2_server_package = 'icinga2'
-          $icinga2_server_plugin_packages = ["nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-nrpe-plugin"]
-        }
-        #...but 14.04 does:
-        '14.04': {
-          $icinga2_server_package = 'icinga2'
-          $icinga2_server_plugin_packages = [ "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-common", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-plugins-contrib", "nagios-nrpe-plugin"]
-        }
-      }
+    'Debian': {
+      $icinga2_server_package = 'icinga2'
+      $icinga2_server_plugin_packages = ["nagios-snmp-plugins", "nagios-plugins-extra", "nagios-nrpe-plugin"]
     }
   }
 
@@ -248,25 +235,13 @@ class icinga2::params {
 
   ##################
   # Icinga 2 client package parameters
-  case $::operatingsystem {
-    #Red Hat/CentOS systems:
-    'RedHat', 'CentOS': {
+  case $::osfamily {
+    'RedHat': {
       #Pick the right list of client packages:
       $icinga2_client_packages = ["nrpe", "nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
-    } 
-    
-    #Ubuntu systems: 
-    'Ubuntu': {
-      case $::operatingsystemrelease {
-        #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
-        '12.04': {
-          $icinga2_client_packages = ["nagios-nrpe-server", "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-nrpe-plugin"]
-        }
-        #...but 14.04 does:
-        '14.04': {
-          $icinga2_client_packages = ["nagios-nrpe-server", "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-common", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-plugins-contrib", "nagios-nrpe-plugin"]
-        }
-      }
+    }
+    'Debian': {
+      $icinga2_client_packages = ["nagios-nrpe-server", "nagios-plugins-extra", "nagios-nrpe-plugin"]
     }
   }
 
