@@ -39,8 +39,8 @@ class icinga2::params {
       $icinga2_server_plugin_packages = ["nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
     }
     
-    #Debian/Ubuntu systems: 
-    /^(Debian|Ubuntu)$/: {
+    #Ubuntu systems: 
+    'Ubuntu': {
       case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
@@ -107,8 +107,8 @@ class icinga2::params {
       $etc_icinga2_obejcts_sub_dir_mode  = '750'
     }
     
-    #Debian/Ubuntu systems: 
-    /^(Debian|Ubuntu)$/: {
+    # Ubuntu systems: 
+    'Ubuntu': {
 
       case $::operatingsystemrelease {
         #Ubuntu 12.04 Precise Pangolin:
@@ -269,8 +269,8 @@ class icinga2::params {
       $icinga2_client_packages = ["nrpe", "nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
     } 
     
-    #Debian/Ubuntu systems: 
-    /^(Debian|Ubuntu)$/: {
+    #Ubuntu systems: 
+    'Ubuntu': {
       case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
