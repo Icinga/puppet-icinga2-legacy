@@ -168,12 +168,12 @@ class icinga2::params {
 
   case $::osfamily {
     'RedHat': {
-      $nrpe_plugin_liddir  = "/usr/lib64/nagios/plugins"
+      $nrpe_plugin_libdir  = "/usr/lib64/nagios/plugins"
       $nrpe_user           = "nrpe"
       $nrpe_group          = "nrpe"
     }
     'Debian': {
-      $nrpe_plugin_liddir   = "/usr/lib/nagios/plugins"
+      $nrpe_plugin_libdir   = "/usr/lib/nagios/plugins"
       $nrpe_user            = "nagios"
       $nrpe_group           = "nagios"
     }
