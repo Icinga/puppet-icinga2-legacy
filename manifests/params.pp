@@ -163,19 +163,17 @@ class icinga2::params {
   $nrpe_connection_timeout = '300'
   #Note: because we use .join in the nrpe.cfg.erb template, this value *must* be an array 
   $nrpe_allowed_hosts      = ['127.0.0.1',]
-   
+  $nrpe_config_basedir = '/etc/nagios'
+  $nrpe_pid_file_path = '/var/run/nagios/nrpe.pid'
+
   case $::osfamily {
     'RedHat': {
-      $nrpe_config_basedir = "/etc/nagios"
       $nrpe_plugin_liddir  = "/usr/lib64/nagios/plugins"
-      $nrpe_pid_file_path  = "/var/run/nrpe/nrpe.pid"
       $nrpe_user           = "nrpe"
       $nrpe_group          = "nrpe"
     }
     'Debian': {
-      $nrpe_config_basedir  = "/etc/nagios"
       $nrpe_plugin_liddir   = "/usr/lib/nagios/plugins"
-      $nrpe_pid_file_path   = "/var/run/nagios/nrpe.pid"
       $nrpe_user            = "nagios"
       $nrpe_group           = "nagios"
     }
