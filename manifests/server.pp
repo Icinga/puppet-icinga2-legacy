@@ -53,9 +53,6 @@ class icinga2::server (
         'pgsql': { $server_db_schema_path = '/usr/share/icinga2-ido-pgsql/schema/pgsql.sql' }
       }
     }
-
-    #Fail if we're on any other OS:
-    default: { fail("${::osfamily} is not supported!") }
   }
 
 

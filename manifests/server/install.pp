@@ -49,9 +49,6 @@ class icinga2::server::install::repos inherits icinga2::server {
         #...use the apt module to add the Icinga 2 PPA from launchpad.net:
         apt::ppa { 'ppa:formorer/icinga': }
       }
-
-      #Fail if we're on any other OS:
-      default: { fail("${::osfamily} is not supported!") }
     }
   }
 

@@ -9,6 +9,15 @@
 
 class icinga2::params {
 
+  $sup_rhel_ = $::osfamily == 'RedHat' and $::operatingsystemrelease == '6.5'
+  $sup_ubu = $::operatingsystem == 'Ubuntu' and (
+    $::operatingsystemrelease == '12.04' or
+    $::operatingsystemrelease == '14.04')
+
+  if !($sup_rhel or $sup_ubu) {
+    fail('Your platform ist not supported')
+  }
+
   ##############################
   # Icinga 2 server parameters
   ##############################
@@ -54,9 +63,6 @@ class icinga2::params {
         }
       }
     }
-    
-    #Fail if we're on any other OS:
-    default: { fail("${::operatingsystem} is not supported!") }
   }
 
   ##############################
@@ -200,9 +206,6 @@ class icinga2::params {
 
       }
     }
-    
-    #Fail if we're on any other OS:
-    default: { fail("${::operatingsystem} is not supported!") }
   }
 
   ##################
@@ -241,8 +244,6 @@ class icinga2::params {
       $nrpe_user            = "nagios"
       $nrpe_group           = "nagios"
     }
-    #Fail if we're on any other OS:
-    default: { fail("${::osfamily} is not supported!") }
   }
 
   ##################
@@ -267,9 +268,6 @@ class icinga2::params {
         }
       }
     }
-    
-    #Fail if we're on any other OS:
-    default: { fail("${::operatingsystem} is not supported!") }
   }
 
   ##################
@@ -281,9 +279,6 @@ class icinga2::params {
     'Debian': {
       $nrpe_daemon_name = 'nagios-nrpe-server'
     }
-
-    #Fail if we're on any other OS:
-    default: { fail("${::osfamily} is not supported!") }
   }
 
 }
