@@ -68,14 +68,12 @@ class icinga2::server::install::packages inherits icinga2::server {
   #Install the Icinga 2 package
   package {$icinga2_server_package:
     ensure   => installed,
-    provider => $package_provider,
   }
 
   if $server_install_nagios_plugins == true {
     #Install the Nagios plugins packages:
     package {$icinga2_server_plugin_packages:
       ensure   => installed,
-      provider => $package_provider,
     }
   }
 
@@ -92,7 +90,6 @@ class icinga2::server::install::packages inherits icinga2::server {
   #http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/getting-started#configuring-db-ido
   package {$icinga2_server_db_connector_package:
     ensure   => installed,
-    provider => $package_provider,
   }
 
 }

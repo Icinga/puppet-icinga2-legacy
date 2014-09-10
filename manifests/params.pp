@@ -10,31 +10,6 @@
 class icinga2::params {
 
   ##############################
-  # Icinga 2 common parameters
-  ##############################
-
-  #This section has parameters that are used by both the client and server subclasses
-
-  ##################
-  # Icinga 2 common package parameters
-  case $operatingsystem {
-    #Red Hat/CentOS systems:
-    'RedHat', 'CentOS': {      
-      #Pick the right package provider:
-      $package_provider = 'yum'
-    } 
-    
-    #Debian/Ubuntu systems: 
-    /^(Debian|Ubuntu)$/: {
-      #Pick the right package provider:
-      $package_provider = 'apt'
-    }
-    
-    #Fail if we're on any other OS:
-    default: { fail("${operatingsystem} is not supported!") }
-  }
-
-  ##############################
   # Icinga 2 server parameters
   ##############################
 
