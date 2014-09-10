@@ -31,9 +31,8 @@ class icinga2::server::install::repos inherits icinga2::server {
   include icinga2::server
 
   if $manage_repos == true {
-    case $::operatingsystem {
-      #Red Hat/CentOS systems:
-      'RedHat', 'CentOS': {
+    case $::osfamily {
+      'RedHat': {
 
         #Add the official Icinga Yum repository: http://packages.icinga.org/epel/
         yumrepo { 'icinga2_yum_repo':
@@ -44,17 +43,12 @@ class icinga2::server::install::repos inherits icinga2::server {
           gpgkey   => 'http://packages.icinga.org/icinga.key'
         }
       }
-
-      #Ubuntu systems:
-      'Ubuntu': {
+      'Debian': {
         #Include the apt module's base class so we can...
         include apt
         #...use the apt module to add the Icinga 2 PPA from launchpad.net:
         apt::ppa { 'ppa:formorer/icinga': }
       }
-
-      #Fail if we're on any other OS:
-      default: { fail("${::operatingsystem} is not supported!") }
     }
   }
 
@@ -68,14 +62,12 @@ class icinga2::server::install::packages inherits icinga2::server {
   #Install the Icinga 2 package
   package {$icinga2_server_package:
     ensure   => installed,
-    provider => $package_provider,
   }
 
   if $server_install_nagios_plugins == true {
     #Install the Nagios plugins packages:
     package {$icinga2_server_plugin_packages:
       ensure   => installed,
-      provider => $package_provider,
     }
   }
 
@@ -92,7 +84,6 @@ class icinga2::server::install::packages inherits icinga2::server {
   #http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/getting-started#configuring-db-ido
   package {$icinga2_server_db_connector_package:
     ensure   => installed,
-    provider => $package_provider,
   }
 
 }
