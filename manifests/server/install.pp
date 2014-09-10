@@ -44,8 +44,6 @@ class icinga2::server::install::repos inherits icinga2::server {
           gpgkey   => 'http://packages.icinga.org/icinga.key'
         }
       }
-
-      #Ubuntu systems:
       'Ubuntu': {
         #Include the apt module's base class so we can...
         include apt

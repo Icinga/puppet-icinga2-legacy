@@ -215,7 +215,7 @@ class icinga2::params {
     }
     
     #Icinga 2 server daemon names for Debian/Ubuntu systems:
-    /^(Debian|Ubuntu)$/: {
+    'Debian', 'Ubuntu': {
       $icinga2_server_service_name = 'icinga2'
     }
     
@@ -249,7 +249,7 @@ class icinga2::params {
       $nrpe_group          = "nrpe"
     }
     #File and template variable names for Debian/Ubuntu systems:
-    /^(Debian|Ubuntu)$/: {
+    'Debian', 'Ubuntu': {
       $nrpe_config_basedir  = "/etc/nagios"
       $nrpe_plugin_liddir   = "/usr/lib/nagios/plugins"
       $nrpe_pid_file_path   = "/var/run/nagios/nrpe.pid"
@@ -296,7 +296,7 @@ class icinga2::params {
     }
     
     #Daemon names for Debian/Ubuntu systems:
-    /^(Debian|Ubuntu)$/: {
+    'Debian', 'Ubuntu': {
       $nrpe_daemon_name     = 'nagios-nrpe-server'
     }
     
