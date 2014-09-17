@@ -180,6 +180,9 @@ class icinga2::params {
       $etc_icinga2_obejcts_sub_dir_owner = 'icinga'
       $etc_icinga2_obejcts_sub_dir_group = 'icinga'
       $etc_icinga2_obejcts_sub_dir_mode  = '750'
+      #Settings for Icinga classicui Apache configuration
+      $icinga_classicui_apache_conf_link = '/etc/httpd/conf.d/icinga2-classicui.conf'
+      $icinga_classicui_apache_conf_path = '/etc/icinga2/classicui/httpd.conf'
     }
 
     #Ubuntu and Debian systems:
@@ -225,6 +228,9 @@ class icinga2::params {
       $etc_icinga2_obejcts_sub_dir_owner = 'root'
       $etc_icinga2_obejcts_sub_dir_group = 'root'
       $etc_icinga2_obejcts_sub_dir_mode  = '755'
+      #Settings for Icinga classicui Apache configuration
+      $icinga_classicui_apache_conf_link = '/etc/apache2/conf.d/icinga2-classicui.conf'
+      $icinga_classicui_apache_conf_path = '/etc/icinga2/classicui/apache2.conf'
     }
 
     #Fail if we're on any other OS:

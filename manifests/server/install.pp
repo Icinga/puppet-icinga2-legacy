@@ -102,6 +102,11 @@ class icinga2::server::install::packages inherits icinga2::server {
       provider => $package_provider,
       install_options => $server_plugin_package_install_options,
     }
+    #Symlink for apache configuration
+    file { $::icinga2::params::icinga_classicui_apache_conf_link:
+      ensure => symlink,
+      target => $::icinga2::params::icinga_classicui_apache_conf_path
+    }
   }
 
   #Pick the right DB lib package name based on the database type the user selected:
