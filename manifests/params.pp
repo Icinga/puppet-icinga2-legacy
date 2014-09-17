@@ -48,6 +48,7 @@ class icinga2::params {
   $manage_repos = true
   $server_db_type = 'pgsql'
   $install_mail_utils_package = false
+  $install_classicui_package = false
 
   #Database paramters
   $db_name = 'icinga2_data'
@@ -72,12 +73,14 @@ class icinga2::params {
           $icinga2_server_package = 'icinga2'
           $icinga2_server_plugin_packages = ["nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
           $icinga2_server_mail_package = 'mailx'
+          $icinga2_classicui_package = 'icinga2-classicui'
         }
         '7': {
           #Icinga 2 server package
           $icinga2_server_package = 'icinga2'
           $icinga2_server_plugin_packages = ["nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
           $icinga2_server_mail_package = 'mailx'
+          $icinga2_classicui_package = 'icinga2-classicui'
         }
         #Fail if we're on any other CentOS release:
         default: { fail("${::operatingsystemmajrelease} is not a supported CentOS release!") }
@@ -92,6 +95,7 @@ class icinga2::params {
           $icinga2_server_package = 'icinga2'
           $icinga2_server_plugin_packages = ["nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-nrpe-plugin"]
           $icinga2_server_mail_package = 'mailutils'
+          $icinga2_classicui_package = 'icinga2-classicui'
           #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
           $server_plugin_package_install_options = '--no-install-recommends'
         }
@@ -100,6 +104,7 @@ class icinga2::params {
           $icinga2_server_package = 'icinga2'
           $icinga2_server_plugin_packages = [ "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-common", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-plugins-contrib", "nagios-nrpe-plugin"]
           $icinga2_server_mail_package = 'mailutils'
+          $icinga2_classicui_package = 'icinga2-classicui'
           #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
           $server_plugin_package_install_options = '--no-install-recommends'
         }
@@ -116,6 +121,7 @@ class icinga2::params {
           $icinga2_server_package = 'icinga2'
           $icinga2_server_plugin_packages = ["nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-contrib", "nagios-nrpe-plugin"]
           $icinga2_server_mail_package = 'mailutils'
+          $icinga2_classicui_package = 'icinga2-classicui'
           #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
           $server_plugin_package_install_options = '--no-install-recommends'
         }

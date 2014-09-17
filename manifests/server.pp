@@ -23,6 +23,7 @@ class icinga2::server (
   $icinga2_server_package = $icinga2::params::icinga2_server_package,
   $server_install_nagios_plugins = $icinga2::params::server_install_nagios_plugins,
   $install_mail_utils_package = $icinga2::params::install_mail_utils_package,
+  $install_classicui_package = $icinga2::params::install_classicui_package,
 ) inherits icinga2::params {
 
   #Do some validation of parameters so we know we have the right data types:
