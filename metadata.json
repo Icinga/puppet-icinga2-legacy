@@ -16,6 +16,12 @@
       ]
     },
     {
+      "operatingsystem": "Debian",
+      "operatingsystemmajrelease": [
+        "7",
+      ]
+    },
+    {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
         "12.04",

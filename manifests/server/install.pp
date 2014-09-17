@@ -53,6 +53,12 @@ class icinga2::server::install::repos inherits icinga2::server {
         apt::ppa { 'ppa:formorer/icinga': }
       }
 
+      #Debian systems:
+      'Debian': {
+        #On Debian (7) icinga2 packags are on backports
+        include apt::backports
+      }
+
       #Fail if we're on any other OS:
       default: { fail("${::operatingsystem} is not supported!") }
     }
@@ -89,6 +95,20 @@ class icinga2::server::install::packages inherits icinga2::server {
     }
   }
 
+  if $install_classicui_package == true {
+    #Install the classicui package: 
+    package {$icinga2_classicui_package:
+      ensure   => installed,
+      provider => $package_provider,
+      install_options => $server_plugin_package_install_options,
+    }
+    #Symlink for apache configuration
+    file { $::icinga2::params::icinga_classicui_apache_conf_link:
+      ensure => symlink,
+      target => $::icinga2::params::icinga_classicui_apache_conf_path
+    }
+  }
+
   #Pick the right DB lib package name based on the database type the user selected:
   case $server_db_type {
     #MySQL:
@@ -104,7 +124,7 @@ class icinga2::server::install::packages inherits icinga2::server {
     ensure   => installed,
     provider => $package_provider,
   }
-
+ 
 }
 
 #This class contains exec resources
