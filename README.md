@@ -170,16 +170,14 @@ If you would like to install packages to make a `mail` command binary available 
   }
 </pre>
 
-###Features
-
 Features can be enabled and disabled using the icinga2::feature definition.
 
 <pre>
 # Enable command feature
-icinga2::feature { 'command': ensure => present, }
+icinga2::server::feature { 'command': ensure => present, }
 
 # Disable statuslog feature
-icinga2::feature { 'statusdata': ensure => absent, }
+icinga2::server::feature { 'statusdata': ensure => absent, }
 </pre>
 
 ###NRPE usage

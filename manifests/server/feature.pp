@@ -1,5 +1,5 @@
 # enable/disable icinga2 features
-define icinga2::feature (
+define icinga2::server::feature (
   $feature_name = $name,
   $ensure = present,
 ) {
