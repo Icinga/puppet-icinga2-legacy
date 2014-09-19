@@ -15,7 +15,7 @@ While NRPE is required for Icinga 2 to check non-network-reachble things on clie
 
 This module should be used with Puppet 3.6 or later. It may work with earlier versions of Puppet 3 but it has not been tested.
 
-This module requires Facter 2.2 or later, specifically because it uses the `operatingsystemmajrrelease` fact.
+This module requires Facter 2.2 or later, specifically because it uses the `operatingsystemmajrelease` fact.
 
 This module requires the [Puppet Labs stdlib module](https://github.com/puppetlabs/puppetlabs-stdlib).
 
@@ -388,6 +388,32 @@ icinga2::object::sysloglogger { 'syslog-warning':
 </pre>
 
 See [SyslogLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-sysloglogger) for more info.
+
+####`icinga2::conf`
+
+This defined type creates custom files in the `/etc/icinga2/conf.d` directory.
+
+The `icinga2::conf` type has `target_dir`, `target_file_name`, `target_file_owner`, `target_file_group` and `target_file_mode` parameters just like the `icinga2::object` types. 
+
+The content of the file can be managed with two parameters: 
+
+* `template` is an ERB tmplate to use for the content (ie. `site/icinga2/baseservices.conf.erb`)
+* `source` is the file server source URL for a static file (ie. `puppet:///modules/site/icinga2/baseservices.conf`)
+
+To dynamically manage the variables of your template, use the `options_hash` parameter. It can be given a hash of data that is accessible in the template.
+
+Example usage:
+
+<pre>
+icinga2::conf { 'baseservices':
+  template     => 'site/icinga2/baseservices.conf.erb',
+  options_hash => {
+    enable_notifications => true,
+    check_interval       => '5',
+    groups               => [ 'all-servers' , 'linux-servers' ],
+  }
+}
+</pre>
 
 ## Documentation
 
