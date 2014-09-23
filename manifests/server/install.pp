@@ -50,12 +50,13 @@ class icinga2::server::install::repos inherits icinga2::server {
         #Include the apt module's base class so we can...
         include apt
         #...use the apt module to add the Icinga 2 PPA from launchpad.net:
+        # https://launchpad.net/~formorer/+archive/ubuntu/icinga
         apt::ppa { 'ppa:formorer/icinga': }
       }
 
       #Debian systems:
       'Debian': {
-        #On Debian (7) icinga2 packags are on backports
+        #On Debian (7) icinga2 packages are on backports
         include apt::backports
       }
 
