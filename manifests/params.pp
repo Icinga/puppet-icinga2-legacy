@@ -19,7 +19,7 @@ class icinga2::params {
   # Icinga 2 common package parameters
   case $::operatingsystem {
     #CentOS systems:
-    'CentOS': {
+    'CentOS', 'CloudLinux': {
       #Pick the right package provider:
       $package_provider = 'yum'
     }
@@ -65,7 +65,7 @@ class icinga2::params {
   #Pick the right package parameters based on the OS:
   case $::operatingsystem {
     #CentOS systems:
-    'CentOS': {
+    'CentOS', 'CloudLinux': {
       case $::operatingsystemmajrelease {
         '6': {
           #Icinga 2 server package
@@ -133,7 +133,7 @@ class icinga2::params {
 
   case $::operatingsystem {
     #CentOS systems:
-    'CentOS': {
+    'CentOS', 'CloudLinux': {
       #Settings for /etc/icinga2/:
       $etc_icinga2_owner = 'icinga'
       $etc_icinga2_group = 'icinga'
@@ -230,7 +230,7 @@ class icinga2::params {
 
   case $::operatingsystem {
     #Icinga 2 server daemon names for Red Had/CentOS systems:
-    'CentOS': {
+    'CentOS', 'CloudLinux': {
       case $::operatingsystemmajrelease {
         '6': {
           $icinga2_server_service_name = 'icinga2'
@@ -290,7 +290,7 @@ class icinga2::params {
 
   case $::operatingsystem {
     #File and template variable names for Red Had/CentOS systems:
-    'CentOS': {
+    'CentOS', 'CloudLinux': {
       $nrpe_config_basedir = "/etc/nagios"
       $nrpe_plugin_libdir  = "/usr/lib64/nagios/plugins"
       $nrpe_pid_file_path  = "/var/run/nrpe/nrpe.pid"
@@ -321,7 +321,7 @@ class icinga2::params {
   # Icinga 2 client package parameters
   case $::operatingsystem {
     #CentOS systems:
-    'CentOS': {
+    'CentOS', 'CloudLinux': {
       case $::operatingsystemmajrelease {
         '6': {
           #Pick the right list of client packages:
@@ -378,7 +378,7 @@ class icinga2::params {
   # Icinga 2 client service parameters
   case $::operatingsystem {
     #Daemon names for Red Had/CentOS systems:
-    'CentOS': {
+    'CentOS', 'CloudLinux': {
       $nrpe_daemon_name = 'nrpe'
     }
 
