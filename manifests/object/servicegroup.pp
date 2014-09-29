@@ -18,7 +18,7 @@ define icinga2::object::servicegroup (
   $target_file_name = "${name}.conf",
   $target_file_owner = 'root',
   $target_file_group = 'root',
-  $target_file_mode = '644',
+  $target_file_mode = '0644',
   $assign_where = undef,
   $ignore_where = undef
 ) {
@@ -35,12 +35,12 @@ define icinga2::object::servicegroup (
   validate_string($target_file_mode)
 
   file {"${target_dir}/${target_file_name}":
-    ensure => file,
+    ensure  => file,
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,
     content => template('icinga2/object_servicegroup.conf.erb'),
-    notify => Service['icinga2'],
+    notify  => Service['icinga2'],
   }
 
 }

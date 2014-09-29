@@ -41,7 +41,7 @@ define icinga2::object::apply_service_to_host (
   $target_file_name  = "${name}.conf",
   $target_file_owner = 'root',
   $target_file_group = 'root',
-  $target_file_mode  = '644'
+  $target_file_mode  = '0644'
 ) {
 
   #Do some validation of the class' parameters:
@@ -57,12 +57,12 @@ define icinga2::object::apply_service_to_host (
 
 
   file {"${target_dir}/${target_file_name}":
-    ensure => file,
+    ensure  => file,
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,
     content => template('icinga2/object_apply_service_to_host.conf.erb'),
-    notify => Service['icinga2'],
+    notify  => Service['icinga2'],
   }
 
 }
