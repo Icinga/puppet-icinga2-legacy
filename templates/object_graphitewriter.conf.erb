@@ -14,9 +14,9 @@ object GraphiteWriter "graphite" {
 	<%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @host -%>
   <%#- Otherwise, include the parameter: -%>
-  host = "<%= @host -%>"
+	host = "<%= @host -%>"
   <%- end -%>
   <%- if @port -%>
-  port = <%= @port %>
+	port = <%= @port %>
   <%- end -%>
 }
