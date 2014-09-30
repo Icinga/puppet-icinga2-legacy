@@ -59,6 +59,9 @@ class icinga2::params {
   #Whether to install the plugin packages when the icinga2::server class is applied:
   $server_install_nagios_plugins = true
 
+  #What Icinga 2 features should be enabled when icinga2::server::features class is applied:
+  $server_enabled_features = ['checker','notification']
+
   ##############################
   # Icinga 2 server package parameters
 
@@ -287,6 +290,10 @@ class icinga2::params {
   $nrpe_connection_timeout = '300'
   #Note: because we use .join in the nrpe.cfg.erb template, this value *must* be an array
   $nrpe_allowed_hosts      = ['127.0.0.1',]
+  #Dtermines whether or not the NRPE daemon will allow clients to specify arguments to commands that are executed
+  # *** ENABLING THIS OPTION IS A SECURITY RISK! ***
+  # Defaults to NOT allow command arguments
+  $allow_command_argument_processing = '0'
 
   case $::operatingsystem {
     #File and template variable names for Red Had/CentOS systems:
