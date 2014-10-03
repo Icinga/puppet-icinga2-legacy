@@ -10,7 +10,6 @@ define icinga2::object::checkcommand (
   $checkcommand_target_file_owner = 'icinga',
   $checkcommand_target_file_group = 'icinga',
   $checkcommand_target_file_mode  = '0640',
-  $checkcommand_source_file       = undef,
   $checkcommand_template          = undef,
 ) {
 
@@ -26,7 +25,6 @@ define icinga2::object::checkcommand (
     owner   => $checkcommand_target_file_owner,
     group   => $checkcommand_target_file_group,
     mode    => $checkcommand_target_file_mode,
-    #source => $checkcommand_source_file,
     content => template("icinga2/${checkcommand_template}"),
     notify  => Service['icinga2'],
   }
