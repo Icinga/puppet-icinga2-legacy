@@ -11,6 +11,7 @@ define icinga2::object::checkcommand (
   $checkcommand_target_file_group = 'icinga',
   $checkcommand_target_file_mode  = '0640',
   $checkcommand_source_file       = undef,
+  $checkcommand_template          = undef,
 ) {
 
   #Do some validation of the class' parameters:
@@ -21,12 +22,13 @@ define icinga2::object::checkcommand (
   validate_string($checkcommand_target_file_mode)
 
   file { "${checkcommand_target_dir}/${checkcommand_name}":
-    ensure => file,
-    owner  => $checkcommand_target_file_owner,
-    group  => $checkcommand_target_file_group,
-    mode   => $checkcommand_target_file_mode,
-    source => $checkcommand_source_file,
-    notify => Service['icinga2'],
+    ensure  => file,
+    owner   => $checkcommand_target_file_owner,
+    group   => $checkcommand_target_file_group,
+    mode    => $checkcommand_target_file_mode,
+    #source => $checkcommand_source_file,
+    content => template("icinga2/${checkcommand_template}"),
+    notify  => Service['icinga2'],
   }
 
 }
