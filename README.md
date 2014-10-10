@@ -172,6 +172,16 @@ If you would like to install packages to make a `mail` command binary available 
   }
 </pre>
 
+Features can be enabled and disabled using the icinga2::feature definition.
+
+<pre>
+# Enable command feature
+icinga2::server::feature { 'command': ensure => present, }
+
+# Disable statuslog feature
+icinga2::server::feature { 'statusdata': ensure => absent, }
+</pre>
+
 ###NRPE usage
 
 To install NRPE and allow the local machine and Icinga 2 servers (or Icinga 1 or plain old Nagios servers) with various IP addresess to connect:
