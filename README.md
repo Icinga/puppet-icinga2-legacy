@@ -46,7 +46,7 @@ Icinga 2 requires either a [MySQL](http://www.mysql.com/) or a [Postgres](http:/
 
 Currently, this module does not set up any databases. You'll have to create one before installing Icinga 2 via the module.
 
-If you would like to set up your own database, either of the Puppet Labs [MySQL](https://github.com/puppetlabs/puppetlabs-mysql) or [Postgres](https://github.com/puppetlabs/puppetlabs-postgresql) modules can be used. 
+If you would like to set up your own database, either of the Puppet Labs [MySQL](https://github.com/puppetlabs/puppetlabs-mysql) or [Postgres](https://github.com/puppetlabs/puppetlabs-postgresql) modules can be used.
 
 The example below shows the [Puppet Labs Postgres module](https://github.com/puppetlabs/puppetlabs-postgresql) being used to install Postgres and create a database and database user for Icinga 2:
 
@@ -72,7 +72,7 @@ This defined type creates custom files in the `/etc/icinga2/conf.d` directory.
 
 The `icinga2::conf` type has `target_dir`, `target_file_name`, `target_file_owner`, `target_file_group` and `target_file_mode` parameters just like the `icinga2::object` types. 
 
-The content of the file can be managed with two parameters: 
+The content of the file can be managed with two parameters:
 
 * `template` is an ERB tmplate to use for the content (ie. `site/icinga2/baseservices.conf.erb`)
 * `source` is the file server source URL for a static file (ie. `puppet:///modules/site/icinga2/baseservices.conf`)
@@ -100,7 +100,7 @@ Once the database is set up, use the `icinga2::server` class with the database c
 
 <pre>
 #Install Icinga 2:
-class { 'icinga2::server': 
+class { 'icinga2::server':
   server_db_type => 'pgsql',
   db_host => 'localhost'
   db_port => '5432'
@@ -111,6 +111,8 @@ class { 'icinga2::server':
 </pre>
 
 When the `server_db_type` parameter is set, the right IDO database connection packages are automatically installed and the schema is loaded.
+
+If you want to use [Debmon repository](http://debmon.org/packages) for Debian 7, you have to set `use_debmon_repo` to true when you call `icinga2::server` class.
 
 **Note:** For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text:
 
@@ -158,17 +160,29 @@ class { 'icinga2::server':
  }
 </pre>
 
-This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
+This will stop the `icinga2::server` class from trying to install the plugins packages, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
 
 If you would like to install packages to make a `mail` command binary available so that Icinga 2 can send out notifications, set the `install_mail_utils_package` parameter to **true**:
 
 <pre>
-  class { 'icinga2::server': 
+  class { 'icinga2::server':
     ...
     install_mail_utils_package => true,
     ...
   }
 </pre>
+
+If you would like you manage enabled and disabled features for Icinga 2 you can set the `server_enabled_features` and `server_enabled_features` parameters to an array of features.
+
+**Note: If a feature is listed in both the enabled and disabled features arrays, the feature will be disabled**
+
+````
+class { 'icinga2::server':
+  ...
+  server_enabled_features  => ['checker','notification'],
+  server_disabled_features => ['graphite','livestatus'],
+}
+````
 
 ###NRPE usage
 
@@ -196,7 +210,7 @@ class { 'icinga2::nrpe':
 
 <pre>
 #Install Icinga 2:
-class { 'icinga2::server': 
+class { 'icinga2::server':
   server_db_type => 'pgsql',
   server_install_nagios_plugins => false,
  }
@@ -252,7 +266,7 @@ Unlike the built-in Nagios types, the file owner, group and mode of the automati
   target_file_name  => "${fqdn}.conf"
   target_file_owner => 'root',
   target_file_group => 'root',
-  target_file_mode  => '644'
+  target_file_mode  => '0644'
 }
 </pre>
 

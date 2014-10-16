@@ -46,6 +46,7 @@ class icinga2::params {
 
   #Whether to manage the package repositories
   $manage_repos = true
+  $use_debmon_repo = false
   $server_db_type = 'pgsql'
   $install_mail_utils_package = false
 
@@ -58,6 +59,10 @@ class icinga2::params {
 
   #Whether to install the plugin packages when the icinga2::server class is applied:
   $server_install_nagios_plugins = true
+
+  #What Icinga 2 features should be enabled when icinga2::server::features class is applied:
+  $server_enabled_features = ['checker','notification']
+  $server_disabled_features = []
 
   ##############################
   # Icinga 2 server package parameters
@@ -297,6 +302,7 @@ class icinga2::params {
     'CentOS': {
       $nrpe_config_basedir = '/etc/nagios'
       $nrpe_plugin_libdir  = '/usr/lib64/nagios/plugins'
+      $checkplugin_libdir  = '/usr/lib64/nagios/plugins'
       $nrpe_pid_file_path  = '/var/run/nrpe/nrpe.pid'
       $nrpe_user           = 'nrpe'
       $nrpe_group          = 'nrpe'
@@ -305,6 +311,7 @@ class icinga2::params {
     'Ubuntu': {
       $nrpe_config_basedir  = '/etc/nagios'
       $nrpe_plugin_libdir   = '/usr/lib/nagios/plugins'
+      $checkplugin_libdir   = '/usr/lib/nagios/plugins'
       $nrpe_pid_file_path   = '/var/run/nagios/nrpe.pid'
       $nrpe_user            = 'nagios'
       $nrpe_group           = 'nagios'
@@ -313,6 +320,7 @@ class icinga2::params {
     'Debian': {
       $nrpe_config_basedir  = '/etc/nagios'
       $nrpe_plugin_libdir   = '/usr/lib/nagios/plugins'
+      $checkplugin_libdir   = '/usr/lib/nagios/plugins'
       $nrpe_pid_file_path   = '/var/run/nagios/nrpe.pid'
       $nrpe_user            = 'nagios'
       $nrpe_group           = 'nagios'
