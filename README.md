@@ -457,11 +457,6 @@ icinga2::object::notificationcommand { 'mail-service-notification':
     'HOSTDISPLAYNAME' => '"$host.display_name$"',
     'SERVICEDISPLAYNAME' => '"$service.display_name$"',
     'USEREMAIL' => '"$user.email$"'
-  },
-  vars      => {
-    'vars.http_address' => '"$address$"',
-    'vars.http_ssl'     => 'false',
-    'vars.http_sni'     => 'false'
   }
 }
 
