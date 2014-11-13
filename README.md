@@ -636,37 +636,17 @@ icinga2::object::notificationcommand { 'mail-service-notification':
     'USEREMAIL' => '"$user.email$"'
   }
 }
-
 </pre>
 
 This object use the same parameter defined to `checkcommand`.
 
-<<<<<<< HEAD
-####[`icinga2::object::scheduleddowntime`](id:object_scheduleddowntime)
-
-This defined type creates **ScheduledDowntime** objects
-=======
 ####[`icinga2::object::prefdatawriter`](id:object_prefdatawriter)
 
 This dfined type creates a **PerfdataWriter** object
->>>>>>> 4b419f2ff2a6eccc9b58183ccb35f828f6c86d84
 
 Example usage:
 
 <pre>
-<<<<<<< HEAD
-icinga2::object::scheduleddowntime {'some-downtime':
-  host_name    => 'localhost',
-  service_name => 'ping4',
-  author       => 'icingaadmin',
-  comment      => 'Some comment',
-  fixed        => false,
-  duration     => '30m',
-  ranges       => { 'sunday' => '02:00-03:00' }
-}
-</pre>
-
-=======
 icinga2::object::prefdatawriter { 'pnp':
   host_perfdata_path      => '/var/spool/icinga2/perfdata/host-perfdata',
   service_perfdata_path   => '/var/spool/icinga2/perfdata/service-perfdata',
@@ -678,7 +658,26 @@ icinga2::object::prefdatawriter { 'pnp':
 
 See [PrefdataWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-prefdatawriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
->>>>>>> 4b419f2ff2a6eccc9b58183ccb35f828f6c86d84
+####[`icinga2::object::scheduleddowntime`](id:object_scheduleddowntime)
+
+This defined type creates **ScheduledDowntime** objects
+
+Example usage:
+
+<pre>
+icinga2::object::scheduleddowntime {'some-downtime':
+  host_name    => 'localhost',
+  service_name => 'ping4',
+  author       => 'icingaadmin',
+  comment      => 'Some comment',
+  fixed        => false,
+  duration     => '30m',
+  ranges       => { 'sunday' => '02:00-03:00' }
+}
+</pre>
+
+See [ScheduledDowntime](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-scheduleddowntime) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
 ####[`icinga2::object::service`](id:object_service)
 
 Coming soon...
