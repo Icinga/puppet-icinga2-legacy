@@ -337,6 +337,7 @@ Object types:
 * [icinga2::object::idopgsqlconnection](#icinga2objectidopgsqlconnection)
 * [icinga2::object::notification](#icinga2objectnotification)
 * [icinga2::object::notificationcommand](#icinga2objectnotificationcommand)
+* [icinga2::object::perfdatawriter](#icinga2objectperfdatawriter)
 * [icinga2::object::scheduleddowntime](#icinga2objectscheduleddowntime)
 * [icinga2::object::service](#icinga2objectservice)
 * [icinga2::object::servicegroup](#icinga2objectservicegroup)
@@ -624,13 +625,20 @@ icinga2::object::notificationcommand { 'mail-service-notification':
 
 This object use the same parameter defined to `checkcommand`.
 
+<<<<<<< HEAD
 ####[`icinga2::object::scheduleddowntime`](id:object_scheduleddowntime)
 
 This defined type creates **ScheduledDowntime** objects
+=======
+####[`icinga2::object::prefdatawriter`](id:object_prefdatawriter)
+
+This dfined type creates a **PerfdataWriter** object
+>>>>>>> 4b419f2ff2a6eccc9b58183ccb35f828f6c86d84
 
 Example usage:
 
 <pre>
+<<<<<<< HEAD
 icinga2::object::scheduleddowntime {'some-downtime':
   host_name    => 'localhost',
   service_name => 'ping4',
@@ -642,6 +650,19 @@ icinga2::object::scheduleddowntime {'some-downtime':
 }
 </pre>
 
+=======
+icinga2::object::prefdatawriter { 'pnp':
+  host_perfdata_path      => '/var/spool/icinga2/perfdata/host-perfdata',
+  service_perfdata_path   => '/var/spool/icinga2/perfdata/service-perfdata',
+  host_format_template    => 'DATATYPE::HOSTPERFDATA\tTIMET::$icinga.timet$\tHOSTNAME::$host.name$\tHOSTPERFDATA::$host.perfdata$\tHOSTCHECKCOMMAND::$host.check_command$\tHOSTSTATE::$host.state$\tHOSTSTATETYPE::$host.state_type$',
+  service_format_template => 'DATATYPE::SERVICEPERFDATA\tTIMET::$icinga.timet$\tHOSTNAME::$host.name$\tSERVICEDESC::$service.name$\tSERVICEPERFDATA::$service.perfdata$\tSERVICECHECKCOMMAND::$service.check_command$\tHOSTSTATE::$host.state$\tHOSTSTATETYPE::$host.state_type$\tSERVICESTATE::$service.state$\tSERVICESTATETYPE::$service.state_type$',
+  rotation_interval       => '15s'
+}
+</pre>
+
+See [PrefdataWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-prefdatawriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+>>>>>>> 4b419f2ff2a6eccc9b58183ccb35f828f6c86d84
 ####[`icinga2::object::service`](id:object_service)
 
 Coming soon...
