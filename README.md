@@ -335,6 +335,7 @@ Object types:
 * [icinga2::object::hostgroup](id:object_hostgroup)
 * [icinga2::object::idomysqlconnection](id:object_idomysqlconnection)
 * [icinga2::object::idopgsqlconnection](id:object_idopgsqlconnection)
+* [icinga2::object::livestatuslistener](#icinga2objectlivestatuslistener)
 * [icinga2::object::notification](id:object_notification)
 * [icinga2::object::notificationcommand](id:object_notificationcommand)
 * [icinga2::object::service](id:object_service)
@@ -553,6 +554,21 @@ All other parameters are given as [single-quoted strings](https://docs.puppetlab
 This defined type supports all of the parameters that **IdoMySqlConnection** objects have available.
 
 See [IdoPgSqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idopgsqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::livestatuslistener`](id:object_livestatuslistener)
+
+This defined type creates a **LivestatusListener** objects.
+
+Example usage:
+
+<pre>
+icinga2::object::livestatuslistener { 'livestatus-unix':
+  socket_type => 'unix',
+  socket_path => '/var/run/icinga2/cmd/livestatus'
+}
+</pre>
+
+See [LivestatusListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-livestatuslistener) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####`icinga2::object::notification`
 
