@@ -36,7 +36,7 @@ This module requires the [Puppet Labs stdlib module](https://github.com/puppetla
 
 For Ubuntu systems, this module requires the [Puppet Labs apt module](https://github.com/puppetlabs/puppetlabs-apt).
 
-On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required.
+On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required. You can also use the [icinga2::nrpe class](#nrpe-usage) to set up NRPE on CentOS 5. It is discouraged to set up Icinga2 Server on this old of a distribution. You are encouraged to use at least CentOS 6 or higher.
 
 If you would like to use the `icinga2::object` defined types as [exported resources](https://docs.puppetlabs.com/guides/exported_resources.html), you'll need to have your Puppet master set up with PuppetDB. See the Puppet Labs documentation for more info: [Docs: PuppetDB](https://docs.puppetlabs.com/puppetdb/)
 
@@ -60,6 +60,24 @@ The example below shows the [Puppet Labs Postgres module](https://github.com/pup
 </pre>
 
 For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text.
+
+####Note For CentOS 5
+You must be running CentOS 5.11 and _no later_ in order to satisfy dependencies.
+
+If you are attempting to install Icinga2 server on CentOS 5 (discouraged) and would like to use PostgreSQL, you must provide a non-EOL'd version of it. If you are installing PostgreSQL for the first time, you can tell the module to manage the pgsql YUM repository like so:
+
+<pre>
+  class { 'postgresql::globals':
+    manage_package_repo => true,
+    version             => '9.3',
+  }->
+  class { 'postgresql::server': }
+</pre>
+
+CentOS 5 provides PostgreSQL 9.1 by default, which was end-of-life'd in 2010. Without having the module manage the repo, it will gladly install this crippled version for you which isn't what you want.
+
+**You will still need to declare a database for Icinga2 to access.**
+
 
 [Usage](id:usage)
 -----
@@ -102,10 +120,10 @@ Once the database is set up, use the `icinga2::server` class with the database c
 #Install Icinga 2:
 class { 'icinga2::server':
   server_db_type => 'pgsql',
-  db_host => 'localhost'
-  db_port => '5432'
-  db_name => 'icinga2_data'
-  db_user => 'icinga2'
+  db_host => 'localhost',
+  db_port => '5432',
+  db_name => 'icinga2_data',
+  db_user => 'icinga2',
   db_password => 'password',
 }
 </pre>
@@ -118,10 +136,10 @@ When the `server_db_type` parameter is set, the right IDO database connection pa
 #Install Icinga 2:
 class { 'icinga2::server':
   server_db_type => 'pgsql',
-  db_host => 'localhost'
-  db_port => '5432'
-  db_name => 'icinga2_data'
-  db_user => 'icinga2'
+  db_host => 'localhost',
+  db_port => '5432',
+  db_name => 'icinga2_data',
+  db_user => 'icinga2',
   db_password => hiera('icinga_db_password_key_here'),
 }
 </pre>
