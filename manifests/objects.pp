@@ -1,8 +1,7 @@
-# == Class: icinga2::params
+# == Class: icinga2::objects
 #
-# This class is intentionally empty. It just serves as a container class for other
-# icinga2::object:: classes to make the module's file layout cleaner (all object defined types
-# can be put into an objects/ subdirectory)
+# This class will search for icinga2 objects inside hiera's database and will create them.
+# This class is called by icinga2::server
 #
 # === Parameters
 #
