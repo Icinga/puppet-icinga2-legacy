@@ -10,6 +10,7 @@ Table of Contents
 4. [Usage - How to use the module for various tasks](#usage)
     * [Object type usage](#object_type_usage)
     * [Objects](#objects)
+    * [Using Hiera to define objects] (#using_hiera_to_define_objects)
 5. [Reference - The classes and defined types available in this module](#reference)
 6. [Limitations - OS compatibility, etc.](#limitations)
 7. [Development - Guide for contributing to the module](#development)
@@ -811,6 +812,50 @@ icinga2::object::graphitewriter { 'graphite_relay':
   graphite_port    => 2003,
 }
 ````
+
+####[`Using Hiera to define Objects`](id:using_hiera_to_define_objects)
+
+The class icinga2::objects search into hiera for icinga2's supported objects and will create them automatically.
+
+Example Usage (json file):
+<pre>
+{
+  "icinga2::object::user" : {
+    "john.doe" : {
+      "email"  : "john.doe@acme.org",
+      "period" : "24x7",
+      "groups" : ["icingaadmins"],
+      "states" : ["OK","Critical"],
+      "types"  : ["Problem","Recovery"]
+    }
+  }
+}
+</pre>
+
+You can use hiera to create the following objects:
+* [`apply_dependency`](#icinga2objectapplydependency)
+* [`apply_notification_to_host`](#icinga2objectapplynotificationtohost)
+* [`apply_notification_to_service`](#icinga2objectapplynotificationtoservice)
+* [`apply_service_to_host`](#icinga2objectapplyservicetohost)
+* [`checkcommand`](#icinga2objectcheckcommand)
+* [`dependency`](#icinga2objectdependency)
+* [`eventcommand`](#icinga2objecteventcommand)
+* [`graphitewriter`](#icinga2objectgraphitewriter)
+* [`hostgroup`](#icinga2objecthostgroup)
+* [`host`](#icinga2objecthost)
+* [`idomysqlconnection`](#icinga2objectidomysqlconnection)
+* [`idopgsqlconnection`](#icinga2objectidopgsqlconnection)
+* [`notificationcommand`](#icinga2objectnotificationcommand)
+* [`notification`](#icinga2objectnotification)
+* [`perfdatawriter`](#icinga2objectperfdatawriter)
+* [`scheduleddowntime`](#icinga2objectscheduleddowntime)
+* [`servicegroup`](#icinga2objectservicegroup)
+* [`service`](#icinga2objectservice)
+* [`sysloglogger`](#icinga2objectsysloglogger)
+* [`timeperiod`](#icinga2objecttimeperiod)
+* [`usergroup`](#icinga2objectusergroup)
+* [`user`](#icinga2objectuser)
+
 
 [Reference](id:reference)
 ---------

@@ -86,6 +86,7 @@ class icinga2::server (
     enabled_features  => $server_enabled_features,
     disabled_features => $server_disabled_features,
   } ~>
+  class {'icinga2::objects':} ~>
   class {'icinga2::server::service':}
 
 }
