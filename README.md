@@ -10,7 +10,7 @@ Table of Contents
 4. [Usage - How to use the module for various tasks](#usage)
     * [Object type usage](#object_type_usage)
     * [Objects](#objects)
-    * [Using Hiera to define objects] (#using_hiera_to_define_objects)
+    * [Using Hiera to define objects] (#using-hiera-to-define-objects)
 5. [Reference - The classes and defined types available in this module](#reference)
 6. [Limitations - OS compatibility, etc.](#limitations)
 7. [Development - Guide for contributing to the module](#development)
