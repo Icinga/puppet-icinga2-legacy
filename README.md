@@ -360,16 +360,19 @@ Object types:
 * [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
+* [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
 * [icinga2::object::host](#icinga2objecthost)
 * [icinga2::object::hostgroup](#icinga2objecthostgroup)
 * [icinga2::object::idomysqlconnection](#icinga2objectidomysqlconnection)
 * [icinga2::object::idopgsqlconnection](#icinga2objectidopgsqlconnection)
+* [icinga2::object::livestatuslistener](#icinga2objectlivestatuslistener)
 * [icinga2::object::notification](#icinga2objectnotification)
 * [icinga2::object::notificationcommand](#icinga2objectnotificationcommand)
 * [icinga2::object::perfdatawriter](#icinga2objectperfdatawriter)
 * [icinga2::object::scheduleddowntime](#icinga2objectscheduleddowntime)
 * [icinga2::object::service](#icinga2objectservice)
 * [icinga2::object::servicegroup](#icinga2objectservicegroup)
+* [icinga2::object::statusdatawriter](#icinga2objectstatusdatawriter)
 * [icinga2::object::syslogger](#icinga2objectsyslogger)
 * [icinga2::object::timeperiod](#icinga2objecttimeperiod)
 * [icinga2::object::user](#icinga2objectuser)
@@ -511,6 +514,18 @@ icinga2::object::eventcommand { 'restart-httpd-event':
 
 This object use the same parameter defined to `checkcommand`.
 
+####`icinga2::object::externalcommandlistener`
+
+The `externalcommandlistener` defined type can create `ExternalCommandListener` objects.
+
+<pre>
+icinga2::object::externalcommandlistener { 'external':
+  command_path => '/var/run/icinga2/cmd/icinga2.cmd'
+}
+</pre>
+
+See [ExternalCommandListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-externalcommandlistener) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
 ####[`icinga2::object::host`](id:object_host)
 
 This defined type creates host objects.
@@ -620,6 +635,21 @@ This defined type supports all of the parameters that **IdoMySqlConnection** obj
 
 See [IdoPgSqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idopgsqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
+####[`icinga2::object::livestatuslistener`](id:object_livestatuslistener)
+
+This defined type creates a **LivestatusListener** objects.
+
+Example usage:
+
+<pre>
+icinga2::object::livestatuslistener { 'livestatus-unix':
+  socket_type => 'unix',
+  socket_path => '/var/run/icinga2/cmd/livestatus'
+}
+</pre>
+
+See [LivestatusListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-livestatuslistener) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
 ####`icinga2::object::notification`
 
 The `notification` defined type can create `notification` objects.
@@ -684,7 +714,6 @@ icinga2::object::notificationcommand { 'mail-service-notification':
     'USEREMAIL' => '"$user.email$"'
   }
 }
-
 </pre>
 
 This object use the same parameter defined to `checkcommand`.
@@ -740,6 +769,22 @@ icinga2::object::servicegroup { 'web_services':
 </pre>
 
 See [ServiceGroup](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::statusdatawriter`](id:object_statusdatawriter)
+
+This defined type creates **StatusDataWriter** objects.
+
+Example usage:
+
+<pre>
+icinga2::object::statusdatawriter { 'status':
+    status_path     => '/var/cache/icinga2/status.dat',
+    objects_path    => '/var/cache/icinga2/objects.path',
+    update_interval => 30s
+}
+</pre>
+
+See [StatusDataWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-statusdatawriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-sysloglogger) for more info.
 
 ####[`icinga2::object::sysloglogger`](id:object_syslogger)
 
