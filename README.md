@@ -115,7 +115,7 @@ icinga2::conf { 'baseservices':
 
 To install Icinga 2, first set up a MySQL or Postgres database.
 
-Once the database is set up, use the `icinga2::server` class with the database connection parameters to specify
+Once the database is set up, use the `icinga2::server` class with the `db_` database connection parameters:
 
 <pre>
 #Install Icinga 2:
@@ -129,7 +129,7 @@ class { 'icinga2::server':
 }
 </pre>
 
-When the `server_db_type` parameter is set, the right IDO database connection packages are automatically installed and the schema is loaded.
+When the `server_db_type` parameter is set, the right IDO database connection packages are automatically installed and the database schema is loaded.
 
 **Note:** For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text:
 
@@ -196,11 +196,11 @@ class { 'icinga2::server':
  }
 </pre>
 
-This will stop the `icinga2::server` class from trying to install the plugins packages, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
+This will stop the `icinga2::server` class from trying to install the plugins packages and will prevent a duplicate resource error, since the `icinga2::nrpe` class will already be installing the plugin packages.
 
 **`mail` binaries**
 
-If you would like to install packages to make a `mail` command binary available so that Icinga 2 can send out notifications, set the `install_mail_utils_package` parameter to **true**:
+If you would like to install packages to make a `mail` command binary available so that Icinga 2 can send out email notifications, set the `install_mail_utils_package` parameter to **true**:
 
 <pre>
   class { 'icinga2::server':
@@ -210,9 +210,15 @@ If you would like to install packages to make a `mail` command binary available 
   }
 </pre>
 
-If you would like you manage enabled and disabled features for Icinga 2 you can set the `server_enabled_features` and `server_enabled_features` parameters to an array of features.
+**Enabling and disabling Icinga 2 features**
 
-**Note: If a feature is listed in both the enabled and disabled features arrays, the feature will be disabled**
+To manage the features that are enabled or disabled on an Icinga 2 server, you can specify them with the `server_enabled_features` and `server_enabled_features` parameters.
+
+The parameters should be given as arrays of single-quoted strings.  
+
+**Note:** Even if you're only specifying one feature, you will still need to specify it as an array.
+
+**Note:** If a feature is listed in both the `server_enabled_features` and `server_disabled_features` arrays, the feature will be **disabled**.
 
 ````
 class { 'icinga2::server':
@@ -266,7 +272,7 @@ This will stop the `icinga2::server` class from trying to install the plugins pa
 
 ### Check Plugins
 
-Agents installed on nodes (such as NRPE ) that Icinga is performing Active checks against often require additional or custom check plugins. In order to deploy these check pluings on a node you can call the checkplugin defined resource.
+Agents installed on nodes (such as NRPE) that Icinga is performing active checks against often require additional or custom check plugins. In order to deploy these check pluings on a node you can call the checkplugin defined resource.
 
 The checkplugin defined resource can distribute files via both content (templates) and source (files).  By default the checkpluin resource will assume your distribution method is content (template) and that your template resides in the icinga2 module
 
@@ -323,7 +329,7 @@ Then, on your Icinga 2 server, you can collect the exported virtual resources (n
 Icinga2::Object::Host <<| |>> { }
 </pre>
 
-Unlike the built-in Nagios types, the file owner, group and mode of the automatically generated files can be controlled via the `target_file_owner`, `target_file_group` and `target_file_mode` parameters:
+Unlike the built-in Nagios types, the file `ensure` status, owner, group and mode of the automatically generated files can be controlled via the `target_file_ensure` `target_file_owner`, `target_file_group` and `target_file_mode` parameters:
 
 <pre>
 @@icinga2::object::host { $::fqdn:
@@ -331,15 +337,16 @@ Unlike the built-in Nagios types, the file owner, group and mode of the automati
   ipv4_address => $::ipaddress_eth0,
   groups => ['linux_servers', 'mysql_servers'],
   vars => {
-    os              => 'linux',
-    virtual_machine => 'true',
-    distro          => $::operatingsystem,
+    os               => 'linux',
+    virtual_machine  => 'true',
+    distro           => $::operatingsystem,
   },
-  target_dir        => '/etc/icinga2/objects/hosts',
-  target_file_name  => "${fqdn}.conf"
-  target_file_owner => 'root',
-  target_file_group => 'root',
-  target_file_mode  => '0644'
+  target_dir         => '/etc/icinga2/objects/hosts',
+  target_file_name   => "${fqdn}.conf"
+  target_file_ensure =>
+  target_file_owner  => 'root',
+  target_file_group  => 'root',
+  target_file_mode   => '0644'
 }
 </pre>
 
@@ -923,7 +930,7 @@ Coming soon...
 
 ###Contributing
 
-To submit a pull request via Github, fork [Icinga/puppet-icinga2](https://github.com/Icinga/puppet-icinga2) and make your changes in a feature branch off of the master branch.
+To submit a pull request via Github, fork [Icinga/puppet-icinga2](https://github.com/Icinga/puppet-icinga2) and make your changes in a feature branch off of the **develop** branch.
 
 If your changes require any discussion, create an account on [https://www.icinga.org/register/](https://www.icinga.org/register/). Once you have an account, log onto [dev.icinga.org](https://dev.icinga.org/). Create an issue under the **Icinga Tools** project and add it to the **Puppet** category.
 
