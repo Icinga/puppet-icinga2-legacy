@@ -12,4 +12,8 @@
 
 library "notification"
 
-object NotificationComponent "<%= @object_name %>" { }
+object NotificationComponent "<%= @object_name %>" { 
+  <%- if @enable_ha !=  true -%>
+  enable_ha = false
+  <%- end -%>
+}

@@ -1,11 +1,22 @@
 #Changelog
 - - -
 
-###v0.6.1 (unreleased)
+###v0.6.2 (unreleased)
+
+* Feature: [PR-58](https://github.com/Icinga/puppet-icinga2/pull/58) and [dev.icinga.org issue #8156](https://dev.icinga.org/issues/8156): Added the ability to use hashes directly in host `vars` parameters (instead of rendering hashes into a series of `vars.` lines in the rendered object file).
+* Feature: [PR-63](https://github.com/Icinga/puppet-icinga2/pull/63) and [dev.icinga.org issue #7232](https://dev.icinga.org/issues/7232): Added an Endpoint object defined type.
+* Feature: [PR-62](https://github.com/Icinga/puppet-icinga2/pull/62) and [dev.icinga.org issue #7230](https://dev.icinga.org/issues/7230): Added an IcingaStatusWriter object defined type.
+* Feature: [PR-61](https://github.com/Icinga/puppet-icinga2/pull/61) and [dev.icinga.org issue #7229](https://dev.icinga.org/issues/7229): Added a FileLogger object defined type.
+* Feature: [PR-70](https://github.com/Icinga/puppet-icinga2/pull/70) and [dev.icinga.org issue #8153](https://dev.icinga.org/issues/8153): Change validation of interval parameters.
+* Feature: [PR-68](https://github.com/Icinga/puppet-icinga2/pull/68) and [dev.icinga.org issue #7346](https://dev.icinga.org/issues/7346): Added OS support for Red Hat.
+* Feature: [dev.icinga.org issue #7231](https://dev.icinga.org/issues/7231): Added an `ApiListener` object defined type.
+
+###v0.6.1 (December 2nd, 2014)
 
 * Feature: [PR-54](https://github.com/Icinga/puppet-icinga2/pull/54) and [dev.icinga.org issue #7225](https://dev.icinga.org/issues/7225): Added a CompatLogger object defined type.
 * Feature: [PR-55](https://github.com/Icinga/puppet-icinga2/pull/55) and [dev.icinga.org issue #7226](https://dev.icinga.org/issues/7226): Added a CheckResultReader object defined type.
 * Feature: Added a parameter that controls whether to purge unmanaged files in `/etc/icinga2/objects/`
+* Feature: [dev.icinga.org issue #7856](https://dev.icinga.org/issues/7856): Added a parameter to each object defined type that can controle whether the Icinga 2 service gets refreshed; it can be set to false if the module is being used to just generate object definition files and isn't managing the service
 
 ###v0.6.0 (November 19th, 2014)
 
