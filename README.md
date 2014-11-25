@@ -783,7 +783,8 @@ icinga2::object::notificationcomponent {'notification':}
  
 This object support the following parameters: 
 * `ensure` - Optional parameter used to remove or create the file, Default value is 'file'. Use 'absent' to remove the file. 
-* `object_name` - Optional. Used to define file name. default value is 'checker' 
+* `object_name` - Optional. Used to define file name. default value is 'checker'
+* `enable_ha` - Optional. Enable the high availability functionality. Only valid in a cluster setup. Default value is true.  
 * `target_dir`  - Optional. Define where the conf fil will be created. Default value is '/etc/icinga2/conf.d' 
 * `target_file_name` - Optional. Define the file name. Default value is '${object_name}.conf'.  
 * `target_file_owner` - Optional. File Owner. Default value is 'root'. 
@@ -791,6 +792,8 @@ This object support the following parameters:
 * `target_file_mode` - Optional. File Mode. Default value is '0644'. 
  
 See [NotificationComponent](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-notificationcomponent) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about this object. 
+
+Should be enable/disable using `icinga2::server::features::enable` or `icinga2::server::features::disable`.
 
 ####[`icinga2::object::perfdatawriter`](id:object_perfdatawriter)
 

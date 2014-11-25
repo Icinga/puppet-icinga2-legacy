@@ -12,6 +12,7 @@
 define icinga2::object::notificationcomponent (
   $ensure                    = 'file',
   $object_name               = 'notification',
+  $enable_ha                 = undef,
   $target_dir                = '/etc/icinga2/conf.d',
   $target_file_name          = "${object_name}.conf",
   $target_file_owner         = 'root',
@@ -19,6 +20,9 @@ define icinga2::object::notificationcomponent (
   $target_file_mode          = '0644'
 ) {
 
+  if $enable_ha {
+    validate_bool($enable_ha)
+  }
   validate_string($target_dir)
   validate_string($target_file_name)
   validate_string($target_file_owner)
@@ -31,6 +35,6 @@ define icinga2::object::notificationcomponent (
     group   => $target_file_group,
     mode    => $target_file_mode,
     content => template('icinga2/object_notificationcomponent.conf.erb'),
-#    notify  => Service['icinga2'], # Dont need to reload/restart the service only enable/disable the feature. Should we force enable/disable the feature (icinga2 feature enable checker) or should the user define it?
+#    notify  => Service['icinga2'], # Dont need to reload/restart the service only enable/disable the feature. Should we force enable/disable the feature (icinga2 feature enable notification) or should the user define it?
   }
 }
