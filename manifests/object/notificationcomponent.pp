@@ -11,10 +11,10 @@
 
 define icinga2::object::notificationcomponent (
   $ensure                    = 'file',
-  $object_name               = 'notification',
+  $object_name               = $name,
   $enable_ha                 = undef,
   $target_dir                = '/etc/icinga2/conf.d',
-  $target_file_name          = "${object_name}.conf",
+  $target_file_name          = "${name}.conf",
   $target_file_owner         = 'root',
   $target_file_group         = 'root',
   $target_file_mode          = '0644'
