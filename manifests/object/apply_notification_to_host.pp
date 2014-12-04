@@ -42,7 +42,7 @@ define icinga2::object::apply_notification_to_host (
   validate_array($user_groups)
   validate_hash($times)
   if $interval {
-    validate_string($interval)
+    validate_re($interval, '^\d+[smhd]?$')
   }
   if $period {
     validate_string($period)
@@ -70,9 +70,9 @@ define icinga2::object::apply_notification_to_host (
     }
 
   }
-  #...otherwise, use the same file resource but without a notify => parameter: 
+  #...otherwise, use the same file resource but without a notify => parameter:
   else {
-  
+
     file { "${target_dir}/${target_file_name}":
       ensure  => $target_file_ensure,
       owner   => $target_file_owner,
@@ -80,7 +80,7 @@ define icinga2::object::apply_notification_to_host (
       mode    => $target_file_mode,
       content => template('icinga2/object_apply_notification_to_host.conf.erb'),
     }
-  
+
   }
 
 }
