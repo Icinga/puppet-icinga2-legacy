@@ -20,13 +20,7 @@ class icinga2::params {
   case $::operatingsystem {
     #CentOS systems:
     'CentOS', 'RedHat': {
-      #Pick the right package provider:
-      $package_provider = 'yum'
-    }
-	
-	#RedHat systems:
-    'RedHat': {
-      #Pick the right package provider:
+     #Pick the right package provider:
       $package_provider = 'yum'
     }
 
