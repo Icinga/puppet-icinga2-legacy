@@ -37,20 +37,23 @@ class icinga2 (
   validate_string($icinga2_package)
   validate_bool($install_nagios_plugins)
 
+  anchor {'icinga2::start':} ->
   class {'::icinga2::install':} ~>
   class {'::icinga2::config':} ~>
   class {'::icinga2::features': } ~>
-  Class['icinga2']
+  anchor {'icinga2::end':}
 
   if $manage_service == true {
     Class['icinga2::config'] ~>
     class {'::icinga2::service':} ->
-    Class['icinga2']
+    Anchor['icinga2::end']
   }
 
   if $manage_database == true {
+    Class['icinga2::features'] ->
     class {'::icinga2::database':
-    } -> Class['icinga2']
+    } -> Anchor['icinga2::end']
+
     if $manage_service {
       Class['icinga2::database'] ~> Class['icinga2::service']
     }

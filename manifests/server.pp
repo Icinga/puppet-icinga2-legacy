@@ -57,6 +57,7 @@ class icinga2::server (
     fail('icinga2::server::disabled_features is no longer supported, please use icinga2::default_features')
   }
 
+  anchor {'icinga2::server::start':} ->
   class {'::icinga2':
     install_mail_utils_package => $install_mail_utils_package,
     install_nagios_plugins     => $install_nagios_plugins,
@@ -70,7 +71,6 @@ class icinga2::server (
     db_user                    => $db_user,
     db_pass                    => $db_password,
   } ~>
-  #Install the DB IDO packages and load the DB schema:
-  Class['icinga2::server']
+  anchor {'icinga2::server::end':}
 
 }
