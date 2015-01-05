@@ -398,10 +398,13 @@ Object types:
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::compatlogger](#icinga2objectcompatlogger)
 * [icinga2::object::checkresultreader](#icinga2objectcheckresultreader)
+* [icinga2::object::endpoint](#icinga2objectendpoint)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
 * [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
+* [icinga2::object::filelogger](#icinga2objectfilelogger)
 * [icinga2::object::host](#icinga2objecthost)
 * [icinga2::object::hostgroup](#icinga2objecthostgroup)
+* [icinga2::object::icingastatuswriter](#icinga2objecticingastatuswriter)
 * [icinga2::object::idomysqlconnection](#icinga2objectidomysqlconnection)
 * [icinga2::object::idopgsqlconnection](#icinga2objectidopgsqlconnection)
 * [icinga2::object::livestatuslistener](#icinga2objectlivestatuslistener)
@@ -567,6 +570,19 @@ icinga2::object::checkresultreader {'reader':
 
 See [CheckResultReader](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-checkresultreader) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
+####[`icinga2::object::endpoint`](id:object_endpoint)
+
+The `endpoint` defined type can create `endpoint` objects.
+
+<pre>
+icinga2::object::endpoint { 'icinga2b':
+  host => '192.168.5.46',
+  port => 5665
+}
+</pre>
+
+See [EndPoint](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-endpoint) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
 ####`icinga2::object::eventcommand`
 
 The `eventcommand` defined type can create `eventcommand` objects.
@@ -592,6 +608,21 @@ icinga2::object::externalcommandlistener { 'external':
 </pre>
 
 See [ExternalCommandListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-externalcommandlistener) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::filelogger`](id:object_filelogger)
+
+This defined type creates file logger objects.
+
+Example:
+
+<pre>
+icinga2::object::filelogger { 'debug-file':
+  severity => 'debug',
+  path     => '/var/log/icinga2/debug.log',
+}
+</pre>
+
+See [FileLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-filelogger) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::host`](id:object_host)
 
@@ -634,6 +665,20 @@ If you would like to use an IPv6 address, make sure to set the `ipv6_address` pa
 ####[`icinga2::object::hostgroup`](id:object_hostgroup)
 
 Coming soon...
+
+####[`icinga2::object::icingastatuswriter`](id:object_icingastatuswriter)
+
+This defined type creates an **IcingaStatusWriter** objects.
+
+Example usage:
+<pre>
+icinga2::object::icingastatuswriter { 'status':
+   status_path       => '/cache/icinga2/status.json',
+   update_interval   => '15s',
+}
+</pre>
+
+See [IcingaStatusWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-icingastatuswriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about the object.
 
 ####[`icinga2::object::idomysqlconnection`](id:object_idomysqlconnection)
 
