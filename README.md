@@ -173,7 +173,7 @@ If you would like to use the [Debmon repository](http://debmon.org/packages) for
 class { 'icinga2::server':
   server_db_type => 'pgsql',
   # default to false
-  use_debmon => true,
+  use_debmon_repo => true,
   db_host => 'localhost'
   db_port => '5432'
   db_name => 'icinga2_data'
@@ -211,7 +211,7 @@ If you would like to install packages to make a `mail` command binary available 
 
 **Enabling and disabling Icinga 2 features**
 
-To manage the features that are enabled or disabled on an Icinga 2 server, you can specify them with the `server_enabled_features` and `server_enabled_features` parameters.
+To manage the features that are enabled or disabled on an Icinga 2 server, you can specify them with the `server_enabled_features` and `server_disabled_features` parameters.
 
 The parameters should be given as arrays of single-quoted strings.  
 
@@ -373,20 +373,39 @@ This means that they will not be added to the rendered object definition files.
 
 **However**, this doesn't mean that the values are undefined in Icinga 2. Icinga 2 itself has built-in default values for many object parameters and falls back to them if one isn't present in an object definition. See the docs for individual object types in [Configuring Icinga 2](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2) for more info about which object parameters have what default values.
 
+####Notifying the Icinga 2 service
+
+By default, each object defined type will automatically notify and restart the Icinga 2 service. However, if you're using the module to just generate object files and not using it to manage the service, you'll likely get compilation errors about the `icinga2` service not being in the catalog.
+
+Each object defined type has a boolean parameter, `refresh_icinga2_service`, that controls whether the object file will notify the service. To **not** notify the service, set it to `false`:
+
+<pre>
+icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
+  parent_host_name => 'icinga2mail.local',
+  target_file_owner => vagrant,
+  assign_where => 'match("^usermail*", host.name)',
+  refresh_icinga2_service => false,
+}
+</pre>
+
 ####[Objects](id:objects)
 
 Object types:
 
+* [icinga2::object::apilistener](#icinga2objectapilistener)
 * [icinga2::object::applyservicetohost](#icinga2objectapplyservicetohost)
 * [icinga2::object::applynotificationtohost](#icinga2objectapplynotificationtohost)
 * [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::compatlogger](#icinga2objectcompatlogger)
 * [icinga2::object::checkresultreader](#icinga2objectcheckresultreader)
+* [icinga2::object::endpoint](#icinga2objectendpoint)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
 * [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
+* [icinga2::object::filelogger](#icinga2objectfilelogger)
 * [icinga2::object::host](#icinga2objecthost)
 * [icinga2::object::hostgroup](#icinga2objecthostgroup)
+* [icinga2::object::icingastatuswriter](#icinga2objecticingastatuswriter)
 * [icinga2::object::idomysqlconnection](#icinga2objectidomysqlconnection)
 * [icinga2::object::idopgsqlconnection](#icinga2objectidopgsqlconnection)
 * [icinga2::object::livestatuslistener](#icinga2objectlivestatuslistener)
@@ -402,6 +421,22 @@ Object types:
 * [icinga2::object::timeperiod](#icinga2objecttimeperiod)
 * [icinga2::object::user](#icinga2objectuser)
 * [icinga2::object::usergroup](#icinga2objectusergroup)
+
+####[`icinga2::object::apilistener`](id:icinga2objectapilistener)
+
+The `apilistener` defined type can create `ApiLister` objects that set the bind address and port for Icinga 2's API listener, as well as the locations of the machine's Icinga 2 cert, key and Icinga 2 CA key:
+
+<pre>
+#Create an API listener object:
+icinga2::object::apilistener { 'master-api':
+  bind_host => $ipaddress_eth1,
+  accept_commands => true,
+}
+</pre>
+
+The `accept_config` and `accept_commands` parameters default to **false**.
+
+See the Icinga 2 documention for more info: [http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-apilistener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-apilistener)
 
 ####[`icinga2::object::apply_service_to_host`](id:object_apply_service_to_host)
 
@@ -553,6 +588,19 @@ icinga2::object::checkresultreader {'reader':
 
 See [CheckResultReader](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-checkresultreader) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
+####[`icinga2::object::endpoint`](id:object_endpoint)
+
+The `endpoint` defined type can create `endpoint` objects.
+
+<pre>
+icinga2::object::endpoint { 'icinga2b':
+  host => '192.168.5.46',
+  port => 5665
+}
+</pre>
+
+See [EndPoint](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-endpoint) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
 ####`icinga2::object::eventcommand`
 
 The `eventcommand` defined type can create `eventcommand` objects.
@@ -578,6 +626,21 @@ icinga2::object::externalcommandlistener { 'external':
 </pre>
 
 See [ExternalCommandListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-externalcommandlistener) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::filelogger`](id:object_filelogger)
+
+This defined type creates file logger objects.
+
+Example:
+
+<pre>
+icinga2::object::filelogger { 'debug-file':
+  severity => 'debug',
+  path     => '/var/log/icinga2/debug.log',
+}
+</pre>
+
+See [FileLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-filelogger) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::host`](id:object_host)
 
@@ -620,6 +683,20 @@ If you would like to use an IPv6 address, make sure to set the `ipv6_address` pa
 ####[`icinga2::object::hostgroup`](id:object_hostgroup)
 
 Coming soon...
+
+####[`icinga2::object::icingastatuswriter`](id:object_icingastatuswriter)
+
+This defined type creates an **IcingaStatusWriter** objects.
+
+Example usage:
+<pre>
+icinga2::object::icingastatuswriter { 'status':
+   status_path       => '/cache/icinga2/status.json',
+   update_interval   => '15s',
+}
+</pre>
+
+See [IcingaStatusWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-icingastatuswriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about the object.
 
 ####[`icinga2::object::idomysqlconnection`](id:object_idomysqlconnection)
 
