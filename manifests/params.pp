@@ -23,7 +23,7 @@ class icinga2::params {
       #Pick the right package provider:
       $package_provider = 'yum'
     }
-	
+
     #Ubuntu systems:
     'Ubuntu': {
       #Pick the right package provider:
@@ -94,9 +94,8 @@ class icinga2::params {
         default: { fail("${::operatingsystemmajrelease} is not a supported CentOS release!") }
       }
     }
-
    #Ubuntu systems:
-    'Ubuntu': {
+   'Ubuntu': {
       case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
@@ -322,6 +321,7 @@ class icinga2::params {
       $nrpe_user           = 'nrpe'
       $nrpe_group          = 'nrpe'
     }
+
     #File and template variable names for Ubuntu systems:
     'Ubuntu': {
       $nrpe_config_basedir  = '/etc/nagios'
@@ -331,6 +331,7 @@ class icinga2::params {
       $nrpe_user            = 'nagios'
       $nrpe_group           = 'nagios'
     }
+
     #File and template variable names for Ubuntu systems:
     'Debian': {
       $nrpe_config_basedir  = '/etc/nagios'
@@ -340,7 +341,8 @@ class icinga2::params {
       $nrpe_user            = 'nagios'
       $nrpe_group           = 'nagios'
     }
-    #Fail if we're on any other OS:
+   
+   #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
   }
 
