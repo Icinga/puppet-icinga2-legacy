@@ -23,6 +23,12 @@ class icinga2::params {
      #Pick the right package provider:
       $package_provider = 'yum'
     }
+	
+	#RedHat systems:
+    'RedHat': {
+      #Pick the right package provider:
+      $package_provider = 'yum'
+    }
 
    #Ubuntu systems:
    'Ubuntu': {
@@ -96,7 +102,7 @@ class icinga2::params {
     }
 
    #Ubuntu systems:
-    'Ubuntu': {
+   'Ubuntu': {
     case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
