@@ -23,6 +23,12 @@ class icinga2::params {
       #Pick the right package provider:
       $package_provider = 'yum'
     }
+	
+	#RedHat systems:
+    'RedHat': {
+      #Pick the right package provider:
+      $package_provider = 'yum'
+    }
 
     #Ubuntu systems:
     'Ubuntu': {

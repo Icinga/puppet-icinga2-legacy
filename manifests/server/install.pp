@@ -45,6 +45,19 @@ class icinga2::server::install::repos inherits icinga2::server {
         }
       }
 
+      #RedHat systems:
+      'RedHat': {
+
+        #Add the official Icinga Yum repository: http://packages.icinga.org/epel/
+        yumrepo { 'icinga2_yum_repo':
+          baseurl  => "http://packages.icinga.org/epel/${::operatingsystemmajrelease}/release/",
+          descr    => 'Icinga 2 Yum repository',
+          enabled  => 1,
+          gpgcheck => 1,
+          gpgkey   => 'http://packages.icinga.org/icinga.key'
+        }
+      }
+
       #Ubuntu systems:
       'Ubuntu': {
         #Include the apt module's base class so we can...
