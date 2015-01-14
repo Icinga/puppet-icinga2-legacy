@@ -82,7 +82,7 @@ class icinga2::server (
   #class left is applied before the class on the right and that it also refreshes the
   #class on the right.
   class {'icinga2::server::install':} ~>
-  class {'icinga2::server::config':} ~>
+  class {'icinga2::config':} ~>
   class {'icinga2::server::features':
     enabled_features  => $server_enabled_features,
     disabled_features => $server_disabled_features,
