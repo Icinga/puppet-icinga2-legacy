@@ -24,12 +24,6 @@ class icinga2::params {
       $package_provider = 'yum'
     }
 	
-	#RedHat systems:
-    'RedHat': {
-      #Pick the right package provider:
-      $package_provider = 'yum'
-    }
-
     #Ubuntu systems:
     'Ubuntu': {
       #Pick the right package provider:
@@ -101,33 +95,7 @@ class icinga2::params {
       }
     }
 
-    #RedHat systems:
-    'RedHat': {
-      case $::operatingsystemmajrelease {
-        '5': {
-          #Icinga 2 server package
-          $icinga2_server_package = 'icinga2'
-          $icinga2_server_plugin_packages = ['nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
-          $icinga2_server_mail_package = 'mailx'
-        }
-        '6': {
-          #Icinga 2 server package
-          $icinga2_server_package = 'icinga2'
-          $icinga2_server_plugin_packages = ['nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
-          $icinga2_server_mail_package = 'mailx'
-        }
-        '7': {
-          #Icinga 2 server package
-          $icinga2_server_package = 'icinga2'
-          $icinga2_server_plugin_packages = ['nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
-          $icinga2_server_mail_package = 'mailx'
-        }
-        #Fail if we're on any other RedHat release:
-        default: { fail("${::operatingsystemmajrelease} is not a supported RedHat release!") }
-      }
-    }
-
-    #Ubuntu systems:
+  #Ubuntu systems:
     'Ubuntu': {
       case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
@@ -175,7 +143,7 @@ class icinga2::params {
   # Icinga 2 server config parameters
 
   case $::operatingsystem {
-    #CentOS systems:
+    #CentOS or RedHat systems:
     'CentOS', 'RedHat': {
       #Settings for /etc/icinga2/:
       $etc_icinga2_owner = 'icinga'
@@ -382,7 +350,7 @@ class icinga2::params {
   ##################
   # Icinga 2 client package parameters
   case $::operatingsystem {
-    #CentOS systems:
+    #CentOS or RedHat systems:
     'CentOS', 'RedHat': {
       case $::operatingsystemmajrelease {
         '5': {
