@@ -18,18 +18,12 @@ class icinga2::params {
   ##################
   # Icinga 2 common package parameters
   case $::operatingsystem {
-    #CentOS systems:
+    #CentOS or RedHat systems:
     'CentOS', 'RedHat': {
       #Pick the right package provider:
       $package_provider = 'yum'
     }
 	
-	#RedHat systems:
-    'RedHat': {
-      #Pick the right package provider:
-      $package_provider = 'yum'
-    }
-
     #Ubuntu systems:
     'Ubuntu': {
       #Pick the right package provider:
@@ -101,7 +95,7 @@ class icinga2::params {
       }
     }
 
-    #Ubuntu systems:
+   #Ubuntu systems:
     'Ubuntu': {
       case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
@@ -149,7 +143,7 @@ class icinga2::params {
   # Icinga 2 server config parameters
 
   case $::operatingsystem {
-    #CentOS systems:
+    #CentOS or RedHat systems:
     'CentOS', 'RedHat': {
       #Settings for /etc/icinga2/:
       $etc_icinga2_owner = 'icinga'
@@ -353,7 +347,7 @@ class icinga2::params {
   ##################
   # Icinga 2 client package parameters
   case $::operatingsystem {
-    #CentOS systems:
+    #CentOS or RedHat systems:
     'CentOS', 'RedHat': {
       case $::operatingsystemmajrelease {
         '5': {
