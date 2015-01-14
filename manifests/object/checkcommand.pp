@@ -23,6 +23,7 @@ define icinga2::object::checkcommand (
   $checkcommand_template_module          = 'icinga2',
   $checkcommand_template                 = 'object_checkcommand.conf.erb',
   $checkcommand_source_file              = undef,
+  $checkcommand_source_inline            = undef,
   $checkcommand_file_distribution_method = 'content',
   $target_file_name                      = "${name}.conf",
   $target_file_ensure                    = file,
@@ -76,6 +77,16 @@ define icinga2::object::checkcommand (
         notify => Service['icinga2'],
       }
     }
+    elsif $checkcommand_file_distribution_method == 'inline' {
+      file {"${target_dir}/${target_file_name}":
+        ensure  => $target_file_ensure,
+        owner   => $target_file_owner,
+        group   => $target_file_group,
+        mode    => $target_file_mode,
+        content => $checkcommand_source_inline,
+        notify  => Service['icinga2'],
+      }
+    }
     else {
       notify {'Missing/Incorrect File Distribution Method':
         message => 'The parameter checkcommand_file_distribution_method is missing or incorrect. Please set content or source',
@@ -83,9 +94,9 @@ define icinga2::object::checkcommand (
     }
   }
 
-  #...otherwise, use the same file resource but without a notify => parameter: 
+  #...otherwise, use the same file resource but without a notify => parameter:
   else {
-  
+
     if $checkcommand_file_distribution_method == 'content' {
       file {"${target_dir}/${target_file_name}":
         ensure  => $target_file_ensure,
@@ -104,12 +115,21 @@ define icinga2::object::checkcommand (
         source => $checkcommand_source_file,
       }
     }
+    elsif $checkcommand_file_distribution_method == 'inline' {
+      file {"${target_dir}/${target_file_name}":
+        ensure  => $target_file_ensure,
+        owner   => $target_file_owner,
+        group   => $target_file_group,
+        mode    => $target_file_mode,
+        content => $checkcommand_source_inline,
+      }
+    }
     else {
       notify {'Missing/Incorrect File Distribution Method':
         message => 'The parameter checkcommand_file_distribution_method is missing or incorrect. Please set content or source',
       }
     }
-  
+
   }
 
 }
