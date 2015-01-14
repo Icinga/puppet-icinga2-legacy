@@ -45,7 +45,7 @@ If you are using RedHat Satellite server, set
    $manage_repos = false
 </pre>
 
-in [icinga2::server class] and make sure, you have a channel set up with the contents of the icinga2 repository and the needed packages from epel. If you leave it at true, the epel repository will be used directly.
+in `icinga2::server` class and make sure, you have a channel set up with the contents of the icinga2 repository and the needed packages from EPEL. If you leave it at true, the EPEL repository will be used directly.
 
 If you would like to use the `icinga2::object` defined types as [exported resources](https://docs.puppetlabs.com/guides/exported_resources.html), you'll need to have your Puppet master set up with PuppetDB. See the Puppet Labs documentation for more info: [Docs: PuppetDB](https://docs.puppetlabs.com/puppetdb/)
 

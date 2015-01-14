@@ -18,18 +18,11 @@ class icinga2::params {
   ##################
   # Icinga 2 common package parameters
   case $::operatingsystem {
-    #CentOS systems:
+    #CentOS or RedHat systems:
     'CentOS', 'RedHat': {
       #Pick the right package provider:
       $package_provider = 'yum'
     }
-	
-	#RedHat systems:
-    'RedHat': {
-      #Pick the right package provider:
-      $package_provider = 'yum'
-    }
-
     #Ubuntu systems:
     'Ubuntu': {
       #Pick the right package provider:
@@ -101,7 +94,7 @@ class icinga2::params {
       }
     }
 
-    #Ubuntu systems:
+   #Ubuntu systems:
     'Ubuntu': {
       case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
@@ -149,7 +142,7 @@ class icinga2::params {
   # Icinga 2 server config parameters
 
   case $::operatingsystem {
-    #CentOS systems:
+    #CentOS or RedHat systems:
     'CentOS', 'RedHat': {
       #Settings for /etc/icinga2/:
       $etc_icinga2_owner = 'icinga'
@@ -328,6 +321,7 @@ class icinga2::params {
       $nrpe_user           = 'nrpe'
       $nrpe_group          = 'nrpe'
     }
+
     #File and template variable names for Ubuntu systems:
     'Ubuntu': {
       $nrpe_config_basedir  = '/etc/nagios'
@@ -337,6 +331,7 @@ class icinga2::params {
       $nrpe_user            = 'nagios'
       $nrpe_group           = 'nagios'
     }
+
     #File and template variable names for Ubuntu systems:
     'Debian': {
       $nrpe_config_basedir  = '/etc/nagios'
@@ -346,14 +341,15 @@ class icinga2::params {
       $nrpe_user            = 'nagios'
       $nrpe_group           = 'nagios'
     }
-    #Fail if we're on any other OS:
+   
+   #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
   }
 
   ##################
   # Icinga 2 client package parameters
   case $::operatingsystem {
-    #CentOS systems:
+    #CentOS or RedHat systems:
     'CentOS', 'RedHat': {
       case $::operatingsystemmajrelease {
         '5': {

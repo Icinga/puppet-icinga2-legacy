@@ -44,16 +44,7 @@ class icinga2::server (
 
   #Pick set the right path where we can find the DB schema based on the OS...
   case $::operatingsystem {
-    'CentOS': {
-      #...and database that the user picks
-      case $server_db_type {
-        'mysql': { $server_db_schema_path = '/usr/share/icinga2-ido-mysql/schema/mysql.sql' }
-        'pgsql': { $server_db_schema_path = '/usr/share/icinga2-ido-pgsql/schema/pgsql.sql' }
-        default: { fail("${server_db_type} is not a supported database! Please specify either 'mysql' for MySQL or 'pgsql' for Postgres.") }
-      }
-    }
-
-    'RedHat': {
+    'CentOS','RedHat': {
       #...and database that the user picks
       case $server_db_type {
         'mysql': { $server_db_schema_path = '/usr/share/icinga2-ido-mysql/schema/mysql.sql' }
