@@ -96,7 +96,7 @@ class icinga2::params {
     }
    #Ubuntu systems:
    'Ubuntu': {
-      case $::operatingsystemrelease {
+     case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
           $icinga2_server_package = 'icinga2'
