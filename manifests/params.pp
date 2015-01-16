@@ -142,100 +142,23 @@ class icinga2::params {
   ##############################
   # Icinga 2 server config parameters
 
-  case $::operatingsystem {
-    #CentOS systems:
-    'CentOS', 'RedHat': {
-      #Settings for /etc/icinga2/:
-      $etc_icinga2_owner = 'icinga'
-      $etc_icinga2_group = 'icinga'
-      $etc_icinga2_mode  = '0750'
-      #Settings for /etc/icinga2/icinga2.conf:
-      $etc_icinga2_icinga2_conf_owner = 'icinga'
-      $etc_icinga2_icinga2_conf_group = 'icinga'
-      $etc_icinga2_icinga2_conf_mode  = '0640'
-      #Settings for /etc/icinga2/conf.d/
-      $etc_icinga2_confd_owner = 'icinga'
-      $etc_icinga2_confd_group = 'icinga'
-      $etc_icinga2_confd_mode  = '0750'
-      #Settings for /etc/icinga2/features-available/:
-      $etc_icinga2_features_available_owner = 'icinga'
-      $etc_icinga2_features_available_group = 'icinga'
-      $etc_icinga2_features_available_mode  = '0750'
-      #Settings for /etc/icinga2/features-enabled/:
-      $etc_icinga2_features_enabled_owner = 'icinga'
-      $etc_icinga2_features_enabled_group = 'icinga'
-      $etc_icinga2_features_enabled_mode  = '0750'
-      #Settings for /etc/icinga2/pki/:
-      $etc_icinga2_pki_owner = 'icinga'
-      $etc_icinga2_pki_group = 'icinga'
-      $etc_icinga2_pki_mode  = '0750'
-      #Settings for /etc/icinga2/scripts/:
-      $etc_icinga2_scripts_owner = 'icinga'
-      $etc_icinga2_scripts_group = 'icinga'
-      $etc_icinga2_scripts_mode  = '0750'
-      #Settings for /etc/icinga2/zones.d/:
-      $etc_icinga2_zonesd_owner = 'icinga'
-      $etc_icinga2_zonesd_group = 'icinga'
-      $etc_icinga2_zonesd_mode  = '0750'
-      #Settings for /etc/icinga2/objects/:
-      $etc_icinga2_obejcts_owner = 'icinga'
-      $etc_icinga2_obejcts_group = 'icinga'
-      $etc_icinga2_obejcts_mode  = '0750'
-      #Settings for subdirectories of /etc/icinga2/objects/:
-      $etc_icinga2_obejcts_sub_dir_owner = 'icinga'
-      $etc_icinga2_obejcts_sub_dir_group = 'icinga'
-      $etc_icinga2_obejcts_sub_dir_mode  = '0750'
+  # permissions for everything below /etc/icinga2/
+  case $::osfamily {
+    'RedHat': {
+      $config_owner = 'icinga'
+      $config_group = 'icinga'
+      $config_mode  = '0640'
     }
-
-    #Ubuntu and Debian systems:
-    /(Ubuntu|Debian)/: {
-
-      #Settings for /etc/icinga2/:
-      $etc_icinga2_owner = 'root'
-      $etc_icinga2_group = 'root'
-      $etc_icinga2_mode  = '0755'
-      #Settings for /etc/icinga2/icinga2.conf:
-      $etc_icinga2_icinga2_conf_owner = 'root'
-      $etc_icinga2_icinga2_conf_group = 'root'
-      $etc_icinga2_icinga2_conf_mode  = '0644'
-      #Settings for /etc/icinga2/conf.d/
-      $etc_icinga2_confd_owner = 'root'
-      $etc_icinga2_confd_group = 'root'
-      $etc_icinga2_confd_mode  = '0755'
-      #Settings for /etc/icinga2/features-available/:
-      $etc_icinga2_features_available_owner = 'root'
-      $etc_icinga2_features_available_group = 'root'
-      $etc_icinga2_features_available_mode  = '0755'
-      #Settings for /etc/icinga2/features-enabled/:
-      $etc_icinga2_features_enabled_owner = 'root'
-      $etc_icinga2_features_enabled_group = 'root'
-      $etc_icinga2_features_enabled_mode  = '0755'
-      #Settings for /etc/icinga2/pki/:
-      $etc_icinga2_pki_owner = 'root'
-      $etc_icinga2_pki_group = 'root'
-      $etc_icinga2_pki_mode  = '0755'
-      #Settings for /etc/icinga2/scripts/:
-      $etc_icinga2_scripts_owner = 'root'
-      $etc_icinga2_scripts_group = 'root'
-      $etc_icinga2_scripts_mode  = '0755'
-      #Settings for /etc/icinga2/zones.d/:
-      $etc_icinga2_zonesd_owner = 'root'
-      $etc_icinga2_zonesd_group = 'root'
-      $etc_icinga2_zonesd_mode  = '0755'
-      #Settings for /etc/icinga2/objects/:
-      $etc_icinga2_obejcts_owner = 'root'
-      $etc_icinga2_obejcts_group = 'root'
-      $etc_icinga2_obejcts_mode  = '0755'
-      #Settings for subdirectories of /etc/icinga2/objects/:
-      $etc_icinga2_obejcts_sub_dir_owner = 'root'
-      $etc_icinga2_obejcts_sub_dir_group = 'root'
-      $etc_icinga2_obejcts_sub_dir_mode  = '0755'
+    'Debian': {
+      $config_owner = 'nagios'
+      $config_group = 'nagios'
+      $config_mode  = '0640'
     }
 
     #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
   }
-  
+
   #Whether to purge object files or directories in /etc/icinga2/objects that aren't managed by Puppet
   $purge_unmanaged_object_files = false
 
