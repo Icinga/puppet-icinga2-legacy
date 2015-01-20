@@ -93,10 +93,9 @@ class icinga2::params {
         default: { fail("${::operatingsystemmajrelease} is not a supported CentOS release!") }
       }
     }
-
    #Ubuntu systems:
-    'Ubuntu': {
-      case $::operatingsystemrelease {
+   'Ubuntu': {
+     case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
           $icinga2_server_package = 'icinga2'
