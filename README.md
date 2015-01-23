@@ -10,6 +10,7 @@ Table of Contents
 4. [Usage - How to use the module for various tasks](#usage)
     * [Object type usage](#object_type_usage)
     * [Objects](#objects)
+    * [Using Hiera to define objects] (#using-hiera-to-define-objects)
 5. [Reference - The classes and defined types available in this module](#reference)
 6. [Limitations - OS compatibility, etc.](#limitations)
 7. [Development - Guide for contributing to the module](#development)
@@ -173,7 +174,7 @@ If you would like to use the [Debmon repository](http://debmon.org/packages) for
 class { 'icinga2::server':
   server_db_type => 'pgsql',
   # default to false
-  use_debmon => true,
+  use_debmon_repo => true,
   db_host => 'localhost'
   db_port => '5432'
   db_name => 'icinga2_data'
@@ -211,7 +212,7 @@ If you would like to install packages to make a `mail` command binary available 
 
 **Enabling and disabling Icinga 2 features**
 
-To manage the features that are enabled or disabled on an Icinga 2 server, you can specify them with the `server_enabled_features` and `server_enabled_features` parameters.
+To manage the features that are enabled or disabled on an Icinga 2 server, you can specify them with the `server_enabled_features` and `server_disabled_features` parameters.
 
 The parameters should be given as arrays of single-quoted strings.  
 
@@ -295,6 +296,23 @@ icinga2::checkplugin { 'check_diskstats':
   checkplugin_source_file              => 'puppet:///modules/checkplugins/check_diskstats',
 }
 ````
+
+Example 3: Distribute check plugin in a manifest
+```
+icinga2::checkplugin { 'check_diskstats':
+  checkplugin_file_distribution_method => 'inline',
+  checkplugin_source_inline            => 'command[check_disks]=/usr/lib64/nagios/plugins/check_disk -w 20 -c 10 -p /',
+}
+```
+
+Example 4: Distribute check plugin stored in Hiera(-yaml)
+```
+---
+icinga2::checkplugin:
+  check_diskstats:
+    checkplugin_file_distribution_method: 'inline'
+    checkplugin_source_inline:            'command[check_disks]=/usr/lib64/nagios/plugins/check_disk -w 20 -c 10 -p /'
+```
 
 ###[Object type usage](id:object_type_usage)
 
@@ -392,16 +410,20 @@ icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
 
 Object types:
 
+* [icinga2::object::apilistener](#icinga2objectapilistener)
 * [icinga2::object::applyservicetohost](#icinga2objectapplyservicetohost)
 * [icinga2::object::applynotificationtohost](#icinga2objectapplynotificationtohost)
 * [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::compatlogger](#icinga2objectcompatlogger)
 * [icinga2::object::checkresultreader](#icinga2objectcheckresultreader)
+* [icinga2::object::endpoint](#icinga2objectendpoint)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
 * [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
+* [icinga2::object::filelogger](#icinga2objectfilelogger)
 * [icinga2::object::host](#icinga2objecthost)
 * [icinga2::object::hostgroup](#icinga2objecthostgroup)
+* [icinga2::object::icingastatuswriter](#icinga2objecticingastatuswriter)
 * [icinga2::object::idomysqlconnection](#icinga2objectidomysqlconnection)
 * [icinga2::object::idopgsqlconnection](#icinga2objectidopgsqlconnection)
 * [icinga2::object::livestatuslistener](#icinga2objectlivestatuslistener)
@@ -416,6 +438,22 @@ Object types:
 * [icinga2::object::timeperiod](#icinga2objecttimeperiod)
 * [icinga2::object::user](#icinga2objectuser)
 * [icinga2::object::usergroup](#icinga2objectusergroup)
+
+####[`icinga2::object::apilistener`](id:icinga2objectapilistener)
+
+The `apilistener` defined type can create `ApiLister` objects that set the bind address and port for Icinga 2's API listener, as well as the locations of the machine's Icinga 2 cert, key and Icinga 2 CA key:
+
+<pre>
+#Create an API listener object:
+icinga2::object::apilistener { 'master-api':
+  bind_host => $ipaddress_eth1,
+  accept_commands => true,
+}
+</pre>
+
+The `accept_config` and `accept_commands` parameters default to **false**.
+
+See the Icinga 2 documention for more info: [http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-apilistener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-apilistener)
 
 ####[`icinga2::object::apply_service_to_host`](id:object_apply_service_to_host)
 
@@ -567,6 +605,19 @@ icinga2::object::checkresultreader {'reader':
 
 See [CheckResultReader](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-checkresultreader) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
+####[`icinga2::object::endpoint`](id:object_endpoint)
+
+The `endpoint` defined type can create `endpoint` objects.
+
+<pre>
+icinga2::object::endpoint { 'icinga2b':
+  host => '192.168.5.46',
+  port => 5665
+}
+</pre>
+
+See [EndPoint](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-endpoint) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
 ####`icinga2::object::eventcommand`
 
 The `eventcommand` defined type can create `eventcommand` objects.
@@ -592,6 +643,21 @@ icinga2::object::externalcommandlistener { 'external':
 </pre>
 
 See [ExternalCommandListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-externalcommandlistener) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::filelogger`](id:object_filelogger)
+
+This defined type creates file logger objects.
+
+Example:
+
+<pre>
+icinga2::object::filelogger { 'debug-file':
+  severity => 'debug',
+  path     => '/var/log/icinga2/debug.log',
+}
+</pre>
+
+See [FileLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-filelogger) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::host`](id:object_host)
 
@@ -634,6 +700,20 @@ If you would like to use an IPv6 address, make sure to set the `ipv6_address` pa
 ####[`icinga2::object::hostgroup`](id:object_hostgroup)
 
 Coming soon...
+
+####[`icinga2::object::icingastatuswriter`](id:object_icingastatuswriter)
+
+This defined type creates an **IcingaStatusWriter** objects.
+
+Example usage:
+<pre>
+icinga2::object::icingastatuswriter { 'status':
+   status_path       => '/cache/icinga2/status.json',
+   update_interval   => '15s',
+}
+</pre>
+
+See [IcingaStatusWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-icingastatuswriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about the object.
 
 ####[`icinga2::object::idomysqlconnection`](id:object_idomysqlconnection)
 
@@ -924,6 +1004,50 @@ icinga2::object::graphitewriter { 'graphite_relay':
   graphite_port    => 2003,
 }
 ````
+
+####[`Using Hiera to define Objects`](id:using_hiera_to_define_objects)
+
+The class icinga2::objects search into hiera for icinga2's supported objects and will create them automatically.
+
+Example Usage (json file):
+<pre>
+{
+  "icinga2::object::user" : {
+    "john.doe" : {
+      "email"  : "john.doe@acme.org",
+      "period" : "24x7",
+      "groups" : ["icingaadmins"],
+      "states" : ["OK","Critical"],
+      "types"  : ["Problem","Recovery"]
+    }
+  }
+}
+</pre>
+
+You can use hiera to create the following objects:
+* [`apply_dependency`](#icinga2objectapplydependency)
+* [`apply_notification_to_host`](#icinga2objectapplynotificationtohost)
+* [`apply_notification_to_service`](#icinga2objectapplynotificationtoservice)
+* [`apply_service_to_host`](#icinga2objectapplyservicetohost)
+* [`checkcommand`](#icinga2objectcheckcommand)
+* [`dependency`](#icinga2objectdependency)
+* [`eventcommand`](#icinga2objecteventcommand)
+* [`graphitewriter`](#icinga2objectgraphitewriter)
+* [`hostgroup`](#icinga2objecthostgroup)
+* [`host`](#icinga2objecthost)
+* [`idomysqlconnection`](#icinga2objectidomysqlconnection)
+* [`idopgsqlconnection`](#icinga2objectidopgsqlconnection)
+* [`notificationcommand`](#icinga2objectnotificationcommand)
+* [`notification`](#icinga2objectnotification)
+* [`perfdatawriter`](#icinga2objectperfdatawriter)
+* [`scheduleddowntime`](#icinga2objectscheduleddowntime)
+* [`servicegroup`](#icinga2objectservicegroup)
+* [`service`](#icinga2objectservice)
+* [`sysloglogger`](#icinga2objectsysloglogger)
+* [`timeperiod`](#icinga2objecttimeperiod)
+* [`usergroup`](#icinga2objectusergroup)
+* [`user`](#icinga2objectuser)
+
 
 [Reference](id:reference)
 ---------

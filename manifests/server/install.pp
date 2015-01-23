@@ -33,7 +33,7 @@ class icinga2::server::install::repos inherits icinga2::server {
   if $manage_repos == true {
     case $::operatingsystem {
       #CentOS systems:
-      'CentOS': {
+      'CentOS', 'RedHat': {
 
         #Add the official Icinga Yum repository: http://packages.icinga.org/epel/
         yumrepo { 'icinga2_yum_repo':
@@ -96,8 +96,8 @@ class icinga2::server::install::packages inherits icinga2::server {
   if $server_install_nagios_plugins == true {
     #Install the Nagios plugins packages:
     package {$icinga2_server_plugin_packages:
-      ensure   => installed,
-      provider => $package_provider,
+      ensure          => installed,
+      provider        => $package_provider,
       install_options => $server_plugin_package_install_options,
     }
   }
@@ -105,8 +105,8 @@ class icinga2::server::install::packages inherits icinga2::server {
   if $install_mail_utils_package == true {
     #Install the package that has the 'mail' binary in it so we can send notifications:
     package {$icinga2_server_mail_package:
-      ensure   => installed,
-      provider => $package_provider,
+      ensure          => installed,
+      provider        => $package_provider,
       install_options => $server_plugin_package_install_options,
     }
   }
