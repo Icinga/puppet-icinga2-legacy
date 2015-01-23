@@ -10,6 +10,7 @@ Table of Contents
 4. [Usage - How to use the module for various tasks](#usage)
     * [Object type usage](#object_type_usage)
     * [Objects](#objects)
+    * [Hiera - Using hiera to create icinga objects](#hiera)
 5. [Reference - The classes and defined types available in this module](#reference)
 6. [Limitations - OS compatibility, etc.](#limitations)
 7. [Development - Guide for contributing to the module](#development)
@@ -1003,6 +1004,67 @@ icinga2::object::graphitewriter { 'graphite_relay':
   graphite_port    => 2003,
 }
 ````
+
+[`Hiera`](id:hiera)
+---------
+
+You can use hiera to create icinga 2 objects in your server.
+
+Example Usage:
+json file
+<pre>
+{
+  ...
+  "icinga2::object::timeperiod": {
+    "bra-office-hrs": {
+      "timeperiod_display_name": "Brazilian WorkTime Hours",
+      "ranges": {
+        "monday": "12:00-21:00",
+        "monday": "12:00-21:00",
+        "monday": "12:00-21:00",
+        "monday": "12:00-21:00",
+        "monday": "12:00-21:00"
+      }
+    },
+    "utc-office-hrs": {
+      "timeperiod_display_name": "UTC WorkTime Hours",
+      "ranges": {
+        "monday": "08:00-17:00",
+        "monday": "08:00-17:00",
+        "monday": "08:00-17:00",
+        "monday": "08:00-17:00",
+        "monday": "08:00-17:00"
+    }
+  }
+  ...
+}
+</pre>
+
+Objects available:
+* `apply_dependency`
+* `apply_notification_to_host`
+* `apply_notification_to_service`
+* `apply_service_to_host`
+* `checkcommand`
+* `dependency`
+* `eventcommand`
+* `graphitewriter`
+* `hostgroup`
+* `host`
+* `idomysqlconnection`
+* `idopgsqlconnection`
+* `notificationcommand`
+* `notification`
+* `perfdatawriter`
+* `scheduleddowntime`
+* `servicegroup`
+* `service`
+* `sysloglogger`
+* `timeperiod`
+* `usergroup`
+* `user`
+
+
 
 [Reference](id:reference)
 ---------
