@@ -24,13 +24,18 @@ define icinga2::nrpe::plugin (
   validate_string($name)
   validate_string($nrpe_plugin_libdir)
 
+  if $::icinga2::nrpe::refresh_nrpe_service {
+    File {
+      notify => Service[$::icinga2::nrpe::daemon_name],
+    }
+  }
+
   file { "${nrpe_plugin_libdir}/${plugin_name}":
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
     source  => $source_file,
     require => Package[$icinga2::params::icinga2_client_packages],
-    notify  => Service[$icinga2::params::nrpe_daemon_name]
   }
 
 }

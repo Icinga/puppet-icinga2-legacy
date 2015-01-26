@@ -8,6 +8,11 @@ class icinga2::nrpe::config inherits icinga2::nrpe {
   include icinga2::nrpe
 
   #config resources here
+  if $::icinga2::nrpe::refresh_nrpe_service {
+    File {
+      notify => Service[$::icinga2::nrpe::daemon_name],
+    }
+  }
 
   #The NRPE configuration base directory:
   file { $nrpe_config_basedir:

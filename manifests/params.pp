@@ -235,7 +235,7 @@ class icinga2::params {
     #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
   }
-  
+
   #Whether to purge object files or directories in /etc/icinga2/objects that aren't managed by Puppet
   $purge_unmanaged_object_files = false
 
@@ -407,6 +407,8 @@ class icinga2::params {
 
   ##################
   # Icinga 2 client service parameters
+  $refresh_nrpe_service = true
+
   case $::operatingsystem {
     #Daemon names for Red Had/CentOS systems:
     'CentOS': {
@@ -415,12 +417,12 @@ class icinga2::params {
 
     #Daemon names for Ubuntu systems:
     'Ubuntu': {
-      $nrpe_daemon_name     = 'nagios-nrpe-server'
+      $nrpe_daemon_name = 'nagios-nrpe-server'
     }
 
     #Daemon names for Debian systems:
     'Debian': {
-      $nrpe_daemon_name     = 'nagios-nrpe-server'
+      $nrpe_daemon_name = 'nagios-nrpe-server'
     }
 
     #Fail if we're on any other OS:
