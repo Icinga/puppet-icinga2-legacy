@@ -81,12 +81,14 @@ class icinga2::server (
   #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
   #class left is applied before the class on the right and that it also refreshes the
   #class on the right.
+  anchor {'icinga2::server::start':} ->
   class {'icinga2::server::install':} ~>
   class {'icinga2::server::config':} ~>
   class {'icinga2::server::features':
     enabled_features  => $server_enabled_features,
     disabled_features => $server_disabled_features,
   } ~>
-  class {'icinga2::server::service':}
+  class {'icinga2::server::service':} ->
+  anchor {'icinga2::server::end':}
 
 }
