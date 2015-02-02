@@ -918,7 +918,7 @@ This object support the following parameters:
  
 See [NotificationComponent](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-notificationcomponent) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about this object. 
 
-Should be enable/disable using `icinga2::server::features::enable` or `icinga2::server::features::disable`.
+Should be enable/disable using `icinga2::features::enable` or `icinga2::features::disable`.
 
 ####[`icinga2::object::perfdatawriter`](id:object_perfdatawriter)
 
