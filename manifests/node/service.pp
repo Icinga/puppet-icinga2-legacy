@@ -18,7 +18,7 @@ class icinga2::node::service inherits icinga2::node {
   #Service resource for the Icinga 2 daemon:
   service {$icinga2::params::icinga2_daemon_name:
     ensure    => running,
-    subscribe => [ Class['icinga2::node::config'], Class['icinga2::server::features'] ],
+    subscribe => [ Class['icinga2::node::config'], Class['icinga2::features'] ],
   }
 
 }

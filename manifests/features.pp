@@ -1,7 +1,7 @@
 # Enable Features for Icinga 2
-class icinga2::server::features (
-  $enabled_features = $icinga2::server::server_enabled_features,
-  $disabled_features = $icinga2::server::server_disabled_features,
+class icinga2::features (
+  $enabled_features = undef,
+  $disabled_features = undef,
 ) {
 
   include stdlib
@@ -15,9 +15,9 @@ class icinga2::server::features (
   $updated_enabled_features = difference($enabled_features,$disabled_features)
 
   #Pass the disabled features array to the define for looping
-  icinga2::server::features::disable { $disabled_features: }
+  icinga2::features::disable { $disabled_features: }
 
   #Pass the features array to the define for looping
-  icinga2::server::features::enable { $updated_enabled_features: }
+  icinga2::features::enable { $updated_enabled_features: }
 
 }
