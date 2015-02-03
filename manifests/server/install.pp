@@ -30,85 +30,12 @@ class icinga2::server::install::repos inherits icinga2::server {
 
   include icinga2::server
 
-  if $manage_repos == true {
-    case $::operatingsystem {
-      #CentOS or RedHat systems:
-      'CentOS', 'RedHat': {
-        #Add the official Icinga Yum repository: http://packages.icinga.org/epel/
-        yumrepo { 'icinga2_yum_repo':
-          baseurl  => "http://packages.icinga.org/epel/${::operatingsystemmajrelease}/release/",
-          descr    => 'Icinga 2 Yum repository',
-          enabled  => 1,
-          gpgcheck => 1,
-          gpgkey   => 'http://packages.icinga.org/icinga.key'
-        }
-      }
-
-     #Ubuntu systems:
-     'Ubuntu': {
-        #Include the apt module's base class so we can...
-        include apt
-        #...use the apt module to add the Icinga 2 PPA from launchpad.net:
-        # https://launchpad.net/~formorer/+archive/ubuntu/icinga
-        apt::ppa { 'ppa:formorer/icinga': }
-      }
-
-      #Debian systems:
-      'Debian': {
-        include apt
-
-        #On Debian (7) icinga2 packages are on backports
-        if $use_debmon_repo == false {
-          include apt::backports
-        } else {
-          apt::source { 'debmon':
-            location    => 'http://debmon.org/debmon',
-            release     => "debmon-${lsbdistcodename}",
-            repos       => 'main',
-            key_source  => 'http://debmon.org/debmon/repo.key',
-            key         => '29D662D2',
-            include_src => false,
-            # backports repo use 200
-            pin         => '300'
-          }
-        }
-      }
-
-      #Fail if we're on any other OS:
-      default: { fail("${::operatingsystem} is not supported!") }
-    }
-  }
-
 }
 
 #Install packages for Icinga 2:
 class icinga2::server::install::packages inherits icinga2::server {
 
   include icinga2::server
-
-  #Install the Icinga 2 package
-  package {$icinga2_server_package:
-    ensure   => installed,
-    provider => $package_provider,
-  }
-
-  if $server_install_nagios_plugins == true {
-    #Install the Nagios plugins packages:
-    package {$icinga2_server_plugin_packages:
-      ensure          => installed,
-      provider        => $package_provider,
-      install_options => $server_plugin_package_install_options,
-    }
-  }
-
-  if $install_mail_utils_package == true {
-    #Install the package that has the 'mail' binary in it so we can send notifications:
-    package {$icinga2_server_mail_package:
-      ensure          => installed,
-      provider        => $package_provider,
-      install_options => $server_plugin_package_install_options,
-    }
-  }
 
   #Pick the right DB lib package name based on the database type the user selected:
   case $server_db_type {
