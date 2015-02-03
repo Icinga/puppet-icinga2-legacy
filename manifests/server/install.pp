@@ -18,21 +18,15 @@ class icinga2::server::install inherits icinga2::server {
   #class left is applied before the class on the right and that it also refreshes the
   #class on the right.
   #
-  #Here, we're setting up the package repos first, then installing the packages:
-  class{'icinga2::server::install::repos':} ~>
+  #Here, we're installing the IDO DB package in the ::packages class, then using the execs
+  # to load the DB schema:
   class{'icinga2::server::install::packages':} ~>
   class{'icinga2::server::install::execs':} ->
   Class['icinga2::server::install']
 
 }
 
-class icinga2::server::install::repos inherits icinga2::server {
-
-  include icinga2::server
-
-}
-
-#Install packages for Icinga 2:
+#Install packages for Icinga 2's IDO database connection:
 class icinga2::server::install::packages inherits icinga2::server {
 
   include icinga2::server
