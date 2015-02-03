@@ -15,6 +15,8 @@ class icinga2::params {
 
   #This section has parameters that are used by both the node and server subclasses
 
+  $manage_service = true
+
   ##################
   # Icinga 2 common package parameters
   case $::operatingsystem {
