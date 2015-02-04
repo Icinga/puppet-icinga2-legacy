@@ -123,5 +123,6 @@ class icinga2::node::install::packages inherits icinga2::node {
 #This class contains exec resources
 class icinga2::node::install::execs inherits icinga2::node {
 
+  #Exec resources for SSL setup will go here.
 
 }

@@ -95,4 +95,6 @@ class icinga2::server::install::execs inherits icinga2::server {
     default: { fail("${server_db_type} is not supported!") }
   }
 
+  #Exec resources for SSL setup will go here.
+
 }
