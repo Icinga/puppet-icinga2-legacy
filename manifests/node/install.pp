@@ -17,19 +17,24 @@ class icinga2::node::install inherits icinga2::node {
   #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
   #class left is applied before the class on the right and that it also refreshes the
   #class on the right.
-  #
+
   #Here, we're setting up the package repos first, then installing the packages, then
   #running any execs that are needed to set things up further:
   class{'icinga2::node::install::repos':} ~>
   class{'icinga2::node::install::packages':} ~>
-  class{'icinga2::node::install::execs':} ->
-  Class['icinga2::node::install']
+  class{'icinga2::node::install::execs':} #->
+  
+  #Class['icinga2::node::install']
+
+  contain 'icinga2::node::install::repos'
+  contain 'icinga2::node::install::packages'
+  contain 'icinga2::node::install::execs'
 
 }
 
 class icinga2::node::install::repos inherits icinga2::node {
 
-  include icinga2::node
+  #include icinga2::node
 
   if $manage_repos == true {
     case $::operatingsystem {
@@ -60,7 +65,13 @@ class icinga2::node::install::repos inherits icinga2::node {
 
         #On Debian (7) icinga2 packages are on backports
         if $use_debmon_repo == false {
-          include apt::backports
+          class {'apt::backports':}
+          #Use the contain function so that the apt repo resources in 
+          #apt::backports don't float off and get applied after Puppet tries to install
+          #the 'icinga2' package (which would fail, since the repo hasn't been added yet).
+          #More info on Puppet Labs' docs:
+          # https://docs.puppetlabs.com/puppet/3.7/reference/lang_containment.html#the-contain-function
+          contain 'apt::backports'
         } else {
           apt::source { 'debmon':
             location    => 'http://debmon.org/debmon',
@@ -85,7 +96,7 @@ class icinga2::node::install::repos inherits icinga2::node {
 #Install packages for Icinga 2:
 class icinga2::node::install::packages inherits icinga2::node {
 
-  include icinga2::node
+  #include icinga2::node
 
   #Install the Icinga 2 package
   package {$icinga2_package:
@@ -116,6 +127,6 @@ class icinga2::node::install::packages inherits icinga2::node {
 #This class contains exec resources
 class icinga2::node::install::execs inherits icinga2::node {
 
-  include icinga2::node
+  #include icinga2::node
 
 }
