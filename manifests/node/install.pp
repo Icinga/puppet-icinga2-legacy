@@ -34,8 +34,6 @@ class icinga2::node::install inherits icinga2::node {
 
 class icinga2::node::install::repos inherits icinga2::node {
 
-  #include icinga2::node
-
   if $manage_repos == true {
     case $::operatingsystem {
       #CentOS or RedHat systems:
@@ -96,8 +94,6 @@ class icinga2::node::install::repos inherits icinga2::node {
 #Install packages for Icinga 2:
 class icinga2::node::install::packages inherits icinga2::node {
 
-  #include icinga2::node
-
   #Install the Icinga 2 package
   package {$icinga2_package:
     ensure   => installed,
@@ -127,6 +123,5 @@ class icinga2::node::install::packages inherits icinga2::node {
 #This class contains exec resources
 class icinga2::node::install::execs inherits icinga2::node {
 
-  #include icinga2::node
 
 }
