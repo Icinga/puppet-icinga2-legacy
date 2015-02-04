@@ -21,15 +21,15 @@ class icinga2::server::install inherits icinga2::server {
   #Here, we're installing the IDO DB package in the ::packages class, then using the execs
   # to load the DB schema:
   class{'icinga2::server::install::packages':} ~>
-  class{'icinga2::server::install::execs':} ->
-  Class['icinga2::server::install']
+  class{'icinga2::server::install::execs':}
+  
+  contain 'icinga2::server::install::packages'
+  contain 'icinga2::server::install::execs'
 
 }
 
 #Install packages for Icinga 2's IDO database connection:
 class icinga2::server::install::packages inherits icinga2::server {
-
-  include icinga2::server
 
   #Pick the right DB lib package name based on the database type the user selected:
   case $server_db_type {
@@ -51,8 +51,6 @@ class icinga2::server::install::packages inherits icinga2::server {
 
 #This class contains exec resources
 class icinga2::server::install::execs inherits icinga2::server {
-
-  include icinga2::server
 
   #Configure database schemas and IDO modules
   case $server_db_type {
@@ -96,4 +94,5 @@ class icinga2::server::install::execs inherits icinga2::server {
 
     default: { fail("${server_db_type} is not supported!") }
   }
+
 }
