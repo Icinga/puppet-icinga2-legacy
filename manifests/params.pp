@@ -347,44 +347,44 @@ class icinga2::params {
     /(Ubuntu|Debian)/: {
 
       #Settings for /etc/icinga2/:
-      $etc_icinga2_owner = 'root'
-      $etc_icinga2_group = 'root'
+      $etc_icinga2_owner = 'nagios'
+      $etc_icinga2_group = 'nagios'
       $etc_icinga2_mode  = '0755'
       #Settings for /etc/icinga2/icinga2.conf:
-      $etc_icinga2_icinga2_conf_owner = 'root'
-      $etc_icinga2_icinga2_conf_group = 'root'
+      $etc_icinga2_icinga2_conf_owner = 'nagios'
+      $etc_icinga2_icinga2_conf_group = 'nagios'
       $etc_icinga2_icinga2_conf_mode  = '0644'
       #Settings for /etc/icinga2/conf.d/
       $etc_icinga2_confd_owner = 'root'
       $etc_icinga2_confd_group = 'root'
       $etc_icinga2_confd_mode  = '0755'
       #Settings for /etc/icinga2/features-available/:
-      $etc_icinga2_features_available_owner = 'root'
-      $etc_icinga2_features_available_group = 'root'
+      $etc_icinga2_features_available_owner = 'nagios'
+      $etc_icinga2_features_available_group = 'nagios'
       $etc_icinga2_features_available_mode  = '0755'
       #Settings for /etc/icinga2/features-enabled/:
-      $etc_icinga2_features_enabled_owner = 'root'
-      $etc_icinga2_features_enabled_group = 'root'
+      $etc_icinga2_features_enabled_owner = 'nagios'
+      $etc_icinga2_features_enabled_group = 'nagios'
       $etc_icinga2_features_enabled_mode  = '0755'
       #Settings for /etc/icinga2/pki/:
-      $etc_icinga2_pki_owner = 'root'
-      $etc_icinga2_pki_group = 'root'
+      $etc_icinga2_pki_owner = 'nagios'
+      $etc_icinga2_pki_group = 'nagios'
       $etc_icinga2_pki_mode  = '0755'
       #Settings for /etc/icinga2/scripts/:
-      $etc_icinga2_scripts_owner = 'root'
-      $etc_icinga2_scripts_group = 'root'
+      $etc_icinga2_scripts_owner = 'nagios'
+      $etc_icinga2_scripts_group = 'nagios'
       $etc_icinga2_scripts_mode  = '0755'
       #Settings for /etc/icinga2/zones.d/:
-      $etc_icinga2_zonesd_owner = 'root'
-      $etc_icinga2_zonesd_group = 'root'
+      $etc_icinga2_zonesd_owner = 'nagios'
+      $etc_icinga2_zonesd_group = 'nagios'
       $etc_icinga2_zonesd_mode  = '0755'
       #Settings for /etc/icinga2/objects/:
-      $etc_icinga2_obejcts_owner = 'root'
-      $etc_icinga2_obejcts_group = 'root'
+      $etc_icinga2_obejcts_owner = 'nagios'
+      $etc_icinga2_obejcts_group = 'nagios'
       $etc_icinga2_obejcts_mode  = '0755'
       #Settings for subdirectories of /etc/icinga2/objects/:
-      $etc_icinga2_obejcts_sub_dir_owner = 'root'
-      $etc_icinga2_obejcts_sub_dir_group = 'root'
+      $etc_icinga2_obejcts_sub_dir_owner = 'nagios'
+      $etc_icinga2_obejcts_sub_dir_group = 'nagios'
       $etc_icinga2_obejcts_sub_dir_mode  = '0755'
     }
 
