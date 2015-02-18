@@ -4,6 +4,8 @@
 ####v0.7.0 (unreleased)
 
 * [dev.icinga.org issue #8403](https://dev.icinga.org/issues/8403): Changed the default owner and group of `/etc/icinga2/` and its files and subdirectories from `root` to `nagios` on Debian/Ubuntu systems
+* Bug: [PR-89](https://github.com/Icinga/puppet-icinga2/pull/89): Unquote the `interval` parameter in the templates for notification applies to hosts and services
+
 
 ###v0.6.2 (January 29th, 2015)
 
