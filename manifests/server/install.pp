@@ -19,10 +19,11 @@ class icinga2::server::install inherits icinga2::server {
   #class on the right.
   #
   #Here, we're setting up the package repos first, then installing the packages:
+  anchor { 'icinga2::server::install::begin': } ->
   class{'icinga2::server::install::repos':} ~>
   class{'icinga2::server::install::packages':} ~>
   class{'icinga2::server::install::execs':} ->
-  Class['icinga2::server::install']
+  anchor { 'icinga2::server::install::end': }
 
 }
 
@@ -116,14 +117,16 @@ class icinga2::server::install::packages inherits icinga2::server {
     'mysql': { $icinga2_server_db_connector_package = 'icinga2-ido-mysql'}
     #Postgres:
     'pgsql': { $icinga2_server_db_connector_package = 'icinga2-ido-pgsql'}
-    default: { fail("${icinga2::params::server_db_type} is not a supported database! Please specify either 'mysql' for MySQL or 'pgsql' for Postgres.") }
+    default: {}
   }
 
   #Install the IDO database connector package. See:
   #http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/getting-started#configuring-db-ido
-  package {$icinga2_server_db_connector_package:
-    ensure   => installed,
-    provider => $package_provider,
+  if $server_db_type {
+    package {$icinga2_server_db_connector_package:
+      ensure   => installed,
+      provider => $package_provider,
+    }
   }
 
 }
@@ -173,6 +176,6 @@ class icinga2::server::install::execs inherits icinga2::server {
       }
     }
 
-    default: { fail("${server_db_type} is not supported!") }
+    default: {}
   }
 }
