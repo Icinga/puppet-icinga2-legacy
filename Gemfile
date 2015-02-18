@@ -12,3 +12,9 @@ group :development, :unit_tests do
   gem 'puppet_facts',            :require => false
   gem 'json',                    :require => false
 end
+
+group :system_tests do
+  gem 'beaker',        :require => false
+  gem 'beaker-rspec',  :require => false
+  gem 'serverspec',    :require => false
+end
