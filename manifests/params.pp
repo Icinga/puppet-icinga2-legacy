@@ -13,7 +13,9 @@ class icinga2::params {
   # Icinga 2 common parameters
   ##############################
 
-  #This section has parameters that are used by both the client and server subclasses
+  #This section has parameters that are used by both the node and server subclasses
+
+  $manage_service = true
 
   ##################
   # Icinga 2 common package parameters
@@ -24,12 +26,6 @@ class icinga2::params {
       $package_provider = 'yum'
     }
 	
-	#RedHat systems:
-    'RedHat': {
-      #Pick the right package provider:
-      $package_provider = 'yum'
-    }
-
    #Ubuntu systems:
    'Ubuntu': {
       #Pick the right package provider:
@@ -47,16 +43,170 @@ class icinga2::params {
   }
 
   ##############################
-  # Icinga 2 server parameters
+  # Icinga 2 node parameters
   ##############################
 
   #Whether to manage the package repositories
   $manage_repos = true
   $use_debmon_repo = false
-  $server_db_type = 'pgsql'
+
+  #Whether to install the plugin packages when the icinga2::server class is applied:
+  $install_nagios_plugins = true
+  
+  #whether to install packages that provide the 'mail' binary 
   $install_mail_utils_package = false
 
+  #What Icinga 2 features should be enabled when icinga2::server::features class is applied:
+  $enabled_features = ['checker','notification']
+  $disabled_features = []
+
+  #Whether to purge object files or directories in /etc/icinga2/objects that aren't managed by Puppet:
+  $purge_unmanaged_object_files = false
+
+  ##############################
+  # Icinga 2 node package parameters
+
+  #Pick the right package parameters based on the OS:
+  case $::operatingsystem {
+    #CentOS systems:
+    'CentOS', 'RedHat': {
+      case $::operatingsystemmajrelease {
+        '5': {
+          #Icinga 2 package:
+          $icinga2_package = 'icinga2'
+          #Packages for Nagios plugins:
+          $nagios_plugin_packages = ['nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
+          $mail_package = 'mailx'
+        }
+        '6': {
+          #Icinga 2 package:
+          $icinga2_package = 'icinga2'
+          #Packages for Nagios plugins:
+          $nagios_plugin_packages = ['nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
+          #Package that provides a 'mail' binary:
+          $mail_package = 'mailx'
+        }
+        '7': {
+          #Icinga 2 package:
+          $icinga2_package = 'icinga2'
+          #Packages for Nagios plugins:
+          $nagios_plugin_packages = ['nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
+          #Package that provides a 'mail' binary:
+          $mail_package = 'mailx'
+        }
+        #Fail if we're on any other CentOS release:
+        default: { fail("${::operatingsystemmajrelease} is not a supported CentOS release!") }
+      }
+    }
+
+   #Ubuntu systems:
+   'Ubuntu': {
+    case $::operatingsystemrelease {
+        #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
+        '12.04': {
+          #Icinga 2 package:
+          $icinga2_package = 'icinga2'
+          #Packages for Nagios plugins:
+          $nagios_plugin_packages = ['nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-standard', 'nagios-snmp-plugins', 'nagios-plugins-extra', 'nagios-nrpe-plugin']
+          #Package that provides a 'mail' binary:
+          $mail_package = 'mailutils'
+          #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
+          $nagios_plugin_package_install_options = '--no-install-recommends'
+        }
+        #...but 14.04 does:
+        '14.04': {
+          #Icinga 2 package:
+          $icinga2_package = 'icinga2'
+          $nagios_plugin_packages = [ 'nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-common', 'nagios-plugins-standard', 'nagios-snmp-plugins', 'nagios-plugins-extra', 'nagios-plugins-contrib', 'nagios-nrpe-plugin']
+          #Package that provides a 'mail' binary:
+          $mail_package = 'mailutils'
+          #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
+          $nagios_plugin_package_install_options = '--no-install-recommends'
+        }
+        #Fail if we're on any other Ubuntu release:
+        default: { fail("${::operatingsystemmajrelease} is not a supported Ubuntu release version!") }
+      }
+    }
+
+    #Debian systems:
+    'Debian': {
+      case $::operatingsystemmajrelease {
+        #Only tested on Debian7
+        '7': {
+          #Icinga 2 package:
+          $icinga2_package = 'icinga2'
+          #Packages for Nagios plugins:
+          $nagios_plugin_packages = ['nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-standard', 'nagios-snmp-plugins', 'nagios-plugins-contrib', 'nagios-nrpe-plugin']
+          #Package that provides a 'mail' binary:
+          $mail_package = 'mailutils'
+          #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
+          $nagios_plugin_package_install_options = '--no-install-recommends'
+        }
+        #Fail if we're on any other Debian release:
+        default: { fail("${::operatingsystemmajrelease} is not a supported Debian release version!") }
+      }
+    }
+
+    #Fail if we're on any other OS:
+    default: { fail("${::operatingsystem} is not supported!") }
+  }
+
+  ##################
+  # Icinga 2 node service settings
+
+  case $::operatingsystem {
+    #Icinga 2 server daemon names for Red Had/CentOS systems:
+    'CentOS', 'RedHat': {
+      case $::operatingsystemmajrelease {
+        '5': {
+          $icinga2_daemon_name = 'icinga2'
+        }
+        '6': {
+          $icinga2_daemon_name = 'icinga2'
+        }
+        '7': {
+          $icinga2_daemon_name = 'icinga2'
+        }
+        #Fail if we're on any other CentOS release:
+        default: { fail("${::operatingsystemmajrelease} is not a supported CentOS release!") }
+      }
+    }
+
+    #Icinga 2 server daemon names for Ubuntu systems:
+    'Ubuntu': {
+      case $::operatingsystemmajrelease {
+        '12.04': {
+          $icinga2_daemon_name = 'icinga2'
+        }
+        '14.04': {
+          $icinga2_daemon_name = 'icinga2'
+        }
+        #Fail if we're on any other Ubuntu release:
+        default: { fail("${::operatingsystemmajrelease} is not a supported Ubuntu release version!") }
+      }
+    }
+
+    #Icinga 2 server daemon names for Debian systems:
+    'Debian': {
+      case $::operatingsystemmajrelease {
+        '7': {
+          $icinga2_daemon_name = 'icinga2'
+        }
+        #Fail if we're on any other Debian release:
+        default: { fail("${::operatingsystemmajrelease} is not a supported Debian release version!") }
+      }
+    }
+
+    #Fail if we're on any other OS:
+    default: { fail("${::operatingsystem} is not supported!") }
+  }
+
+  ##############################
+  # Icinga 2 server parameters
+  ##############################
+
   #Database paramters
+  $server_db_type = 'pgsql'
   $db_name = 'icinga2_data'
   $db_user = 'icinga2'
   $db_password = 'password'
@@ -197,98 +347,45 @@ class icinga2::params {
     /(Ubuntu|Debian)/: {
 
       #Settings for /etc/icinga2/:
-      $etc_icinga2_owner = 'root'
-      $etc_icinga2_group = 'root'
+      $etc_icinga2_owner = 'nagios'
+      $etc_icinga2_group = 'nagios'
       $etc_icinga2_mode  = '0755'
       #Settings for /etc/icinga2/icinga2.conf:
-      $etc_icinga2_icinga2_conf_owner = 'root'
-      $etc_icinga2_icinga2_conf_group = 'root'
+      $etc_icinga2_icinga2_conf_owner = 'nagios'
+      $etc_icinga2_icinga2_conf_group = 'nagios'
       $etc_icinga2_icinga2_conf_mode  = '0644'
       #Settings for /etc/icinga2/conf.d/
       $etc_icinga2_confd_owner = 'root'
       $etc_icinga2_confd_group = 'root'
       $etc_icinga2_confd_mode  = '0755'
       #Settings for /etc/icinga2/features-available/:
-      $etc_icinga2_features_available_owner = 'root'
-      $etc_icinga2_features_available_group = 'root'
+      $etc_icinga2_features_available_owner = 'nagios'
+      $etc_icinga2_features_available_group = 'nagios'
       $etc_icinga2_features_available_mode  = '0755'
       #Settings for /etc/icinga2/features-enabled/:
-      $etc_icinga2_features_enabled_owner = 'root'
-      $etc_icinga2_features_enabled_group = 'root'
+      $etc_icinga2_features_enabled_owner = 'nagios'
+      $etc_icinga2_features_enabled_group = 'nagios'
       $etc_icinga2_features_enabled_mode  = '0755'
       #Settings for /etc/icinga2/pki/:
-      $etc_icinga2_pki_owner = 'root'
-      $etc_icinga2_pki_group = 'root'
+      $etc_icinga2_pki_owner = 'nagios'
+      $etc_icinga2_pki_group = 'nagios'
       $etc_icinga2_pki_mode  = '0755'
       #Settings for /etc/icinga2/scripts/:
-      $etc_icinga2_scripts_owner = 'root'
-      $etc_icinga2_scripts_group = 'root'
+      $etc_icinga2_scripts_owner = 'nagios'
+      $etc_icinga2_scripts_group = 'nagios'
       $etc_icinga2_scripts_mode  = '0755'
       #Settings for /etc/icinga2/zones.d/:
-      $etc_icinga2_zonesd_owner = 'root'
-      $etc_icinga2_zonesd_group = 'root'
+      $etc_icinga2_zonesd_owner = 'nagios'
+      $etc_icinga2_zonesd_group = 'nagios'
       $etc_icinga2_zonesd_mode  = '0755'
       #Settings for /etc/icinga2/objects/:
-      $etc_icinga2_obejcts_owner = 'root'
-      $etc_icinga2_obejcts_group = 'root'
+      $etc_icinga2_obejcts_owner = 'nagios'
+      $etc_icinga2_obejcts_group = 'nagios'
       $etc_icinga2_obejcts_mode  = '0755'
       #Settings for subdirectories of /etc/icinga2/objects/:
-      $etc_icinga2_obejcts_sub_dir_owner = 'root'
-      $etc_icinga2_obejcts_sub_dir_group = 'root'
+      $etc_icinga2_obejcts_sub_dir_owner = 'nagios'
+      $etc_icinga2_obejcts_sub_dir_group = 'nagios'
       $etc_icinga2_obejcts_sub_dir_mode  = '0755'
-    }
-
-    #Fail if we're on any other OS:
-    default: { fail("${::operatingsystem} is not supported!") }
-  }
-  
-  #Whether to purge object files or directories in /etc/icinga2/objects that aren't managed by Puppet
-  $purge_unmanaged_object_files = false
-
-  ##################
-  # Icinga 2 server service settings
-
-  case $::operatingsystem {
-    #Icinga 2 server daemon names for Red Had/CentOS systems:
-    'CentOS', 'RedHat': {
-      case $::operatingsystemmajrelease {
-        '5': {
-          $icinga2_server_service_name = 'icinga2'
-        }
-        '6': {
-          $icinga2_server_service_name = 'icinga2'
-        }
-        '7': {
-          $icinga2_server_service_name = 'icinga2'
-        }
-        #Fail if we're on any other CentOS release:
-        default: { fail("${::operatingsystemmajrelease} is not a supported CentOS release!") }
-      }
-    }
-
-    #Icinga 2 server daemon names for Ubuntu systems:
-    'Ubuntu': {
-      case $::operatingsystemmajrelease {
-        '12.04': {
-          $icinga2_server_service_name = 'icinga2'
-        }
-        '14.04': {
-          $icinga2_server_service_name = 'icinga2'
-        }
-        #Fail if we're on any other Ubuntu release:
-        default: { fail("${::operatingsystemmajrelease} is not a supported Ubuntu release version!") }
-      }
-    }
-
-    #Icinga 2 server daemon names for Debian systems:
-    'Debian': {
-      case $::operatingsystemmajrelease {
-        '7': {
-          $icinga2_server_service_name = 'icinga2'
-        }
-        #Fail if we're on any other Debian release:
-        default: { fail("${::operatingsystemmajrelease} is not a supported Debian release version!") }
-      }
     }
 
     #Fail if we're on any other OS:

@@ -12,21 +12,26 @@
 #
 
 class icinga2::server (
+  #
   $manage_repos = $icinga2::params::manage_repos,
+  $manage_service = $icinga2::params::manage_service,
   $use_debmon_repo = $icinga2::params::use_debmon_repo,
+  $package_provider = $icinga2::params::package_provider,
+  $icinga2_package = $icinga2::params::icinga2_package,
+  $install_nagios_plugins = $icinga2::params::install_nagios_plugins,
+  $install_mail_utils_package = $icinga2::params::install_mail_utils_package,
+  $enabled_features = $icinga2::params::enabled_features,
+  $disabled_features = $icinga2::params::disabled_features,
+  $purge_unmanaged_object_files = $icinga2::params::purge_unmanaged_object_files,
+  #Icinga 2 server specific parameters:
   $server_db_type = $icinga2::params::server_db_type,
   $db_name = $icinga2::params::db_name,
   $db_user = $icinga2::params::db_user,
   $db_password = $icinga2::params::db_password,
   $db_host = $icinga2::params::db_host,
   $db_port = $icinga2::params::db_port,
-  $package_provider = $icinga2::params::package_provider,
-  $icinga2_server_package = $icinga2::params::icinga2_server_package,
-  $server_install_nagios_plugins = $icinga2::params::server_install_nagios_plugins,
-  $install_mail_utils_package = $icinga2::params::install_mail_utils_package,
   $server_enabled_features = $icinga2::params::server_enabled_features,
   $server_disabled_features = $icinga2::params::server_disabled_features,
-  $purge_unmanaged_object_files = $icinga2::params::purge_unmanaged_object_files
 ) inherits icinga2::params {
 
   #Do some validation of parameters so we know we have the right data types:
@@ -77,16 +82,53 @@ class icinga2::server (
     default: { fail("${::operatingsystem} is not supported!") }
   }
 
+  if $manage_service == true {
+    #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
+    #class left is applied before the class on the right and that it also refreshes the
+    #class on the right.
+  
+    #Start with the icinga2::node class to install Icinga 2 itself and enable some
+    #server-specific features:
+    class {'icinga2::node':
+      install_mail_utils_package   => $install_mail_utils_package,
+      install_nagios_plugins       => $install_nagios_plugins,
+      enabled_features             => $server_enabled_features,
+      purge_unmanaged_object_files => true,
+      manage_service               => false,
+    } ~>
+    #Install the DB IDO packages and load the DB schema:
+    class {'icinga2::server::install':} ~>
+    #Server-specific configuration:
+    class {'icinga2::server::config':} ~>
+    class {'icinga2::node::service':}
 
-  #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
-  #class left is applied before the class on the right and that it also refreshes the
-  #class on the right.
-  class {'icinga2::server::install':} ~>
-  class {'icinga2::server::config':} ~>
-  class {'icinga2::server::features':
-    enabled_features  => $server_enabled_features,
-    disabled_features => $server_disabled_features,
-  } ~>
-  class {'icinga2::server::service':}
+    #Use the contain function so that the resources in 
+    #the subclasses don't float off and get applied in a non-deterministic order. The
+    #containment ensures that the ordering arrows above do what they're supposed to.
+    #More info on Puppet Labs' docs:
+    # https://docs.puppetlabs.com/puppet/3.7/reference/lang_containment.html#the-contain-function
+    contain 'icinga2::node'
+    contain 'icinga2::server::install'
+    contain 'icinga2::server::config'
+    contain 'icinga2::node::service'
+    
+  }
+  else {
+    #Like the class applications above in the previous block, but without the icinga2::node::class
+    class {'icinga2::node':
+      install_mail_utils_package   => $install_mail_utils_package,
+      install_nagios_plugins       => $install_nagios_plugins,
+      enabled_features             => $server_enabled_features,
+      purge_unmanaged_object_files => true,
+      manage_service               => false,
+    } ~>
+    class {'icinga2::server::install':} ~>
+    class {'icinga2::server::config':}
+
+    contain 'icinga2::node'
+    contain 'icinga2::server::install'
+    contain 'icinga2::server::config'
+
+  }
 
 }
