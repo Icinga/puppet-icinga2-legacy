@@ -6,6 +6,7 @@
 
 class icinga2::nrpe (
 
+  $icinga2_client_packages                = $icinga2::params::icinga2_client_packages,
   $nrpe_listen_port                       = $icinga2::params::nrpe_listen_port,
   $nrpe_debug_level                       = $icinga2::params::nrpe_debug_level,
   $nrpe_log_facility                      = $icinga2::params::nrpe_log_facility,

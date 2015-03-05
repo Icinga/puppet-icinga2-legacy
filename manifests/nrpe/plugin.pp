@@ -29,7 +29,7 @@ define icinga2::nrpe::plugin (
     group   => 'root',
     mode    => '0755',
     source  => $source_file,
-    require => Package[$icinga2::params::icinga2_client_packages],
+    require => Package[$icinga2::nrpe::icinga2_client_packages],
     notify  => Service[$icinga2::params::nrpe_daemon_name],
   }
 

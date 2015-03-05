@@ -27,7 +27,7 @@ define icinga2::nrpe::command (
     group   => 'root',
     mode    => '0644',
     content => template('icinga2/nrpe_command.cfg.erb'),
-    require => Package[$icinga2::params::icinga2_client_packages],
+    require => Package[$icinga2::nrpe::icinga2_client_packages],
     notify  => Service[$icinga2::params::nrpe_daemon_name],
   }
 
