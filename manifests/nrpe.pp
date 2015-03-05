@@ -6,6 +6,7 @@
 
 class icinga2::nrpe (
 
+  $icinga2_client_packages                = $icinga2::params::icinga2_client_packages,
   $nrpe_listen_port                       = $icinga2::params::nrpe_listen_port,
   $nrpe_debug_level                       = $icinga2::params::nrpe_debug_level,
   $nrpe_log_facility                      = $icinga2::params::nrpe_log_facility,
@@ -14,6 +15,7 @@ class icinga2::nrpe (
   $nrpe_allowed_hosts                     = $icinga2::params::nrpe_allowed_hosts,
   $nrpe_allow_command_argument_processing = $icinga2::params::allow_command_argument_processing,
   $nrpe_purge_unmanaged                   = $icinga2::params::nrpe_purge_unmanaged,
+  
 
 ) inherits icinga2::params {
 
