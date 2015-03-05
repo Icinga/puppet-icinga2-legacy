@@ -13,7 +13,7 @@ class icinga2::nrpe::service inherits icinga2::nrpe {
   service {$icinga2::params::nrpe_daemon_name:
     ensure    => running,
     enable    => true, #Enable the service to start on system boot
-    require   => Package[$icinga2::params::icinga2_client_packages],
+    require   => Package[$icinga2_client_packages],
     subscribe => Class['icinga2::nrpe::config'], #Subscribe to the client::config class so the service gets restarted if any config files change
   }
 
