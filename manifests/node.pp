@@ -44,17 +44,9 @@ class icinga2::node (
       enabled_features  => $enabled_features,
       disabled_features => $disabled_features,
     } ~>
-    class {'icinga2::node::service':}
-    #Use the contain function so that the resources in 
-    #the subclasses don't float off and get applied in a non-deterministic order. The
-    #containment ensures that the ordering arrows above do what they're supposed to.
-    #More info on Puppet Labs' docs:
-    # https://docs.puppetlabs.com/puppet/3.7/reference/lang_containment.html#the-contain-function
-    contain 'icinga2::node::install'
-    contain 'icinga2::node::config'
-    contain 'icinga2::features'
-    contain 'icinga2::node::service'
-    
+    class {'icinga2::node::service':} ->
+    Class['icinga2::node']
+
   }
   else {
     #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
@@ -65,12 +57,8 @@ class icinga2::node (
     class {'icinga2::features':
       enabled_features  => $enabled_features,
       disabled_features => $disabled_features,
-    }
-    
-    contain 'icinga2::node::install'
-    contain 'icinga2::node::config'
-    contain 'icinga2::features'
-
+    } ->
+    Class['icinga2::node']
   }
 
 }

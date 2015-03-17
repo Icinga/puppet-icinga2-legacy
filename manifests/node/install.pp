@@ -22,13 +22,8 @@ class icinga2::node::install inherits icinga2::node {
   #running any execs that are needed to set things up further:
   class{'icinga2::node::install::repos':} ~>
   class{'icinga2::node::install::packages':} ~>
-  class{'icinga2::node::install::execs':} #->
-  
-  #Class['icinga2::node::install']
-
-  contain 'icinga2::node::install::repos'
-  contain 'icinga2::node::install::packages'
-  contain 'icinga2::node::install::execs'
+  class{'icinga2::node::install::execs':} ->
+  Class['icinga2::node::install']
 
 }
 
@@ -63,13 +58,10 @@ class icinga2::node::install::repos inherits icinga2::node {
 
         #On Debian (7) icinga2 packages are on backports
         if $use_debmon_repo == false {
-          class {'apt::backports':}
-          #Use the contain function so that the apt repo resources in 
-          #apt::backports don't float off and get applied after Puppet tries to install
-          #the 'icinga2' package (which would fail, since the repo hasn't been added yet).
-          #More info on Puppet Labs' docs:
-          # https://docs.puppetlabs.com/puppet/3.7/reference/lang_containment.html#the-contain-function
-          contain 'apt::backports'
+
+          include ::apt::backports
+          Class['apt::backports'] -> Class['icinga2::node::install::repos']
+
         } else {
           apt::source { 'debmon':
             location    => 'http://debmon.org/debmon',
@@ -80,7 +72,7 @@ class icinga2::node::install::repos inherits icinga2::node {
             include_src => false,
             # backports repo use 200
             pin         => '300'
-          }
+          } -> Class['icinga2::node::install::repos']
         }
       }
 

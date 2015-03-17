@@ -86,7 +86,7 @@ class icinga2::server (
     #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
     #class left is applied before the class on the right and that it also refreshes the
     #class on the right.
-  
+
     #Start with the icinga2::node class to install Icinga 2 itself and enable some
     #server-specific features:
     class {'icinga2::node':
@@ -100,18 +100,9 @@ class icinga2::server (
     class {'icinga2::server::install':} ~>
     #Server-specific configuration:
     class {'icinga2::server::config':} ~>
-    class {'icinga2::node::service':}
+    class {'icinga2::node::service':} ->
+    Class['icinga2::server']
 
-    #Use the contain function so that the resources in 
-    #the subclasses don't float off and get applied in a non-deterministic order. The
-    #containment ensures that the ordering arrows above do what they're supposed to.
-    #More info on Puppet Labs' docs:
-    # https://docs.puppetlabs.com/puppet/3.7/reference/lang_containment.html#the-contain-function
-    contain 'icinga2::node'
-    contain 'icinga2::server::install'
-    contain 'icinga2::server::config'
-    contain 'icinga2::node::service'
-    
   }
   else {
     #Like the class applications above in the previous block, but without the icinga2::node::class
@@ -123,11 +114,8 @@ class icinga2::server (
       manage_service               => false,
     } ~>
     class {'icinga2::server::install':} ~>
-    class {'icinga2::server::config':}
-
-    contain 'icinga2::node'
-    contain 'icinga2::server::install'
-    contain 'icinga2::server::config'
+    class {'icinga2::server::config':} ->
+    Class['icinga2::server']
 
   }
 

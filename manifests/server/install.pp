@@ -21,10 +21,8 @@ class icinga2::server::install inherits icinga2::server {
   #Here, we're installing the IDO DB package in the ::packages class, then using the execs
   # to load the DB schema:
   class{'icinga2::server::install::packages':} ~>
-  class{'icinga2::server::install::execs':}
-  
-  contain 'icinga2::server::install::packages'
-  contain 'icinga2::server::install::execs'
+  class{'icinga2::server::install::execs':} ->
+  Class['icinga2::server::install']
 
 }
 
