@@ -17,4 +17,19 @@ describe 'icinga2::node' do
 
   end
 
+  context 'on Debian wheezy with debmon.org' do
+    let :facts do
+      IcingaPuppet.variants['Debian wheezy']
+    end
+    let :params do
+      {
+        :use_debmon_repo => true,
+      }
+    end
+
+    it { should compile }
+    it { should contain_class('icinga2::node') }
+    it { should contain_class('icinga2::params') }
+  end
+
 end
