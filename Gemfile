@@ -1,15 +1,9 @@
 source ENV['GEM_SOURCE'] || "https://rubygems.org"
 
-#Install the gems but don't run `require gemname` when bundler runs
-#Source: http://stackoverflow.com/questions/4800721/bundler-what-does-require-false-in-a-gemfile-mean
-#Source of the list of gems: https://github.com/puppetlabs/puppetlabs-ntp/blob/master/Gemfile
-group :development, :unit_tests do
-  gem 'json',                    :require => false
-  gem 'puppet',                  :require => false
-  gem 'puppet-lint',             :require => false
-  gem 'puppet_facts',            :require => false
-  gem 'puppetlabs_spec_helper',  :require => false
-  gem 'rake',                    :require => false
-  gem 'rspec-puppet',            :require => false
-  gem 'simplecov',               :require => false
-end
+gem 'puppet', ENV.key?('PUPPET_VERSION') ? "~> #{ENV['PUPPET_VERSION']}" : '>= 2.7'
+gem 'rspec-puppet', '~> 2.0'
+gem 'puppetlabs_spec_helper', '>= 0.1.0'
+gem 'puppet-lint', '>= 1'
+gem 'facter', '>= 1.7.0'
+
+gem 'puppet-lint-strict_indent-check'

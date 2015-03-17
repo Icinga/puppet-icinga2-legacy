@@ -1,0 +1,8 @@
+--fail-on-warnings
+--relative
+--no-80chars
+--no-class_inherits_from_params_class-check
+
+# TODO: fix it
+--no-autoloader_layout
+--no-variable_scope
