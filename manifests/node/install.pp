@@ -58,10 +58,7 @@ class icinga2::node::install::repos inherits icinga2::node {
 
         #On Debian (7) icinga2 packages are on backports
         if $use_debmon_repo == false {
-
           include ::apt::backports
-          Class['apt::backports'] -> Class['icinga2::node::install::repos']
-
         } else {
           apt::source { 'debmon':
             location    => 'http://debmon.org/debmon',
