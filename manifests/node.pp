@@ -39,7 +39,7 @@ class icinga2::node (
     #class left is applied before the class on the right and that it also refreshes the
     #class on the right.
     class {'icinga2::node::install':} ~>
-    class {'icinga2::node::config':} ~>
+    class {'icinga2::config':} ~>
     class {'icinga2::features':
       enabled_features  => $enabled_features,
       disabled_features => $disabled_features,
@@ -53,7 +53,7 @@ class icinga2::node (
     #class left is applied before the class on the right and that it also refreshes the
     #class on the right.
     class {'icinga2::node::install':} ~>
-    class {'icinga2::node::config':} ~>
+    class {'icinga2::config':} ~>
     class {'icinga2::features':
       enabled_features  => $enabled_features,
       disabled_features => $disabled_features,

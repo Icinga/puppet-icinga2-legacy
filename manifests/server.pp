@@ -98,8 +98,6 @@ class icinga2::server (
     } ~>
     #Install the DB IDO packages and load the DB schema:
     class {'icinga2::server::install':} ~>
-    #Server-specific configuration:
-    class {'icinga2::server::config':} ~>
     class {'icinga2::node::service':} ->
     Class['icinga2::server']
 
@@ -114,7 +112,6 @@ class icinga2::server (
       manage_service               => false,
     } ~>
     class {'icinga2::server::install':} ~>
-    class {'icinga2::server::config':} ->
     Class['icinga2::server']
 
   }
