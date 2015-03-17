@@ -3,7 +3,7 @@
   "version": "0.6.1",
   "author": "Icinga Development Team",
   "summary": "Icinga 2 Puppet module",
-  "license": "GPLv2",
+  "license": "GPL-2.0+",
   "source": "git://github.com/icinga/puppet-icinga2",
   "project_page": "https://github.com/icinga/puppet-icinga2",
   "issues_url": "https://dev.icinga.org/projects/puppet-icinga2",
