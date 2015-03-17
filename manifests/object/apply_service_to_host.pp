@@ -40,7 +40,7 @@ define icinga2::object::apply_service_to_host (
   $icon_image_alt = undef,
   $target_dir         = '/etc/icinga2/conf.d',
   $target_file_name   = "${name}.conf",
-  $target_file_ensure = file,  
+  $target_file_ensure = file,
   $target_file_owner  = 'root',
   $target_file_group  = 'root',
   $target_file_mode   = '0644',
@@ -73,9 +73,9 @@ define icinga2::object::apply_service_to_host (
     }
 
   }
-  #...otherwise, use the same file resource but without a notify => parameter: 
+  #...otherwise, use the same file resource but without a notify => parameter:
   else {
-  
+
     file { "${target_dir}/${target_file_name}":
       ensure  => $target_file_ensure,
       owner   => $target_file_owner,
@@ -83,7 +83,7 @@ define icinga2::object::apply_service_to_host (
       mode    => $target_file_mode,
       content => template('icinga2/object_apply_service_to_host.conf.erb'),
     }
-  
+
   }
 
 }

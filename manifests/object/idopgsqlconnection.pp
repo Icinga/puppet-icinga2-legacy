@@ -34,7 +34,7 @@ define icinga2::object::idopgsqlconnection (
     processevents_age              => 0,
     statehistory_age               => 0,
     servicechecks_age              => 0,
-    systemcommands_age             => 0
+    systemcommands_age             => 0,
   },
   $categories           = [],
   $target_dir           = '/etc/icinga2/conf.d',
@@ -48,7 +48,6 @@ define icinga2::object::idopgsqlconnection (
 
   #Do some validation of the class' parameters:
   validate_string($object_name)
-  validate_string($template_to_import)
   validate_string($host)
   validate_string($user)
   validate_string($password)
@@ -78,9 +77,9 @@ define icinga2::object::idopgsqlconnection (
     }
 
   }
-  #...otherwise, use the same file resource but without a notify => parameter: 
+  #...otherwise, use the same file resource but without a notify => parameter:
   else {
-  
+
     file { "${target_dir}/${target_file_name}":
       ensure  => $target_file_ensure,
       owner   => $target_file_owner,
@@ -88,7 +87,7 @@ define icinga2::object::idopgsqlconnection (
       mode    => $target_file_mode,
       content => template('icinga2/object_idopgsqlconnection.conf.erb'),
     }
-  
+
   }
 
 }

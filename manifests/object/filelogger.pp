@@ -40,6 +40,6 @@ define icinga2::object::filelogger (
     group   => $target_file_group,
     mode    => $target_file_mode,
     content => template('icinga2/object_filelogger.conf.erb'),
-    notify  => Service['icinga2']
+    notify  => Service['icinga2'],
   }
 }

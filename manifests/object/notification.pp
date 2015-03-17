@@ -81,9 +81,9 @@ define icinga2::object::notification (
     }
 
   }
-  #...otherwise, use the same file resource but without a notify => parameter: 
+  #...otherwise, use the same file resource but without a notify => parameter:
   else {
-  
+
     file { "${target_dir}/${target_file_name}":
       ensure  => $target_file_ensure,
       owner   => $target_file_owner,
@@ -91,7 +91,7 @@ define icinga2::object::notification (
       mode    => $target_file_mode,
       content => template('icinga2/object_notification.conf.erb'),
     }
-  
+
   }
 
 }

@@ -30,7 +30,7 @@ define icinga2::nrpe::plugin (
     mode    => '0755',
     source  => $source_file,
     require => Package[$icinga2::params::icinga2_client_packages],
-    notify  => Service[$icinga2::params::nrpe_daemon_name]
+    notify  => Service[$icinga2::params::nrpe_daemon_name],
   }
 
 }

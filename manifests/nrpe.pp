@@ -24,7 +24,8 @@ class icinga2::nrpe (
   #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
   #class left is applied before the class on the right and that it also refreshes the
   #class on the right.
-  class {'icinga2::nrpe::install':} ~>
-  class {'icinga2::nrpe::config':} ~>
-  class {'icinga2::nrpe::service':}
+  class {'::icinga2::nrpe::install':} ~>
+  class {'::icinga2::nrpe::config':} ~>
+  class {'::icinga2::nrpe::service':} ->
+  Class['icinga2::nrpe']
 }

@@ -31,6 +31,6 @@ define icinga2::object::checkercomponent (
     group   => $target_file_group,
     mode    => $target_file_mode,
     content => template('icinga2/object_checkercomponent.conf.erb'),
-#    notify  => Service['icinga2'], # Dont need to reload/restart the service only enable/disable the feature. Should we force enable/disable the feature (icinga2 feature enable checker) or should the user define it?
+    #notify  => Service['icinga2'], # Dont need to reload/restart the service only enable/disable the feature. Should we force enable/disable the feature (icinga2 feature enable checker) or should the user define it?
   }
 }

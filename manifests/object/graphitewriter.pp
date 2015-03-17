@@ -24,7 +24,7 @@ define icinga2::object::graphitewriter (
 ) {
 
   #Do some validation
-  validate_string($host)
+  validate_string($graphite_host)
   validate_bool($refresh_icinga2_service)
 
   #If the refresh_icinga2_service parameter is set to true...
@@ -41,9 +41,9 @@ define icinga2::object::graphitewriter (
     }
 
   }
-  #...otherwise, use the same file resource but without a notify => parameter: 
+  #...otherwise, use the same file resource but without a notify => parameter:
   else {
-  
+
     file { "${target_dir}/${target_file_name}":
       ensure  => $target_file_ensure,
       owner   => $target_file_owner,
@@ -51,7 +51,7 @@ define icinga2::object::graphitewriter (
       mode    => $target_file_mode,
       content => template('icinga2/object_graphitewriter.conf.erb'),
     }
-  
+
   }
 
 }

@@ -44,8 +44,8 @@ class icinga2::server (
   validate_string($db_host)
   validate_string($db_port)
   validate_string($package_provider)
-  validate_string($icinga2_server_package)
-  validate_bool($server_install_nagios_plugins)
+  validate_string($::icinga2::params::icinga2_server_package)
+  validate_bool($::icinga2::params::server_install_nagios_plugins)
 
   #Pick set the right path where we can find the DB schema based on the OS...
   case $::operatingsystem {
@@ -89,7 +89,7 @@ class icinga2::server (
 
     #Start with the icinga2::node class to install Icinga 2 itself and enable some
     #server-specific features:
-    class {'icinga2::node':
+    class {'::icinga2::node':
       install_mail_utils_package   => $install_mail_utils_package,
       install_nagios_plugins       => $install_nagios_plugins,
       enabled_features             => $server_enabled_features,
@@ -97,21 +97,21 @@ class icinga2::server (
       manage_service               => false,
     } ~>
     #Install the DB IDO packages and load the DB schema:
-    class {'icinga2::server::install':} ~>
-    class {'icinga2::node::service':} ->
+    class {'::icinga2::server::install':} ~>
+    class {'::icinga2::node::service':} ->
     Class['icinga2::server']
 
   }
   else {
     #Like the class applications above in the previous block, but without the icinga2::node::class
-    class {'icinga2::node':
+    class {'::icinga2::node':
       install_mail_utils_package   => $install_mail_utils_package,
       install_nagios_plugins       => $install_nagios_plugins,
       enabled_features             => $server_enabled_features,
       purge_unmanaged_object_files => true,
       manage_service               => false,
     } ~>
-    class {'icinga2::server::install':} ~>
+    class {'::icinga2::server::install':} ~>
     Class['icinga2::server']
 
   }

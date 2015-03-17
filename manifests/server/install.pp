@@ -13,20 +13,20 @@
 
 class icinga2::server::install inherits icinga2::server {
 
-  include icinga2::server
   #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
   #class left is applied before the class on the right and that it also refreshes the
   #class on the right.
   #
   #Here, we're installing the IDO DB package in the ::packages class, then using the execs
   # to load the DB schema:
-  class{'icinga2::server::install::packages':} ~>
-  class{'icinga2::server::install::execs':} ->
+  class{'::icinga2::server::install::packages':} ~>
+  class{'::icinga2::server::install::execs':} ->
   Class['icinga2::server::install']
 
 }
 
 #Install packages for Icinga 2's IDO database connection:
+# lint:ignore:autoloader_layout lint:ignore:variable_scope
 class icinga2::server::install::packages inherits icinga2::server {
 
   #Pick the right DB lib package name based on the database type the user selected:
@@ -96,3 +96,4 @@ class icinga2::server::install::execs inherits icinga2::server {
   #Exec resources for SSL setup will go here.
 
 }
+# lint:endignore

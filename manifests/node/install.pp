@@ -13,20 +13,21 @@
 
 class icinga2::node::install inherits icinga2::node {
 
-  include icinga2::node
   #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
   #class left is applied before the class on the right and that it also refreshes the
   #class on the right.
 
   #Here, we're setting up the package repos first, then installing the packages, then
   #running any execs that are needed to set things up further:
-  class{'icinga2::node::install::repos':} ~>
-  class{'icinga2::node::install::packages':} ~>
-  class{'icinga2::node::install::execs':} ->
+  class{'::icinga2::node::install::repos':} ~>
+  class{'::icinga2::node::install::packages':} ~>
+  class{'::icinga2::node::install::execs':} ->
   Class['icinga2::node::install']
 
 }
 
+# Setup repositories for Icinga
+# lint:ignore:autoloader_layout lint:ignore:variable_scope
 class icinga2::node::install::repos inherits icinga2::node {
 
   if $manage_repos == true {
@@ -39,14 +40,14 @@ class icinga2::node::install::repos inherits icinga2::node {
           descr    => 'Icinga 2 Yum repository',
           enabled  => 1,
           gpgcheck => 1,
-          gpgkey   => 'http://packages.icinga.org/icinga.key'
+          gpgkey   => 'http://packages.icinga.org/icinga.key',
         }
       }
 
-     #Ubuntu systems:
-     'Ubuntu': {
+      #Ubuntu systems:
+      'Ubuntu': {
         #Include the apt module's base class so we can...
-        include apt
+        include ::apt
         #...use the apt module to add the Icinga 2 PPA from launchpad.net:
         # https://launchpad.net/~formorer/+archive/ubuntu/icinga
         apt::ppa { 'ppa:formorer/icinga': }
@@ -54,7 +55,7 @@ class icinga2::node::install::repos inherits icinga2::node {
 
       #Debian systems:
       'Debian': {
-        include apt
+        include ::apt
 
         #On Debian (7) icinga2 packages are on backports
         if $use_debmon_repo == false {
@@ -68,8 +69,8 @@ class icinga2::node::install::repos inherits icinga2::node {
             key         => '29D662D2',
             include_src => false,
             # backports repo use 200
-            pin         => '300'
-          } -> Class['icinga2::node::install::repos']
+            pin         => '300',
+          }
         }
       }
 
@@ -115,3 +116,4 @@ class icinga2::node::install::execs inherits icinga2::node {
   #Exec resources for SSL setup will go here.
 
 }
+# lint:endignore

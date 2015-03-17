@@ -29,12 +29,12 @@ define icinga2::object::apply_dependency (
   $target_file_owner     = 'root',
   $target_file_group     = 'root',
   $target_file_mode      = '0644',
-  $refresh_icinga2_service = true
-  ) {
+  $refresh_icinga2_service = true,
+) {
+
   # Do some validation of the class' parameters:
   validate_string($object_name)
   validate_string($display_name)
-  validate_string($host_name)
   validate_string($parent_host_name)
   validate_string($child_host_name)
   validate_string($child_service_name)
@@ -66,9 +66,9 @@ define icinga2::object::apply_dependency (
     }
 
   }
-  #...otherwise, use the same file resource but without a notify => parameter: 
+  #...otherwise, use the same file resource but without a notify => parameter:
   else {
-  
+
     file { "${target_dir}/${target_file_name}":
       ensure  => $target_file_ensure,
       owner   => $target_file_owner,
@@ -76,7 +76,7 @@ define icinga2::object::apply_dependency (
       mode    => $target_file_mode,
       content => template('icinga2/object_apply_dependency.conf.erb'),
     }
-  
+
   }
 
 }

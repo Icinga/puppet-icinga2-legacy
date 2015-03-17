@@ -11,8 +11,7 @@
 #
 # Coming soon...
 #
-
-class icinga2::node ( 
+class icinga2::node (
   $manage_repos = $icinga2::params::manage_repos,
   $manage_service = $icinga2::params::manage_service,
   $use_debmon_repo = $icinga2::params::use_debmon_repo,
@@ -38,13 +37,13 @@ class icinga2::node (
     #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
     #class left is applied before the class on the right and that it also refreshes the
     #class on the right.
-    class {'icinga2::node::install':} ~>
-    class {'icinga2::config':} ~>
-    class {'icinga2::features':
+    class {'::icinga2::node::install':} ~>
+    class {'::icinga2::config':} ~>
+    class {'::icinga2::features':
       enabled_features  => $enabled_features,
       disabled_features => $disabled_features,
     } ~>
-    class {'icinga2::node::service':} ->
+    class {'::icinga2::node::service':} ->
     Class['icinga2::node']
 
   }
@@ -52,9 +51,9 @@ class icinga2::node (
     #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
     #class left is applied before the class on the right and that it also refreshes the
     #class on the right.
-    class {'icinga2::node::install':} ~>
-    class {'icinga2::config':} ~>
-    class {'icinga2::features':
+    class {'::icinga2::node::install':} ~>
+    class {'::icinga2::config':} ~>
+    class {'::icinga2::features':
       enabled_features  => $enabled_features,
       disabled_features => $disabled_features,
     } ->

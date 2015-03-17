@@ -20,19 +20,16 @@ class icinga2::params {
   ##################
   # Icinga 2 common package parameters
   case $::operatingsystem {
-    #CentOS or RedHat systems:
     'CentOS', 'RedHat': {
-     #Pick the right package provider:
+      #Pick the right package provider:
       $package_provider = 'yum'
     }
-	
-   #Ubuntu systems:
-   'Ubuntu': {
+
+    'Ubuntu': {
       #Pick the right package provider:
       $package_provider = 'apt'
     }
 
-    #Debian systems:
     'Debian': {
       #Pick the right package provider:
       $package_provider = 'apt'
@@ -52,8 +49,8 @@ class icinga2::params {
 
   #Whether to install the plugin packages when the icinga2::server class is applied:
   $install_nagios_plugins = true
-  
-  #whether to install packages that provide the 'mail' binary 
+
+  #whether to install packages that provide the 'mail' binary
   $install_mail_utils_package = false
 
   #What Icinga 2 features should be enabled when icinga2::server::features class is applied:
@@ -99,9 +96,8 @@ class icinga2::params {
       }
     }
 
-   #Ubuntu systems:
-   'Ubuntu': {
-    case $::operatingsystemrelease {
+    'Ubuntu': {
+      case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
           #Icinga 2 package:
@@ -251,9 +247,9 @@ class icinga2::params {
       }
     }
 
-   #Ubuntu systems:
-   'Ubuntu': {
-    case $::operatingsystemrelease {
+    #Ubuntu systems:
+    'Ubuntu': {
+      case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
           $icinga2_server_package = 'icinga2'
@@ -373,8 +369,8 @@ class icinga2::params {
       $nrpe_user            = 'nagios'
       $nrpe_group           = 'nagios'
     }
-   
-   #Fail if we're on any other OS:
+
+    #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
   }
 

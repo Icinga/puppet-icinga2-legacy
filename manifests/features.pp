@@ -4,8 +4,6 @@ class icinga2::features (
   $disabled_features = undef,
 ) {
 
-  include stdlib
-
   # Do some checking
   validate_array($enabled_features)
   validate_array($disabled_features)

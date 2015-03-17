@@ -34,10 +34,10 @@ define icinga2::checkplugin (
   }
   elsif $checkplugin_file_distribution_method == 'source' {
     file { "${checkplugin_libdir}/${checkplugin_name}":
-      owner   => $checkplugin_target_file_owner,
-      group   => $checkplugin_target_file_group,
-      mode    => $checkplugin_target_file_mode,
-      source  => $checkplugin_source_file,
+      owner  => $checkplugin_target_file_owner,
+      group  => $checkplugin_target_file_group,
+      mode   => $checkplugin_target_file_mode,
+      source => $checkplugin_source_file,
     }
   }
   elsif $checkplugin_file_distribution_method == 'inline' {

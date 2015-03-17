@@ -5,21 +5,22 @@
 
 class icinga2::nrpe::install inherits icinga2::nrpe {
 
-  include icinga2::nrpe
   #Apply our subclasses in the right order. Use the squiggly arrows (~>) to ensure that the
   #class left is applied before the class on the right and that it also refreshes the
   #class on the right.
-  class {'icinga2::nrpe::install::repos':} ~>
-  class {'icinga2::nrpe::install::packages':} ~>
-  class {'icinga2::nrpe::install::execs':}
+  class {'::icinga2::nrpe::install::repos':} ~>
+  class {'::icinga2::nrpe::install::packages':} ~>
+  class {'::icinga2::nrpe::install::execs':} ->
+  Class['icinga2::nrpe::install']
+
 }
 
 ##################
 #Package repositories
 ##################
+# lint:ignore:autoloader_layout
 class icinga2::nrpe::install::repos inherits icinga2::nrpe {
 
-  include icinga2::nrpe
   #repository resources here
 
 }
@@ -29,7 +30,6 @@ class icinga2::nrpe::install::repos inherits icinga2::nrpe {
 ##################
 class icinga2::nrpe::install::packages inherits icinga2::nrpe {
 
-  include icinga2::nrpe
   #Install the packages we specified in the ::params class:
   package {$icinga2::params::icinga2_client_packages:
     ensure          => installed,
@@ -43,8 +43,9 @@ class icinga2::nrpe::install::packages inherits icinga2::nrpe {
 ##################
 # Execs
 ##################
-class icinga2::nrpe::install::execs { 
+class icinga2::nrpe::install::execs {
 
   #exec resources here
 
 }
+# lint:endignore

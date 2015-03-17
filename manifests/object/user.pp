@@ -32,7 +32,6 @@ define icinga2::object::user (
   #Do some validation of the class' parameters:
   validate_string($object_username)
   validate_string($display_name)
-  validate_string($host_name)
   validate_array($groups)
   validate_hash($vars)
   validate_array($types)
@@ -58,9 +57,9 @@ define icinga2::object::user (
     }
 
   }
-  #...otherwise, use the same file resource but without a notify => parameter: 
+  #...otherwise, use the same file resource but without a notify => parameter:
   else {
-  
+
     file { "${target_dir}/${target_file_name}":
       ensure  => $target_file_ensure,
       owner   => $target_file_owner,
@@ -68,7 +67,7 @@ define icinga2::object::user (
       mode    => $target_file_mode,
       content => template('icinga2/object_user.conf.erb'),
     }
-  
+
   }
 
 }

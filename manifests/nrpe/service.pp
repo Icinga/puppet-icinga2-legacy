@@ -6,8 +6,6 @@
 
 class icinga2::nrpe::service inherits icinga2::nrpe {
 
-  include icinga2::nrpe
-
   #Service resource for NRPE.
   #This references the daemon name we defined in the icinga2::params class based on the OS:
   service {$icinga2::params::nrpe_daemon_name:

@@ -68,7 +68,7 @@ define icinga2::object::checkcommand (
     }
     elsif $checkcommand_file_distribution_method == 'source' {
       file {"${target_dir}/${target_file_name}":
-        ensure  => $target_file_ensure,
+        ensure => $target_file_ensure,
         owner  => $target_file_owner,
         group  => $target_file_group,
         mode   => $target_file_mode,
@@ -83,9 +83,9 @@ define icinga2::object::checkcommand (
     }
   }
 
-  #...otherwise, use the same file resource but without a notify => parameter: 
+  #...otherwise, use the same file resource but without a notify => parameter:
   else {
-  
+
     if $checkcommand_file_distribution_method == 'content' {
       file {"${target_dir}/${target_file_name}":
         ensure  => $target_file_ensure,
@@ -97,7 +97,7 @@ define icinga2::object::checkcommand (
     }
     elsif $checkcommand_file_distribution_method == 'source' {
       file {"${target_dir}/${target_file_name}":
-        ensure  => $target_file_ensure,
+        ensure => $target_file_ensure,
         owner  => $target_file_owner,
         group  => $target_file_group,
         mode   => $target_file_mode,
@@ -109,7 +109,7 @@ define icinga2::object::checkcommand (
         message => 'The parameter checkcommand_file_distribution_method is missing or incorrect. Please set content or source',
       }
     }
-  
+
   }
 
 }

@@ -19,16 +19,16 @@
 #   Custom hash with key values to use in custom templates
 #
 define icinga2::conf (
-  $source            = '' ,
-  $template          = '' ,
+  $source            = undef,
+  $template          = undef,
   $options_hash      = undef,
   $ensure            = present,
   $target_dir        = '/etc/icinga2/conf.d',
   $target_file_name  = "${name}.conf",
   $target_file_owner = 'root',
   $target_file_group = 'root',
-  $target_file_mode  = '644'
-  ) {
+  $target_file_mode  = '0644',
+) {
 
   validate_string($target_dir)
   validate_string($target_file_name)
@@ -36,14 +36,13 @@ define icinga2::conf (
   validate_string($target_file_group)
   validate_string($target_file_mode)
 
-  $manage_file_source = $source ? {
-    ''        => undef,
-    default   => $source,
-  }
+  $manage_file_source = $source
 
-  $manage_file_content = $template ? {
-    ''        => undef,
-    default   => template($template),
+  if $template {
+    $manage_file_content = template($template)
+  }
+  else {
+    $manage_file_content = undef
   }
 
   file { "${target_dir}/${target_file_name}":

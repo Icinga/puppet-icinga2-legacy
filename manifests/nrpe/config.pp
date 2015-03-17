@@ -5,12 +5,10 @@
 
 class icinga2::nrpe::config inherits icinga2::nrpe {
 
-  include icinga2::nrpe
-
   #config resources here
 
   #The NRPE configuration base directory:
-  file { $nrpe_config_basedir:
+  file { $::icinga2::params::nrpe_config_basedir:
     ensure  => directory,
     owner   => 'root',
     group   => 'root',
@@ -24,7 +22,7 @@ class icinga2::nrpe::config inherits icinga2::nrpe {
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    purge   => $nrpe_purge_unmanaged,
+    purge   => $::icinga2::nrpe::nrpe_purge_unmanaged,
     recurse => true,
     require => Package[$icinga2::params::icinga2_client_packages],
   }
@@ -34,7 +32,7 @@ class icinga2::nrpe::config inherits icinga2::nrpe {
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    purge   => $nrpe_purge_unmanaged,
+    purge   => $::icinga2::nrpe::nrpe_purge_unmanaged,
     recurse => true,
     require => Package[$icinga2::params::icinga2_client_packages],
   }

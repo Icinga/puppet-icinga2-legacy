@@ -13,8 +13,6 @@
 
 class icinga2::node::service inherits icinga2::node {
 
-  include icinga2::node
-
   #Service resource for the Icinga 2 daemon:
   service {$icinga2::params::icinga2_daemon_name:
     ensure    => running,
