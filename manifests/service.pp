@@ -1,4 +1,4 @@
-# == Class: icinga2::node::service
+# == Class: icinga2::service
 #
 # This class mangages the Icinga 2 daemon.
 #
@@ -11,7 +11,7 @@
 # Coming soon...
 #
 
-class icinga2::node::service inherits icinga2::node {
+class icinga2::service inherits icinga2 {
 
   #Service resource for the Icinga 2 daemon:
   service {$icinga2::params::icinga2_daemon_name:

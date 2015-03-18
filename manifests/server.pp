@@ -87,9 +87,9 @@ class icinga2::server (
     #class left is applied before the class on the right and that it also refreshes the
     #class on the right.
 
-    #Start with the icinga2::node class to install Icinga 2 itself and enable some
+    #Start with the icinga2 class to install Icinga 2 itself and enable some
     #server-specific features:
-    class {'::icinga2::node':
+    class {'::icinga2':
       install_mail_utils_package   => $install_mail_utils_package,
       install_nagios_plugins       => $install_nagios_plugins,
       enabled_features             => $server_enabled_features,
@@ -98,13 +98,13 @@ class icinga2::server (
     } ~>
     #Install the DB IDO packages and load the DB schema:
     class {'::icinga2::server::install':} ~>
-    class {'::icinga2::node::service':} ->
+    class {'::icinga2::service':} ->
     Class['icinga2::server']
 
   }
   else {
-    #Like the class applications above in the previous block, but without the icinga2::node::class
-    class {'::icinga2::node':
+    #Like the class applications above in the previous block, but without the icinga2::class
+    class {'::icinga2':
       install_mail_utils_package   => $install_mail_utils_package,
       install_nagios_plugins       => $install_nagios_plugins,
       enabled_features             => $server_enabled_features,

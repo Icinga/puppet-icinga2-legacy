@@ -5,6 +5,6 @@ define icinga2::features::enable () {
     path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
     command => "/usr/sbin/icinga2 feature enable ${name}",
     unless  => "[ ! -f /etc/icinga2/features-available/${name}.conf ] || [ -f /etc/icinga2/features-enabled/${name}.conf ]",
-    require => Class['icinga2::node::install::packages'],
+    require => Class['icinga2::install::packages'],
   }
 }

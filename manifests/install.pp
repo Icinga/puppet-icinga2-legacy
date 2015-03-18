@@ -1,4 +1,4 @@
-# == Class: icinga2::node::install
+# == Class: icinga2::install
 #
 # This class installs the Icinga 2 daemon.
 #
@@ -11,7 +11,7 @@
 # Coming soon...
 #
 
-class icinga2::node::install inherits icinga2::node {
+class icinga2::install inherits icinga2 {
 
   #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
   #class left is applied before the class on the right and that it also refreshes the
@@ -19,16 +19,16 @@ class icinga2::node::install inherits icinga2::node {
 
   #Here, we're setting up the package repos first, then installing the packages, then
   #running any execs that are needed to set things up further:
-  class{'::icinga2::node::install::repos':} ~>
-  class{'::icinga2::node::install::packages':} ~>
-  class{'::icinga2::node::install::execs':} ->
-  Class['icinga2::node::install']
+  class{'::icinga2::install::repos':} ~>
+  class{'::icinga2::install::packages':} ~>
+  class{'::icinga2::install::execs':} ->
+  Class['icinga2::install']
 
 }
 
 # Setup repositories for Icinga
 # lint:ignore:autoloader_layout lint:ignore:variable_scope
-class icinga2::node::install::repos inherits icinga2::node {
+class icinga2::install::repos inherits icinga2 {
 
   if $manage_repos == true {
     case $::operatingsystem {
@@ -82,7 +82,7 @@ class icinga2::node::install::repos inherits icinga2::node {
 }
 
 #Install packages for Icinga 2:
-class icinga2::node::install::packages inherits icinga2::node {
+class icinga2::install::packages inherits icinga2 {
 
   #Install the Icinga 2 package
   package {$icinga2_package:
@@ -111,7 +111,7 @@ class icinga2::node::install::packages inherits icinga2::node {
 }
 
 #This class contains exec resources
-class icinga2::node::install::execs inherits icinga2::node {
+class icinga2::install::execs inherits icinga2 {
 
   #Exec resources for SSL setup will go here.
 
