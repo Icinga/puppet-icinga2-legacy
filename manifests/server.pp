@@ -21,7 +21,7 @@ class icinga2::server (
   $install_mail_utils_package = $icinga2::params::install_mail_utils_package,
   $enabled_features = undef,
   $disabled_features = undef,
-  $purge_unmanaged_object_files = $icinga2::params::purge_unmanaged_object_files,
+  $purge_unmanaged_object_files = true,
   #Icinga 2 server specific parameters:
   $server_db_type = $icinga2::params::server_db_type,
   $db_name = $icinga2::params::db_name,
@@ -98,11 +98,11 @@ class icinga2::server (
     #Start with the icinga2 class to install Icinga 2 itself and enable some
     #server-specific features:
     class {'::icinga2':
-      install_mail_utils_package   => $install_mail_utils_package,
-      install_nagios_plugins       => $install_nagios_plugins,
-      default_features             => $default_features,
-      purge_unmanaged_object_files => true,
-      manage_service               => false,
+      install_mail_utils_package => $install_mail_utils_package,
+      install_nagios_plugins     => $install_nagios_plugins,
+      default_features           => $default_features,
+      purge_configs              => $purge_unmanaged_object_files,
+      manage_service             => false,
     } ~>
     #Install the DB IDO packages and load the DB schema:
     class {'::icinga2::server::install':} ~>
@@ -113,11 +113,11 @@ class icinga2::server (
   else {
     #Like the class applications above in the previous block, but without the icinga2::class
     class {'::icinga2':
-      install_mail_utils_package   => $install_mail_utils_package,
-      install_nagios_plugins       => $install_nagios_plugins,
-      default_features             => $default_features,
-      purge_unmanaged_object_files => true,
-      manage_service               => false,
+      install_mail_utils_package => $install_mail_utils_package,
+      install_nagios_plugins     => $install_nagios_plugins,
+      default_features           => $default_features,
+      purge_configs              => $purge_unmanaged_object_files,
+      manage_service             => false,
     } ~>
     class {'::icinga2::server::install':} ~>
     Class['icinga2::server']

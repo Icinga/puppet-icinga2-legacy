@@ -53,9 +53,6 @@ class icinga2::params {
   #whether to install packages that provide the 'mail' binary
   $install_mail_utils_package = false
 
-  #Whether to purge object files or directories in /etc/icinga2/objects that aren't managed by Puppet:
-  $purge_unmanaged_object_files = false
-
   ##############################
   # Icinga 2 node package parameters
 

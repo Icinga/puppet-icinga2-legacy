@@ -4,13 +4,6 @@
 #
 class icinga2::config {
 
-  if $purge_unmanaged_object_files == true { # lint:ignore:variable_scope
-    $recurse_and_purge = true
-  }
-  else {
-    $recurse_and_purge = false
-  }
-
   File {
     owner => $icinga2::params::config_owner,
     group => $icinga2::params::config_group,
@@ -19,25 +12,26 @@ class icinga2::config {
 
   # maintained directories
   file {
-    '/etc/icinga2':
-      ensure => directory;
-    '/etc/icinga2/conf.d':
-      ensure => directory;
-    '/etc/icinga2/features-available':
-      ensure => directory;
-    '/etc/icinga2/features-enabled':
-      ensure => directory;
-    '/etc/icinga2/pki':
-      ensure => directory;
-    '/etc/icinga2/scripts':
-      ensure => directory;
-    '/etc/icinga2/zones.d':
-      ensure => directory;
-    '/etc/icinga2/objects':
+    [
+      '/etc/icinga2',
+      '/etc/icinga2/conf.d',
+      '/etc/icinga2/pki',
+      '/etc/icinga2/scripts',
+      '/etc/icinga2/zones.d',
+    ]:
+      ensure => directory,
+  }
+
+  file {
+    [
+      '/etc/icinga2/features-available',
+      '/etc/icinga2/features-enabled',
+      '/etc/icinga2/objects',
+    ]:
       ensure  => directory,
-      purge   => $recurse_and_purge,
-      recurse => $recurse_and_purge,
-      force   => $recurse_and_purge;
+      purge   => $::icinga2::purge_configs,
+      recurse => $::icinga2::purge_configs,
+      force   => $::icinga2::purge_configs,
   }
 
   file { '/etc/icinga2/icinga2.conf':
