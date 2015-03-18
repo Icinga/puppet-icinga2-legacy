@@ -21,6 +21,7 @@ describe 'icinga2::feature::ido_pgsql' do
       :path    => '/etc/icinga2/features-available/ido-pgsql.conf',
       :content => /database = "icinga2_data"/,
     })}
+    it { should contain_file('icinga2 object idopgsqlconnection ido-pgsql').without_content(/port =/) }
     it { should contain_file('icinga2 feature ido-pgsql enabled') }
   end
 

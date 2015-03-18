@@ -21,6 +21,7 @@ describe 'icinga2::feature::ido_mysql' do
       :path    => '/etc/icinga2/features-available/ido-mysql.conf',
       :content => /database = "icinga2_data"/,
     })}
+    it { should contain_file('icinga2 object idomysqlconnection ido-mysql').without_content(/port =/) }
     it { should contain_file('icinga2 feature ido-mysql enabled') }
   end
 

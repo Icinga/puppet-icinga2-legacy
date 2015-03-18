@@ -2,42 +2,42 @@
 
 library "db_ido_mysql"
 
-object IdoMysqlConnection "<%= scope.lookupvar('name') %>" {
-  <%- if scope.lookupvar('host') -%>
-  host = "<%= scope.lookupvar('host') -%>"
+object IdoMysqlConnection "<%= @name %>" {
+  <%- if @host -%>
+  host = "<%= @host -%>"
   <%- end -%>
-  <%- if scope.lookupvar('port') -%>
-  port = <%= scope.lookupvar('port') %>
+  <%- if @port -%>
+  port = <%= @port %>
   <%- end -%>
-  <%- if scope.lookupvar('user') -%>
-  user = "<%= scope.lookupvar('user') -%>"
+  <%- if @user -%>
+  user = "<%= @user -%>"
   <%- end -%>
-  <%- if scope.lookupvar('password') -%>
-  password = "<%= scope.lookupvar('password') -%>"
+  <%- if @password -%>
+  password = "<%= @password -%>"
   <%- end -%>
-  <%- if scope.lookupvar('database') -%>
-  database = "<%= scope.lookupvar('database') -%>"
+  <%- if @database -%>
+  database = "<%= @database -%>"
   <%- end -%>
-  <%- if scope.lookupvar('table_prefix') -%>
-  table_prefix = "<%= scope.lookupvar('table_prefix') -%>"
+  <%- if @table_prefix -%>
+  table_prefix = "<%= @table_prefix -%>"
   <%- end -%>
-  <%- if scope.lookupvar('instance_name') -%>
-  instance_name = "<%= scope.lookupvar('instance_name') -%>"
+  <%- if @instance_name -%>
+  instance_name = "<%= @instance_name -%>"
   <%- end -%>
-  <%- if scope.lookupvar('instance_description') -%>
-  instance_description = "<%= scope.lookupvar('instance_description') -%>"
+  <%- if @instance_description -%>
+  instance_description = "<%= @instance_description -%>"
   <%- end -%>
 
-  <%- if ! scope.lookupvar('cleanup').empty? -%>
+  <%- if ! @cleanup.empty? -%>
   cleanup = {
-    <%- scope.lookupvar('cleanup').sort.each do |key, value| -%>
+    <%- @cleanup.sort.each do |key, value| -%>
     <%- return if ! value -%>
     <%= key %> = <%= value %>
     <%- end -%>
   }
   <%- end -%>
 
-  <%- if scope.lookupvar('categories').length != 0 -%>
-  categories = <%= scope.lookupvar('categories').sort.join(' | ') %>
+  <%- if @categories.length != 0 -%>
+  categories = <%= @categories.sort.join(' | ') %>
   <%- end -%>
 }
