@@ -1,0 +1,43 @@
+<%= ERB.new(File.read(File.expand_path('_header.erb',File.dirname(File.dirname(file))))).result(binding) -%>
+
+library "db_ido_mysql"
+
+object IdoMysqlConnection "<%= scope.lookupvar('name') %>" {
+  <%- if scope.lookupvar('host') -%>
+  host = "<%= scope.lookupvar('host') -%>"
+  <%- end -%>
+  <%- if scope.lookupvar('port') -%>
+  port = <%= scope.lookupvar('port') %>
+  <%- end -%>
+  <%- if scope.lookupvar('user') -%>
+  user = "<%= scope.lookupvar('user') -%>"
+  <%- end -%>
+  <%- if scope.lookupvar('password') -%>
+  password = "<%= scope.lookupvar('password') -%>"
+  <%- end -%>
+  <%- if scope.lookupvar('database') -%>
+  database = "<%= scope.lookupvar('database') -%>"
+  <%- end -%>
+  <%- if scope.lookupvar('table_prefix') -%>
+  table_prefix = "<%= scope.lookupvar('table_prefix') -%>"
+  <%- end -%>
+  <%- if scope.lookupvar('instance_name') -%>
+  instance_name = "<%= scope.lookupvar('instance_name') -%>"
+  <%- end -%>
+  <%- if scope.lookupvar('instance_description') -%>
+  instance_description = "<%= scope.lookupvar('instance_description') -%>"
+  <%- end -%>
+
+  <%- if ! scope.lookupvar('cleanup').empty? -%>
+  cleanup = {
+    <%- scope.lookupvar('cleanup').sort.each do |key, value| -%>
+    <%- return if ! value -%>
+    <%= key %> = <%= value %>
+    <%- end -%>
+  }
+  <%- end -%>
+
+  <%- if scope.lookupvar('categories').length != 0 -%>
+  categories = <%= scope.lookupvar('categories').sort.join(' | ') %>
+  <%- end -%>
+}
