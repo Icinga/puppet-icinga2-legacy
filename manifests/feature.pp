@@ -43,7 +43,7 @@ define icinga2::feature (
   file { "icinga2 feature ${name} enabled":
     ensure => link,
     path   => "/etc/icinga2/features-enabled/${name}.conf",
-    target => "../feature-available/${name}.conf",
+    target => "../features-available/${name}.conf",
   }
 
   if $::icinga2::manage_service {
