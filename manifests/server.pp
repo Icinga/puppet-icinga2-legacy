@@ -27,9 +27,11 @@ class icinga2::server (
   $db_name = $icinga2::params::db_name,
   $db_user = $icinga2::params::db_user,
   $db_password = $icinga2::params::db_password,
-  $db_host = $icinga2::params::db_host,
-  $db_port = $icinga2::params::db_port,
+  $db_host = 'localhost',
+  $db_port = undef,
 ) inherits icinga2::params {
+
+  warning('DEPRECATED: The usage of icinga2::server is deprecated and might be removed due to refactoring')
 
   #Do some validation of parameters so we know we have the right data types:
   validate_bool($manage_repos)
@@ -55,73 +57,20 @@ class icinga2::server (
     fail('icinga2::server::disabled_features is no longer supported, please use icinga2::default_features')
   }
 
-  #Pick set the right path where we can find the DB schema based on the OS...
-  case $::operatingsystem {
-    'CentOS','RedHat': {
-      #...and database that the user picks
-      case $server_db_type {
-        'mysql': { $server_db_schema_path = '/usr/share/icinga2-ido-mysql/schema/mysql.sql' }
-        'pgsql': { $server_db_schema_path = '/usr/share/icinga2-ido-pgsql/schema/pgsql.sql' }
-        default: { fail("${server_db_type} is not a supported database! Please specify either 'mysql' for MySQL or 'pgsql' for Postgres.") }
-      }
-    }
-
-    #Ubuntu systems:
-    'Ubuntu': {
-      #Pick set the right path where we can find the DB schema
-      case $server_db_type {
-        'mysql': { $server_db_schema_path = '/usr/share/icinga2-ido-mysql/schema/mysql.sql' }
-        'pgsql': { $server_db_schema_path = '/usr/share/icinga2-ido-pgsql/schema/pgsql.sql' }
-        default: { fail("${server_db_type} is not a supported database! Please specify either 'mysql' for MySQL or 'pgsql' for Postgres.") }
-      }
-    }
-
-    #Debian systems:
-    'Debian': {
-      #Pick set the right path where we can find the DB schema
-      case $server_db_type {
-        'mysql': { $server_db_schema_path = '/usr/share/icinga2-ido-mysql/schema/mysql.sql' }
-        'pgsql': { $server_db_schema_path = '/usr/share/icinga2-ido-pgsql/schema/pgsql.sql' }
-        default: { fail("${server_db_type} is not a supported database! Please specify either 'mysql' for MySQL or 'pgsql' for Postgres.") }
-      }
-    }
-
-    #Fail if we're on any other OS:
-    default: { fail("${::operatingsystem} is not supported!") }
-  }
-
-  if $manage_service == true {
-    #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
-    #class left is applied before the class on the right and that it also refreshes the
-    #class on the right.
-
-    #Start with the icinga2 class to install Icinga 2 itself and enable some
-    #server-specific features:
-    class {'::icinga2':
-      install_mail_utils_package => $install_mail_utils_package,
-      install_nagios_plugins     => $install_nagios_plugins,
-      default_features           => $default_features,
-      purge_configs              => $purge_unmanaged_object_files,
-      manage_service             => false,
-    } ~>
-    #Install the DB IDO packages and load the DB schema:
-    class {'::icinga2::server::install':} ~>
-    class {'::icinga2::service':} ->
-    Class['icinga2::server']
-
-  }
-  else {
-    #Like the class applications above in the previous block, but without the icinga2::class
-    class {'::icinga2':
-      install_mail_utils_package => $install_mail_utils_package,
-      install_nagios_plugins     => $install_nagios_plugins,
-      default_features           => $default_features,
-      purge_configs              => $purge_unmanaged_object_files,
-      manage_service             => false,
-    } ~>
-    class {'::icinga2::server::install':} ~>
-    Class['icinga2::server']
-
-  }
+  class {'::icinga2':
+    install_mail_utils_package => $install_mail_utils_package,
+    install_nagios_plugins     => $install_nagios_plugins,
+    purge_configs              => $purge_unmanaged_object_files,
+    manage_service             => $manage_service,
+    manage_database            => true,
+    db_type                    => $server_db_type,
+    db_host                    => $db_host,
+    db_port                    => $db_port,
+    db_name                    => $db_name,
+    db_user                    => $db_user,
+    db_pass                    => $db_password,
+  } ~>
+  #Install the DB IDO packages and load the DB schema:
+  Class['icinga2::server']
 
 }

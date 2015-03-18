@@ -9,6 +9,7 @@ class IcingaPuppet
         :operatingsystemmajrelease => '7',
         :lsbdistcodename           => 'wheezy',
         :lsbdistid                 => 'debian',
+        :path                      => '/dummy',
       },
       'Ubuntu trusty' => {
         :osfamily                  => 'Debian',
@@ -17,6 +18,7 @@ class IcingaPuppet
         :operatingsystemmajrelease => '14.04',
         :lsbdistcodename           => 'trusty',
         :lsbdistid                 => 'ubuntu',
+        :path                      => '/dummy',
       },
       'RedHat 6' => {
         :osfamily                  => 'RedHat',
@@ -25,6 +27,7 @@ class IcingaPuppet
         :operatingsystemmajrelease => '6',
         #:lsbdistcodename          => '',
         #:lsbdistid                => 'ubuntu',
+        :path                      => '/dummy',
       },
     }
   end

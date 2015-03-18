@@ -195,12 +195,14 @@ class icinga2::params {
   ##############################
 
   #Database paramters
-  $server_db_type = 'pgsql'
-  $db_name = 'icinga2_data'
-  $db_user = 'icinga2'
+  $db_type     = 'pgsql'
+  $db_name     = 'icinga2_data'
+  $db_user     = 'icinga2'
   $db_password = 'password'
-  $db_host = 'localhost'
-  $db_port        = '5432'
+
+  # the schema is currently not OS specific
+  $db_schema_mysql = '/usr/share/icinga2-ido-mysql/schema/mysql.sql'
+  $db_schema_pgsql = '/usr/share/icinga2-ido-pgsql/schema/pgsql.sql'
 
   #Whether to install the plugin packages when the icinga2::server class is applied:
   $server_install_nagios_plugins = true

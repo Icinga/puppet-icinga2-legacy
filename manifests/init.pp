@@ -11,6 +11,14 @@
 #
 class icinga2 (
   $default_features             = true,
+  $db_type                      = $::icinga2::params::db_type,
+  $db_host                      = 'localhost',
+  $db_port                      = undef,
+  $db_name                      = $::icinga2::params::db_name,
+  $db_user                      = $::icinga2::params::db_user,
+  $db_pass                      = $::icinga2::params::db_pass,
+  $db_schema                    = undef,
+  $manage_database              = false,
   $manage_repos                 = $icinga2::params::manage_repos,
   $manage_service               = $icinga2::params::manage_service,
   $use_debmon_repo              = $icinga2::params::use_debmon_repo,
@@ -21,7 +29,8 @@ class icinga2 (
   $purge_configs                = true,
 ) inherits icinga2::params {
 
-  # Do some validation of parameters so we know we have the right data types:
+  validate_bool($manage_database)
+  validate_bool($manage_service)
   validate_bool($manage_repos)
   validate_bool($use_debmon_repo)
   validate_string($package_provider)
@@ -37,6 +46,14 @@ class icinga2 (
     Class['icinga2::config'] ~>
     class {'::icinga2::service':} ->
     Class['icinga2']
+  }
+
+  if $manage_database == true {
+    class {'::icinga2::database':
+    } -> Class['icinga2']
+    if $manage_service {
+      Class['icinga2::database'] ~> Class['icinga2::service']
+    }
   }
 
 }
