@@ -38,7 +38,7 @@ class icinga2::feature::ido_mysql (
     provider => $::icinga2::package_provider,
   }
 
-  ::icinga2::object::idomysqlconnection { 'ido_mysql':
+  ::icinga2::object::idomysqlconnection { 'ido-mysql':
     host                 => $host,
     port                 => $port,
     user                 => $user,
@@ -49,10 +49,10 @@ class icinga2::feature::ido_mysql (
     instance_description => $instance_description,
     cleanup              => $cleanup,
     categories           => $categories,
-    target_file          => '/etc/icinga2/features-available/ido_mysql.conf',
+    target_file          => '/etc/icinga2/features-available/ido-mysql.conf',
   } ->
 
-  ::icinga2::feature { 'ido_mysql':
+  ::icinga2::feature { 'ido-mysql':
     manage_file => false,
   }
 }

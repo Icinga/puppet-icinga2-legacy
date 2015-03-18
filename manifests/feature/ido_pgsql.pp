@@ -38,7 +38,7 @@ class icinga2::feature::ido_pgsql (
     provider => $::icinga2::package_provider,
   }
 
-  ::icinga2::object::idopgsqlconnection { 'ido_pgsql':
+  ::icinga2::object::idopgsqlconnection { 'ido-pgsql':
     host                 => $host,
     port                 => $port,
     user                 => $user,
@@ -49,10 +49,10 @@ class icinga2::feature::ido_pgsql (
     instance_description => $instance_description,
     cleanup              => $cleanup,
     categories           => $categories,
-    target_file          => '/etc/icinga2/features-available/ido_pgsql.conf',
+    target_file          => '/etc/icinga2/features-available/ido-pgsql.conf',
   } ->
 
-  ::icinga2::feature { 'ido_pgsql':
+  ::icinga2::feature { 'ido-pgsql':
     manage_file => false,
   }
 }
