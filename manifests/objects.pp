@@ -82,10 +82,6 @@ class icinga2::objects {
   if $hash_service {
     create_resources(icinga2::object::service,$hash_service)
   }
-  $hash_sysloglogger = hiera_hash('icinga2::object::sysloglogger',undef)
-  if $hash_sysloglogger {
-    create_resources(icinga2::object::sysloglogger,$hash_sysloglogger)
-  }
   $hash_timeperiod = hiera_hash('icinga2::object::timeperiod',undef)
   if $hash_timeperiod {
     create_resources(icinga2::object::timeperiod,$hash_timeperiod)

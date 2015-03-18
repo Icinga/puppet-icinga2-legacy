@@ -10,6 +10,7 @@
 # Please see the README for details on how to use this module.
 #
 class icinga2 (
+  $default_features             = true,
   $manage_repos                 = $icinga2::params::manage_repos,
   $manage_service               = $icinga2::params::manage_service,
   $use_debmon_repo              = $icinga2::params::use_debmon_repo,
@@ -17,8 +18,6 @@ class icinga2 (
   $icinga2_package              = $icinga2::params::icinga2_package,
   $install_nagios_plugins       = $icinga2::params::install_nagios_plugins,
   $install_mail_utils_package   = $icinga2::params::install_mail_utils_package,
-  $enabled_features             = $icinga2::params::enabled_features,
-  $disabled_features            = $icinga2::params::disabled_features,
   $purge_unmanaged_object_files = $icinga2::params::purge_unmanaged_object_files
 ) inherits icinga2::params {
 
@@ -31,10 +30,7 @@ class icinga2 (
 
   class {'::icinga2::install':} ~>
   class {'::icinga2::config':} ~>
-  class {'::icinga2::features':
-    enabled_features  => $enabled_features,
-    disabled_features => $disabled_features,
-  } ~>
+  class {'::icinga2::features': } ~>
   Class['icinga2']
 
   if $manage_service == true {

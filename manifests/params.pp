@@ -53,10 +53,6 @@ class icinga2::params {
   #whether to install packages that provide the 'mail' binary
   $install_mail_utils_package = false
 
-  #What Icinga 2 features should be enabled when icinga2::server::features class is applied:
-  $enabled_features = ['checker','notification']
-  $disabled_features = []
-
   #Whether to purge object files or directories in /etc/icinga2/objects that aren't managed by Puppet:
   $purge_unmanaged_object_files = false
 
@@ -211,10 +207,6 @@ class icinga2::params {
 
   #Whether to install the plugin packages when the icinga2::server class is applied:
   $server_install_nagios_plugins = true
-
-  #What Icinga 2 features should be enabled when icinga2::server::features class is applied:
-  $server_enabled_features = ['checker','notification']
-  $server_disabled_features = []
 
   ##############################
   # Icinga 2 server package parameters

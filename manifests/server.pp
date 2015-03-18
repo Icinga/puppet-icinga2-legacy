@@ -12,7 +12,6 @@
 #
 
 class icinga2::server (
-  #
   $manage_repos = $icinga2::params::manage_repos,
   $manage_service = $icinga2::params::manage_service,
   $use_debmon_repo = $icinga2::params::use_debmon_repo,
@@ -20,8 +19,8 @@ class icinga2::server (
   $icinga2_package = $icinga2::params::icinga2_package,
   $install_nagios_plugins = $icinga2::params::install_nagios_plugins,
   $install_mail_utils_package = $icinga2::params::install_mail_utils_package,
-  $enabled_features = $icinga2::params::enabled_features,
-  $disabled_features = $icinga2::params::disabled_features,
+  $enabled_features = undef,
+  $disabled_features = undef,
   $purge_unmanaged_object_files = $icinga2::params::purge_unmanaged_object_files,
   #Icinga 2 server specific parameters:
   $server_db_type = $icinga2::params::server_db_type,
@@ -30,8 +29,6 @@ class icinga2::server (
   $db_password = $icinga2::params::db_password,
   $db_host = $icinga2::params::db_host,
   $db_port = $icinga2::params::db_port,
-  $server_enabled_features = $icinga2::params::server_enabled_features,
-  $server_disabled_features = $icinga2::params::server_disabled_features,
 ) inherits icinga2::params {
 
   #Do some validation of parameters so we know we have the right data types:
@@ -46,6 +43,17 @@ class icinga2::server (
   validate_string($package_provider)
   validate_string($::icinga2::params::icinga2_server_package)
   validate_bool($::icinga2::params::server_install_nagios_plugins)
+
+  if $enabled_features {
+    validate_array($enabled_features)
+    $default_features = $enabled_features
+  }
+  else {
+    $default_features = true
+  }
+  if $disabled_features {
+    fail('icinga2::server::disabled_features is no longer supported, please use icinga2::default_features')
+  }
 
   #Pick set the right path where we can find the DB schema based on the OS...
   case $::operatingsystem {
@@ -92,7 +100,7 @@ class icinga2::server (
     class {'::icinga2':
       install_mail_utils_package   => $install_mail_utils_package,
       install_nagios_plugins       => $install_nagios_plugins,
-      enabled_features             => $server_enabled_features,
+      default_features             => $default_features,
       purge_unmanaged_object_files => true,
       manage_service               => false,
     } ~>
@@ -107,7 +115,7 @@ class icinga2::server (
     class {'::icinga2':
       install_mail_utils_package   => $install_mail_utils_package,
       install_nagios_plugins       => $install_nagios_plugins,
-      enabled_features             => $server_enabled_features,
+      default_features             => $default_features,
       purge_unmanaged_object_files => true,
       manage_service               => false,
     } ~>

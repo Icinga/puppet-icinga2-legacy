@@ -1,21 +1,22 @@
-# Enable Features for Icinga 2
-class icinga2::features (
-  $enabled_features = undef,
-  $disabled_features = undef,
-) {
+# == Class: icinga2::features
+#
+# Managing the enabled features of Icinga2
+#
+class icinga2::features {
 
-  # Do some checking
-  validate_array($enabled_features)
-  validate_array($disabled_features)
+  if $::icinga2::default_features == true {
+    ::icinga2::feature { 'checker': }
+    include ::icinga2::feature::notification
+    include ::icinga2::feature::mainlog
+  }
+  else {
+    validate_array($::icinga2::default_features)
 
-  #Compare the enabled and disabled feature arrays
-  #Remove enabled features that are also listed to be disabled
-  $updated_enabled_features = difference($enabled_features,$disabled_features)
+    if ! member($::icinga2::default_features, 'checker') {
+      warning('The feature "checker" is a core feature of Icinga 2, are you sure you want to disable it?')
+    }
 
-  #Pass the disabled features array to the define for looping
-  icinga2::features::disable { $disabled_features: }
-
-  #Pass the features array to the define for looping
-  icinga2::features::enable { $updated_enabled_features: }
+    ::icinga2::features::load { $::icinga2::default_features: }
+  }
 
 }

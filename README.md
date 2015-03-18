@@ -415,6 +415,42 @@ icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
 }
 </pre>
 
+####[Features](id:features)
+
+TODO: describe init.pp params
+TODO: checker
+
+* [icinga2::feature::mainlog](#feature_mainlog)
+* [icinga2::feature::notification](#icinga2featurenotification)
+
+Please see the [Icinga 2 Documentation](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types) for details on the
+attributes.
+
+#####[`icinga2::feature::mainlog`](id:feature_mainlog)
+
+This feature is enabled by default and defines where to write the main log file of Icinga2.
+
+You can change the location and severity.
+
+``` puppet
+class { 'icinga2::feature::mainlog':
+  severity => 'debug',
+  path     => '/data/icinga2/icinga2.log',
+}
+```
+
+#####[`icinga2::feature::notification`](id:feature_notification)
+
+This feature is enabled by default and enabled notification features in Icinga2.
+
+You can change the enable_ha feature
+
+``` puppet
+class { 'icinga2::feature::mainlog':
+  enable_ha => false,
+}
+```
+
 ####[Objects](id:objects)
 
 Object types:
@@ -425,12 +461,10 @@ Object types:
 * [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::compatlogger](#icinga2objectcompatlogger)
-* [icinga2::object::checkercomponent](#icinga2objectcheckercomponent)
 * [icinga2::object::checkresultreader](#icinga2objectcheckresultreader)
 * [icinga2::object::endpoint](#icinga2objectendpoint)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
 * [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
-* [icinga2::object::filelogger](#icinga2objectfilelogger)
 * [icinga2::object::host](#icinga2objecthost)
 * [icinga2::object::hostgroup](#icinga2objecthostgroup)
 * [icinga2::object::icingastatuswriter](#icinga2objecticingastatuswriter)
@@ -439,7 +473,6 @@ Object types:
 * [icinga2::object::livestatuslistener](#icinga2objectlivestatuslistener)
 * [icinga2::object::notification](#icinga2objectnotification)
 * [icinga2::object::notificationcommand](#icinga2objectnotificationcommand)
-* [icinga2::object::notificationcomponent](#icinga2objectnotificationcomponent)
 * [icinga2::object::perfdatawriter](#icinga2objectperfdatawriter)
 * [icinga2::object::scheduleddowntime](#icinga2objectscheduleddowntime)
 * [icinga2::object::service](#icinga2objectservice)
@@ -602,27 +635,6 @@ icinga2::object::compatlogger { 'daily-log':
 Both patameters as optionals. The parameter `rotation_method` can one of `HOURLY`, `DAILY`, `WEEKLY` or `MONTHY`.
 See [CompatLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-compatlogger) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
-####[`icinga2::object::checkercomponent`](id:object_checkercomponent)
-
-The `checkercomponent` defined type can create `checkercomponent` objects.
-
-Example:
-
-<pre>
-icinga2::object::checkercomponent {'checker':}
-</pre>
-
-This object support the following parameters:
-* `ensure` - Optional parameter used to remove or create the file, Default value is 'file'. Use 'absent' to remove the file.
-* `object_name` - Optional. Used to define file name. default value is 'checker'
-* `target_dir`  - Optional. Define where the conf fil will be created. Default value is '/etc/icinga2/conf.d'
-* `target_file_name` - Optional. Define the file name. Default value is '${object_name}.conf'. 
-* `target_file_owner` - Optional. File Owner. Default value is 'root'.
-* `target_file_group` - Optional. File Group. Default value is 'root'.
-* `target_file_mode` - Optional. File Mode. Default value is '0644'.
-
-See [CheckerComponent](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-checkercomponent) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about this object.
-
 ####[`icinga2::object::checkresultreader`](id:object_checkresultreader)
 
 The `checkresultreader` defined type can create `checkresultreader` objects.
@@ -675,21 +687,6 @@ icinga2::object::externalcommandlistener { 'external':
 </pre>
 
 See [ExternalCommandListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-externalcommandlistener) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
-
-####[`icinga2::object::filelogger`](id:object_filelogger)
-
-This defined type creates file logger objects.
-
-Example:
-
-<pre>
-icinga2::object::filelogger { 'debug-file':
-  severity => 'debug',
-  path     => '/var/log/icinga2/debug.log',
-}
-</pre>
-
-See [FileLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-filelogger) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::host`](id:object_host)
 
@@ -896,30 +893,6 @@ icinga2::object::notificationcommand { 'mail-service-notification':
 </pre>
 
 This object use the same parameter defined to `checkcommand`.
-
-####[`icinga2::object::notificationcomponent`](id:object_notificationcomponent) 
- 
-The `notificationcomponent` defined type can create `notificationcomponent` objects. 
- 
-Example: 
- 
-<pre> 
-icinga2::object::notificationcomponent {'notification':} 
-</pre> 
- 
-This object support the following parameters: 
-* `ensure` - Optional parameter used to remove or create the file, Default value is 'file'. Use 'absent' to remove the file. 
-* `object_name` - Optional. Used to define file name. default value is 'checker'
-* `enable_ha` - Optional. Enable the high availability functionality. Only valid in a cluster setup. Default value is true.  
-* `target_dir`  - Optional. Define where the conf fil will be created. Default value is '/etc/icinga2/features-available' 
-* `target_file_name` - Optional. Define the file name. Default value is '${object_name}.conf'.  
-* `target_file_owner` - Optional. File Owner. Default value is 'root'. 
-* `target_file_group` - Optional. File Group. Default value is 'root'. 
-* `target_file_mode` - Optional. File Mode. Default value is '0644'. 
- 
-See [NotificationComponent](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-notificationcomponent) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about this object. 
-
-Should be enable/disable using `icinga2::features::enable` or `icinga2::features::disable`.
 
 ####[`icinga2::object::perfdatawriter`](id:object_perfdatawriter)
 
