@@ -4,8 +4,6 @@
 #
 class icinga2::config {
 
-  assert_private()
-
   if $purge_unmanaged_object_files == true { # lint:ignore:variable_scope
     $recurse_and_purge = true
   }
