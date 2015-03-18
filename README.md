@@ -1,5 +1,15 @@
-puppet-icinga2
-==========
+Icinga 2 Puppet module
+======================
+
+# Fair warning
+
+The GIT branch `develop` of this module is in a bit of flux at the moment.
+
+Please make sure to check:
+* https://github.com/Icinga/puppet-icinga2/pull/94
+* https://dev.icinga.org/projects/puppet-icinga2/roadmap
+
+TODO: remove for release!
 
 Table of Contents
 -----------------
