@@ -12,6 +12,7 @@ define icinga2::object::idomysqlconnection (
   $table_prefix         = 'icinga_',
   $instance_name        = 'default',
   $instance_description = undef,
+  $enable_ha            = true,
   $cleanup              = {
     acknowledgements_age           => 0,
     commenthistory_age             => 0,
@@ -45,6 +46,7 @@ define icinga2::object::idomysqlconnection (
   validate_string($database)
   validate_string($table_prefix)
   validate_string($instance_name)
+  validate_bool($enable_ha)
   validate_hash($cleanup)
   validate_array($categories)
   validate_absolute_path($target_file)

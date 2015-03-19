@@ -13,6 +13,7 @@ class icinga2::feature::ido_mysql (
   $table_prefix         = 'icinga_',
   $instance_name        = 'default',
   $instance_description = undef,
+  $enable_ha            = true,
   $cleanup              = {
     acknowledgements_age           => 0,
     commenthistory_age             => 0,
@@ -47,6 +48,7 @@ class icinga2::feature::ido_mysql (
     table_prefix         => $table_prefix,
     instance_name        => $instance_name,
     instance_description => $instance_description,
+    enable_ha            => $enable_ha,
     cleanup              => $cleanup,
     categories           => $categories,
     target_file          => '/etc/icinga2/features-available/ido-mysql.conf',

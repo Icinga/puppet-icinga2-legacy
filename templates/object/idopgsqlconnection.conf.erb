@@ -27,6 +27,7 @@ object IdoPgsqlConnection "<%= @name %>" {
   <%- if @instance_description -%>
   instance_description = "<%= @instance_description -%>"
   <%- end -%>
+  enable_ha = <%= @enable_ha -%>
 
   <%- if ! @cleanup.empty? -%>
   cleanup = {
