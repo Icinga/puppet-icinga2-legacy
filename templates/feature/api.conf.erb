@@ -1,0 +1,18 @@
+<%= ERB.new(File.read(File.expand_path('_header.erb',File.dirname(File.dirname(file))))).result(binding) -%>
+
+object ApiListener "api" {
+  cert_path = "<%= @cert_path %>"
+  key_path = "<%= @key_path %>"
+  ca_path = "<%= @ca_path %>"
+  <%- if @crl_path -%>
+  crl_path = "<%= @crl_path %>"
+  <%- end -%>
+  <%- if @bind_host -%>
+  bind_host = "<%= @bind_host %>"
+  <%- end -%>
+  <%- if @bind_port -%>
+  bind_port = <%= @bind_port %>
+  <%- end -%>
+  accept_config = <%= @accept_config %>
+  accept_commands = <%= @accept_commands %>
+}

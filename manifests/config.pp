@@ -79,8 +79,6 @@ class icinga2::config {
       ensure => directory;
     '/etc/icinga2/objects/statusdatawriters':
       ensure => directory;
-    '/etc/icinga2/objects/apilisteners':
-      ensure => directory;
     '/etc/icinga2/objects/endpoints':
       ensure => directory;
     '/etc/icinga2/objects/zones':
