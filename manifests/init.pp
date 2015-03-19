@@ -27,7 +27,14 @@ class icinga2 (
   $install_nagios_plugins       = $icinga2::params::install_nagios_plugins,
   $install_mail_utils_package   = $icinga2::params::install_mail_utils_package,
   $purge_configs                = true,
+  $purge_confd                  = false,
 ) inherits icinga2::params {
+
+  # TODO: temporary parameter until we provide some default templates
+  validate_bool($purge_confd)
+  if $purge_confd {
+    warning('icinga2::purge_confd is a temporary parameter and will be removed again!')
+  }
 
   validate_bool($manage_database)
   validate_bool($manage_service)

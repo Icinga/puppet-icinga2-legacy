@@ -14,12 +14,22 @@ class icinga2::config {
   file {
     [
       '/etc/icinga2',
-      '/etc/icinga2/conf.d',
       '/etc/icinga2/pki',
       '/etc/icinga2/scripts',
       '/etc/icinga2/zones.d',
     ]:
       ensure => directory,
+  }
+
+  # TODO: temporary until we provide some default templates
+  file {
+    [
+      '/etc/icinga2/conf.d',
+    ]:
+      ensure  => directory,
+      purge   => $::icinga2::purge_confd,
+      recurse => $::icinga2::purge_confd,
+      force   => $::icinga2::purge_confd,
   }
 
   file {
