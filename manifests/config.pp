@@ -79,14 +79,6 @@ class icinga2::config {
       ensure => directory;
     '/etc/icinga2/objects/statusdatawriters':
       ensure => directory;
-    '/etc/icinga2/objects/externalcommandlisteners':
-      ensure => directory;
-    '/etc/icinga2/objects/checkercomponents':
-      ensure => directory;
-    '/etc/icinga2/objects/notificationcomponents':
-      ensure => directory;
-    '/etc/icinga2/objects/fileloggers':
-      ensure => directory;
     '/etc/icinga2/objects/apilisteners':
       ensure => directory;
     '/etc/icinga2/objects/endpoints':
