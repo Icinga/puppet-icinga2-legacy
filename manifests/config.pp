@@ -51,54 +51,36 @@ class icinga2::config {
 
   # maintained object directories
   file {
-    '/etc/icinga2/objects/hosts':
-      ensure => directory;
-    '/etc/icinga2/objects/hostgroups':
-      ensure => directory;
-    '/etc/icinga2/objects/services':
-      ensure => directory;
-    '/etc/icinga2/objects/servicegroups':
-      ensure => directory;
-    '/etc/icinga2/objects/users':
-      ensure => directory;
-    '/etc/icinga2/objects/usergroups':
-      ensure => directory;
-    '/etc/icinga2/objects/checkcommands':
-      ensure => directory;
-    '/etc/icinga2/objects/notificationcommands':
-      ensure => directory;
-    '/etc/icinga2/objects/eventcommands':
-      ensure => directory;
-    '/etc/icinga2/objects/notifications':
-      ensure => directory;
-    '/etc/icinga2/objects/timeperiods':
-      ensure => directory;
-    '/etc/icinga2/objects/scheduleddowntimes':
-      ensure => directory;
-    '/etc/icinga2/objects/dependencies':
-      ensure => directory;
-    '/etc/icinga2/objects/perfdatawriters':
-      ensure => directory;
-    '/etc/icinga2/objects/graphitewriters':
-      ensure => directory;
-    '/etc/icinga2/objects/idomysqlconnections':
-      ensure => directory;
-    '/etc/icinga2/objects/idopgsqlconnections':
-      ensure => directory;
-    '/etc/icinga2/objects/livestatuslisteners':
-      ensure => directory;
-    '/etc/icinga2/objects/statusdatawriters':
-      ensure => directory;
-    '/etc/icinga2/objects/endpoints':
-      ensure => directory;
-    '/etc/icinga2/objects/zones':
-      ensure => directory;
-    '/etc/icinga2/objects/applys':
-      ensure => directory;
-    '/etc/icinga2/objects/templates':
-      ensure => directory;
-    '/etc/icinga2/objects/constants':
-      ensure => directory;
+    [
+      '/etc/icinga2/objects/hosts',
+      '/etc/icinga2/objects/hostgroups',
+      '/etc/icinga2/objects/services',
+      '/etc/icinga2/objects/servicegroups',
+      '/etc/icinga2/objects/users',
+      '/etc/icinga2/objects/usergroups',
+      '/etc/icinga2/objects/checkcommands',
+      '/etc/icinga2/objects/notificationcommands',
+      '/etc/icinga2/objects/eventcommands',
+      '/etc/icinga2/objects/notifications',
+      '/etc/icinga2/objects/timeperiods',
+      '/etc/icinga2/objects/scheduleddowntimes',
+      '/etc/icinga2/objects/dependencies',
+      '/etc/icinga2/objects/perfdatawriters',
+      '/etc/icinga2/objects/graphitewriters',
+      '/etc/icinga2/objects/idomysqlconnections',
+      '/etc/icinga2/objects/idopgsqlconnections',
+      '/etc/icinga2/objects/livestatuslisteners',
+      '/etc/icinga2/objects/statusdatawriters',
+      '/etc/icinga2/objects/endpoints',
+      '/etc/icinga2/objects/zones',
+      '/etc/icinga2/objects/applys',
+      '/etc/icinga2/objects/templates',
+      '/etc/icinga2/objects/constants',
+    ]:
+      ensure  => directory,
+      purge   => $::icinga2::purge_configs,
+      recurse => $::icinga2::purge_configs,
+      force   => $::icinga2::purge_configs,
   }
 
 }
