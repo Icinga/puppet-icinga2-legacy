@@ -233,7 +233,7 @@ If you would like to install packages to make a `mail` command binary available 
 
 To manage the features that are enabled or disabled on an Icinga 2 server, you can specify them with the `server_enabled_features` and `server_disabled_features` parameters.
 
-The parameters should be given as arrays of single-quoted strings.  
+The parameters should be given as arrays of single-quoted strings.
 
 **Note:** Even if you're only specifying one feature, you will still need to specify it as an array.
 
@@ -586,7 +586,8 @@ Example:
 #Create an HTTP check command:
 icinga2::object::checkcommand { 'check_http':
   command => ['"/check_http"'],
-  arguments     => {'"-H"'             => '"$http_vhost$"',
+  arguments     => {
+    '"-H"'          => '"$http_vhost$"',
     '"-I"'          => '"$http_address$"',
     '"-u"'          => '"$http_uri$"',
     '"-p"'          => '"$http_port$"',
