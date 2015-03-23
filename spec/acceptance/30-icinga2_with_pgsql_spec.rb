@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'icinga2::server' do
+describe 'icinga2' do
 
   before :all do
     on default, puppet('module','install','puppetlabs-postgresql')
@@ -16,9 +16,10 @@ describe 'icinga2::server' do
         password => postgresql_password('icinga2', 'password'),
       }
       ->
-      class { '::icinga2::server':
+      class { '::icinga2':
         manage_repos    => false,
-        server_db_type  => 'pgsql',
+        manage_database => true,
+        db_type         => 'pgsql',
         use_debmon_repo => false,
       }
       EOS

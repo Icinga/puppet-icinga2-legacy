@@ -1,11 +1,11 @@
 require 'spec_helper_acceptance'
 
-describe 'icinga2::node' do
+describe 'icinga2' do
 
   context 'with defaults' do
     it 'should idempotently run' do
       pp = <<-EOS
-      class { '::icinga2::node': }
+      class { '::icinga2': }
       EOS
 
       apply_manifest(pp, :catch_failures => true)
