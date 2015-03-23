@@ -6,7 +6,7 @@ describe 'icinga2' do
     on default, puppet('module','install','puppetlabs-postgresql')
   end
 
-  context 'with defaults' do
+  context 'with PostgreSQL database as IDO backend' do
     it 'should idempotently run' do
       pp = <<-EOS
       class { 'postgresql::server': }
