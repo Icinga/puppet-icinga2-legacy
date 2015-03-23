@@ -67,6 +67,7 @@ class icinga2::params {
           #Packages for Nagios plugins:
           $nagios_plugin_packages = ['nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
           $mail_package = 'mailx'
+          $nagios_plugin_package_install_options = undef
         }
         '6': {
           #Icinga 2 package:
@@ -75,6 +76,7 @@ class icinga2::params {
           $nagios_plugin_packages = ['nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
           #Package that provides a 'mail' binary:
           $mail_package = 'mailx'
+          $nagios_plugin_package_install_options = undef
         }
         '7': {
           #Icinga 2 package:
@@ -83,6 +85,7 @@ class icinga2::params {
           $nagios_plugin_packages = ['nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
           #Package that provides a 'mail' binary:
           $mail_package = 'mailx'
+          $nagios_plugin_package_install_options = undef
         }
         #Fail if we're on any other CentOS release:
         default: { fail("${::operatingsystemmajrelease} is not a supported CentOS release!") }
