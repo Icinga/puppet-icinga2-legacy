@@ -195,10 +195,10 @@ class icinga2::params {
   ##############################
 
   #Database paramters
-  $db_type     = 'pgsql'
-  $db_name     = 'icinga2_data'
-  $db_user     = 'icinga2'
-  $db_password = 'password'
+  $db_type = 'pgsql'
+  $db_name = 'icinga2_data'
+  $db_user = 'icinga2'
+  $db_pass = 'password'
 
   # the schema is currently not OS specific
   $db_schema_mysql = '/usr/share/icinga2-ido-mysql/schema/mysql.sql'

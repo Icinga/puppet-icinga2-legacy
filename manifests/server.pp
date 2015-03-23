@@ -26,7 +26,7 @@ class icinga2::server (
   $server_db_type = $icinga2::params::server_db_type,
   $db_name = $icinga2::params::db_name,
   $db_user = $icinga2::params::db_user,
-  $db_password = $icinga2::params::db_password,
+  $db_password = $icinga2::params::db_pass,
   $db_host = 'localhost',
   $db_port = undef,
 ) inherits icinga2::params {
