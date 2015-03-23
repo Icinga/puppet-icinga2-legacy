@@ -9,7 +9,8 @@ gem 'facter', '>= 1.7.0'
 gem 'puppet-lint-strict_indent-check'
 
 group :system_tests do
-  gem 'beaker',        :require => false
-  gem 'beaker-rspec',  :require => false
-  gem 'serverspec',    :require => false
+  gem 'beaker',          :require => false
+  gem 'beaker-rspec',    :require => false
+  gem 'serverspec',      :require => false
+  gem 'vagrant-wrapper', :require => false
 end
