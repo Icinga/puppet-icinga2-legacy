@@ -24,6 +24,11 @@ vendor/
 ## rspec
 spec/fixtures/
 
+## acceptance
+.vagrant/
+junit/
+log/
+
 ## Puppet module
 pkg/
 coverage/
