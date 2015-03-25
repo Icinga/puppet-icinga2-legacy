@@ -16,7 +16,6 @@ class icinga2::config {
       '/etc/icinga2',
       '/etc/icinga2/pki',
       '/etc/icinga2/scripts',
-      '/etc/icinga2/zones.d',
     ]:
       ensure => directory,
   }
@@ -37,6 +36,7 @@ class icinga2::config {
       '/etc/icinga2/features-available',
       '/etc/icinga2/features-enabled',
       '/etc/icinga2/objects',
+      '/etc/icinga2/zones.d',
     ]:
       ensure  => directory,
       purge   => $::icinga2::purge_configs,
