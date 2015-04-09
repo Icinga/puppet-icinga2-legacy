@@ -22,12 +22,12 @@ apply Service "<%= @object_servicename %>" to Host {
   <%- if @host_name -%>
   host_name = "<%= @host_name -%>"
   <%- end -%>
-  <%- if @assign_where -%>
-  assign where <%= @assign_where -%> 
-  <%- end -%>
-  <%- if @ignore_where -%>
-  ignore where <%= @ignore_where -%> 
-  <%- end -%>
+  <% if @assign_where %>
+  assign where <%= @assign_where -%>
+  <% end %>
+  <% if @ignore_where %>
+  ignore where <%= @ignore_where -%>
+  <% end %>
   <%- if @groups.length != 0 -%>
   groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
   <%- end -%>
@@ -36,7 +36,11 @@ apply Service "<%= @object_servicename %>" to Host {
   <%- end -%>
   <%- if @vars.empty? != true  -%>
   <%- @vars.sort_by {|key, value| key}.each do |key, value| -%>
+  <%- if value.class == Array && value.count != 0 -%>
+  vars.<%= key %> = [ <% value.join('", "').each do |val| %>"<%= val %>"<% end -%> ]
+  <%- else -%>
   vars.<%= key %> = "<%= value %>"
+  <%- end -%>
   <%- end -%>
   <%- end -%>
   <%- if @max_check_attempts -%>
