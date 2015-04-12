@@ -16,6 +16,7 @@ define icinga2::object::apply_service_to_host (
   $display_name = $name,
   $assign_where = undef,
   $ignore_where = undef,
+  $command_endpoint = undef,
   $groups = [],
   $vars = {},
   $check_command = undef,
