@@ -11,6 +11,7 @@
 
 define icinga2::object::user (
   $object_username = $name,
+  $template_to_import = undef,
   $display_name = $name,
   $email = undef,
   $pager = undef,
@@ -31,6 +32,7 @@ define icinga2::object::user (
 
   #Do some validation of the class' parameters:
   validate_string($object_username)
+  validate_string($template_to_import)
   validate_string($display_name)
   validate_array($groups)
   validate_hash($vars)
