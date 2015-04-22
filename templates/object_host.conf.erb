@@ -37,7 +37,11 @@ object Host "<%= @object_hostname %>" {
   <%- end -%>
   }
   <%- else -%>
+  <%- if value.is_a?(Array) -%>
+  vars.<%= key %> = <%= value %>
+  <%- else -%>
   vars.<%= key %> = "<%= value %>"
+  <%- end -%>
   <%- end -%>
   <%- end -%>
   <%- end -%>
