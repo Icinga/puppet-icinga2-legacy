@@ -17,7 +17,7 @@ define icinga2::object::user (
   $pager = undef,
   $vars = {},
   $groups = [],
-  $enable_notifications = undef,
+  $enable_notifications = true,
   $period = undef,
   $types = [],
   $states = [],
