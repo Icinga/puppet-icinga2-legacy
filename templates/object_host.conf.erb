@@ -12,9 +12,11 @@
 
 object Host "<%= @object_hostname %>" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
-  <%- if @template_to_import -%>
+  <%- if @templates_to_import.length != 0 -%>
   <%#- Otherwise, include the parameter: -%>
-  import "<%= @template_to_import -%>"
+  <%- @templates_to_import.each do |template| -%>
+  import "<%= template -%>"
+  <%- end -%>
   <%- end -%>
   <%- if @display_name -%>
   display_name = "<%= @display_name -%>"
