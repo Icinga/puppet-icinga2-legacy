@@ -47,6 +47,8 @@ object Service "<%= @object_servicename %>" {
   <%- end -%>
   <%- if @enable_notifications -%>
   enable_notifications = <%= @enable_notifications %>
+  <%- else -%>
+  enable_notifications = false
   <%- end -%>
   <%- if @enable_active_checks -%>
   enable_active_checks = <%= @enable_active_checks %>

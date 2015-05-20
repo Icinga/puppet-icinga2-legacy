@@ -58,6 +58,8 @@ object Host "<%= @object_hostname %>" {
   <%- end -%>
   <%- if @enable_notifications -%>
   enable_notifications = <%= @enable_notifications %>
+  <%- else -%>
+  enable_notifications = false
   <%- end -%>
   <%- if @enable_active_checks -%>
   enable_active_checks = <%= @enable_active_checks %>
