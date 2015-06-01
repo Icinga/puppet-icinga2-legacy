@@ -33,7 +33,15 @@ object Host "<%= @object_hostname %>" {
   <%- if value.is_a?(Hash) -%>
   vars.<%= key %> = {
   <%- value.sort_by {|subkey,subvalue| subkey}.each do |subkey,subvalue| -%>
-    <%= subkey %> = <%= subvalue %>
+  <%- if subvalue.is_a?(Hash) -%>
+    <%= subkey %> = {
+    <%- subvalue.sort_by {|subsubkey,subsubvalue| subsubkey}.each do |subsubkey,subsubvalue| -%>
+    <%= subsubkey %> = "<%= subsubvalue %>"
+    <%- end -%>
+    }
+    <%- else -%>
+    <%= subkey %> = "<%= subvalue %>"
+    <%- end -%>
   <%- end -%>
   }
   <%- else -%>
