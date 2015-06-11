@@ -6,6 +6,10 @@ if not ENV['SPEC_OPTS']
   ENV['SPEC_OPTS'] = '--format documentation'
 end
 
+# load path for template syntax checks
+# we require some modules there
+$:.unshift File.dirname(__FILE__) + '/lib'
+
 #PuppetLint.configuration.send('disable_documentation')
 #PuppetLint.configuration.send('disable_single_quote_string_with_variables')
 
