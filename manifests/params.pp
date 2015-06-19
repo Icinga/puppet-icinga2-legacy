@@ -123,8 +123,17 @@ class icinga2::params {
     #Debian systems:
     'Debian': {
       case $::operatingsystemmajrelease {
-        #Only tested on Debian7
         '7': {
+          #Icinga 2 package:
+          $icinga2_package = 'icinga2'
+          #Packages for Nagios plugins:
+          $nagios_plugin_packages = ['nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-standard', 'nagios-snmp-plugins', 'nagios-plugins-contrib', 'nagios-nrpe-plugin']
+          #Package that provides a 'mail' binary:
+          $mail_package = 'mailutils'
+          #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
+          $nagios_plugin_package_install_options = '--no-install-recommends'
+        }
+        '8': {
           #Icinga 2 package:
           $icinga2_package = 'icinga2'
           #Packages for Nagios plugins:
@@ -182,6 +191,9 @@ class icinga2::params {
     'Debian': {
       case $::operatingsystemmajrelease {
         '7': {
+          $icinga2_daemon_name = 'icinga2'
+        }
+        '8': {
           $icinga2_daemon_name = 'icinga2'
         }
         #Fail if we're on any other Debian release:
@@ -268,8 +280,14 @@ class icinga2::params {
     #Debian systems:
     'Debian': {
       case $::operatingsystemmajrelease {
-        #Only tested on Debian7
         '7': {
+          $icinga2_server_package = 'icinga2'
+          $icinga2_server_plugin_packages = ['nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-standard', 'nagios-snmp-plugins', 'nagios-plugins-contrib', 'nagios-nrpe-plugin']
+          $icinga2_server_mail_package = 'mailutils'
+          #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
+          $server_plugin_package_install_options = '--no-install-recommends'
+        }
+        '8': {
           $icinga2_server_package = 'icinga2'
           $icinga2_server_plugin_packages = ['nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-standard', 'nagios-snmp-plugins', 'nagios-plugins-contrib', 'nagios-nrpe-plugin']
           $icinga2_server_mail_package = 'mailutils'
@@ -416,6 +434,11 @@ class icinga2::params {
     'Debian': {
       case $::operatingsystemmajrelease {
         '7': {
+          $icinga2_client_packages = ['nagios-nrpe-server', 'nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-standard', 'nagios-snmp-plugins', 'nagios-plugins-contrib', 'nagios-nrpe-plugin']
+          #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
+          $client_plugin_package_install_options = '--no-install-recommends'
+        }
+        '8': {
           $icinga2_client_packages = ['nagios-nrpe-server', 'nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-standard', 'nagios-snmp-plugins', 'nagios-plugins-contrib', 'nagios-nrpe-plugin']
           #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
           $client_plugin_package_install_options = '--no-install-recommends'
