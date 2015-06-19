@@ -56,21 +56,25 @@ class icinga2::server::install::repos inherits icinga2::server {
       #Debian systems:
       'Debian': {
         include apt
-
-        #On Debian (7) icinga2 packages are on backports
-        if $use_debmon_repo == false {
-          include apt::backports
-        } else {
+        $icinga2_server_service_name = 'icinga2'
+        if $use_debmon_repo == true {
           apt::source { 'debmon':
             location    => 'http://debmon.org/debmon',
             release     => "debmon-${lsbdistcodename}",
             repos       => 'main',
             key_source  => 'http://debmon.org/debmon/repo.key',
-            key         => '29D662D2',
-            include_src => false,
-            # backports repo use 200
-            pin         => '300'
+            key         => '7E55BD75930BB3674BFD6582DC0EE15A29D662D2',
+            include_src => false
           }
+          if $::operatingsystemmajrelease == '7' {
+            apt::pin { 'debmon':
+              priority    => '300',
+              origin      => 'debmon.org'
+            }
+          }
+        }
+        elsif $::operatingsystemmajrelease == '7' {
+          include apt::backports
         }
       }
 
