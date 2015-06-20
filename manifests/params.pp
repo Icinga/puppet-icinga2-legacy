@@ -175,7 +175,7 @@ class icinga2::params {
 
     #Icinga 2 server daemon names for Ubuntu systems:
     'Ubuntu': {
-      case $::operatingsystemmajrelease {
+      case $::operatingsystemrelease {
         '12.04': {
           $icinga2_daemon_name = 'icinga2'
         }
@@ -183,7 +183,7 @@ class icinga2::params {
           $icinga2_daemon_name = 'icinga2'
         }
         #Fail if we're on any other Ubuntu release:
-        default: { fail("${::operatingsystemmajrelease} is not a supported Ubuntu release version!") }
+        default: { fail("${::operatingsystemrelease} is not a supported Ubuntu release version!") }
       }
     }
 
