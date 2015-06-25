@@ -33,9 +33,9 @@ describe 'icinga2::object::host' do
           :path => '/etc/icinga2/objects/testhost.conf',
           :content => /object Host "testhost"/,
         }) }
-    it { should contain_file(object_file).with_content(/^\s*import "generic-host"$/) }
-    it { should contain_file(object_file).with_content(/^\s*display_name = "testhost"$/) }
-    it { should contain_file(object_file).with_content(/^\s*address = "1.1.1.1"$/) }
+    it { should contain_file(object_file).with_content(/^\s*import generic-host$/) }
+    it { should contain_file(object_file).with_content(/^\s*display_name = testhost$/) }
+    it { should contain_file(object_file).with_content(/^\s*address = 1.1.1.1$/) }
 
   end
 

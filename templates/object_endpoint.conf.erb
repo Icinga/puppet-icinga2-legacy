@@ -11,11 +11,11 @@
 */
 
 object Endpoint "<%= @object_name %>" {
-  host = "<%= @host -%>"
+  host = <%= @host %>
   <%- if @port -%>
-  port = <%= @port -%>
+  port = <%= @port %>
   <%- end -%>
   <%- if @log_duration -%>
-	  log_duration = <%= @log_duration -%>
+  log_duration = <%= @log_duration %>
   <%- end -%>
 }

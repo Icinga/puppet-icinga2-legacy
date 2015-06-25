@@ -14,10 +14,10 @@ apply Notification "<%= @object_notificationname %>" to Service {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @notification_to_import -%>
   <%#- Otherwise, include the parameter: -%>
-  import "<%= @notification_to_import %>"
+  import <%= @notification_to_import %>
   <%- end -%>
   <%- if @host_name -%>
-  host_name = "<%= @host_name %>"
+  host_name = <%= @host_name %>
   <%- end -%>
   <%- if @assign_where -%>
   assign where <%= @assign_where %>
@@ -26,21 +26,21 @@ apply Notification "<%= @object_notificationname %>" to Service {
   ignore where <%= @ignore_where %>
   <%- end -%>
   <%- if @command -%>
-  command = "<%= @command %>"
+  command = <%= @command %>
   <%- end -%>
   <%- if @vars.any? -%>
   vars += <%= scope.function_icinga2_config_value([@vars]) %>
   <%- end -%>
   <%- if @users.empty? !=true -%>
-  users = [ <% @users.each_with_index do |usr, i| %>"<%= usr -%>"<%= ', ' if i < (@users.size - 1) %><% end %> ]
+  users = [ <% @users.each_with_index do |usr, i| %><%= usr -%><%= ', ' if i < (@users.size - 1) %><% end %> ]
   <%- end -%>
   <%- if @user_groups.empty? !=true -%>
-  user_groups = [ <% @user_groups.each_with_index do |u_grp, i| %>"<%= u_grp -%>"<%= ', ' if i < (@user_groups.size - 1) %><% end %> ]
+  user_groups = [ <% @user_groups.each_with_index do |u_grp, i| %><%= u_grp -%><%= ', ' if i < (@user_groups.size - 1) %><% end %> ]
   <%- end -%>
   <%- if @times.empty? != true -%>
   times = {
   <%- @times.sort_by {|key, value| key}.each do |key, value| -%>
-    <%= key %> = "<%= value %>"
+    <%= key %> = <%= value %>
   <%- end -%>
   }
   <%- end -%>
@@ -48,7 +48,7 @@ apply Notification "<%= @object_notificationname %>" to Service {
   interval = <%= @interval %>
   <%- end -%>
   <%- if @period -%>
-  period = "<%= @period -%>"
+  period = <%= @period %>
   <%- end -%>
   <%- if @types.empty? !=true -%>
   types = [ <% @types.each_with_index do |typ, i| %><%= typ -%><%= ', ' if i < (@types.size - 1) %><% end %> ]

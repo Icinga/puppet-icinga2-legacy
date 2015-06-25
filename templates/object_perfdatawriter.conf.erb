@@ -16,26 +16,26 @@ object PerfdataWriter "<%= @object_perfdatawritername %>" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @host_perfdata_path -%>
 
-  host_perfdata_path = "<%= @host_perfdata_path %>"
+  host_perfdata_path = <%= @host_perfdata_path %>
   <%- end -%>
   <%- if @service_perfdata_path -%>
 
-  service_perfdata_path = "<%= @service_perfdata_path %>"
+  service_perfdata_path = <%= @service_perfdata_path %>
   <%- end -%>
   <%- if @host_temp_path -%>
 
-  host_temp_path = "<%= @host_temp_path %>"
+  host_temp_path = <%= @host_temp_path %>
   <%- end -%>
   <%- if @service_temp_path -%>
 
-  service_temp_path = "<%= @service_temp_path %>"
+  service_temp_path = <%= @service_temp_path %>
   <%- end -%>
   
   <%- if @host_format_template -%>
-  host_format_template = "<%= @host_format_template %>"
+  host_format_template = <%= @host_format_template %>
   <%- end -%>
   <%- if @service_format_template -%>
-  service_format_template = "<%= @service_format_template %>"
+  service_format_template = <%= @service_format_template %>
   <%- end -%>
   <%- if @rotation_interval -%>
 

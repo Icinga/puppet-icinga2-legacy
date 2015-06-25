@@ -14,16 +14,16 @@ object User "<%= @object_username %>" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @template_to_import -%>
   <%#- Otherwise, include the parameter: -%>
-  import "<%= @template_to_import -%>"
+  import <%= @template_to_import %>
   <%- end -%>
   <%- if @display_name -%>
-  display_name = "<%= @display_name -%>"
+  display_name = <%= @display_name %>
   <%- end -%>
   <%- if @email -%>
-  email = "<%= @email -%>"
+  email = <%= @email %>
   <%- end -%>
   <%- if @pager -%>
-  pager = "<%= @pager -%>"
+  pager = <%= @pager %>
   <%- end -%>
   <%- if @enable_notifications -%>
   enable_notifications = <%= @enable_notifications %>
@@ -32,14 +32,14 @@ object User "<%= @object_username %>" {
   <%- end %>
   <%- if @vars.empty? != true  -%>
   <%- @vars.sort_by {|key, value| key}.each do |key, value| -%>
-  vars.<%= key %> = "<%= value %>"
+  vars.<%= key %> = <%= value %>
   <%- end -%>
   <%- end -%>
   <%- if @groups.length != 0 -%>
-  groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
+  groups = [ <%- @groups.each do |group| -%> <%= group %>, <%- end -%>]
   <%- end -%>
   <%- if @period -%>
-  period = "<%= @period -%>"
+  period = <%= @period %>
   <%- end -%>
   <%- if @types.length != 0 -%>
   types = [ <%- @types.each do |type| -%> <%= type %>, <%- end -%>]

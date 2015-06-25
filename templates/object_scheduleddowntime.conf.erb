@@ -13,13 +13,13 @@
 object ScheduledDowntime  "<%= @object_scheduleddowntimename %>" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
 
-  host_name = "<%= @host_name -%>"
+  host_name = <%= @host_name %>
   <%- if @service_name -%>
-  service_name = "<%= @service_name -%>"
+  service_name = <%= @service_name %>
   <%- end -%>
 
-  author = "<%= @author -%>"
-  comment = "<%= @comment -%>"
+  author = <%= @author %>
+  comment = <%= @comment %>
 
   <%- if @fixed !=  true -%>
   fixed = false
@@ -31,7 +31,7 @@ object ScheduledDowntime  "<%= @object_scheduleddowntimename %>" {
 
   ranges = {
   <%- @ranges.sort_by {|key, value| key}.each do |key, value| -%>
-    "<%= key %>" = "<%= value %>"
+    <%= key %> = <%= value %>
   <%- end -%>
   }
   <%- end -%>

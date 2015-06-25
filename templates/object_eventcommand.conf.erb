@@ -12,7 +12,7 @@
 
 object EventCommand "<%= @object_eventcommandname %>" {
   <%- if @template_to_import -%>
-  import "<%= @template_to_import -%>"
+  import <%= @template_to_import %>
   <%- end -%>
   <%- if @command -%>
   command = [ <% if @cmd_path -%><%= @cmd_path -%> + <% end -%><% @command.each_with_index do |cmd, i| %><%= cmd -%><%= ', ' if i < (@command.size - 1) %><% end %> ]
