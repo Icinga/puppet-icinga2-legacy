@@ -15,6 +15,6 @@ library "compat"
 object CheckResultReader "<%= @object_checkresultreadername %>" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @spool_dir -%>
-  spool_dir = "<%= @spool_dir %>"
+  spool_dir = <%= @spool_dir %>
   <%- end -%>
 }

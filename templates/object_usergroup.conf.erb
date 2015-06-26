@@ -14,12 +14,12 @@ object UserGroup "<%= @object_usergroup_name %>" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @template_to_import -%>
   <%#- Otherwise, include the parameter: -%>
-  import "<%= @template_to_import -%>"
+  import <%= @template_to_import %>
   <%- end -%>
   <%- if @display_name -%>
-  display_name = "<%= @display_name -%>"
+  display_name = <%= @display_name %>
   <%- end -%>
   <%- if @groups.length != 0 -%>
-  groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
+  groups = [ <%- @groups.each do |group| -%> <%= group %>, <%- end -%>]
   <%- end -%>
 }

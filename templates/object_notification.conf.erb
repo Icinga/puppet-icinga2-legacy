@@ -14,15 +14,15 @@ object Notification "<%= @object_notificationname %>" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @host_name -%>
 
-  host_name = "<%= @host_name -%>"
+  host_name = <%= @host_name %>
   <%- end -%>
   <%- if @service_name -%>
 
-  service_name = "<%= @service_name -%>"
+  service_name = <%= @service_name %>
   <%- end -%>
   <%- if @command -%>
 
-  command = "<%= @command -%>"
+  command = <%= @command %>
   <%- end -%>
   <%- if @vars.empty? != true -%>
 
@@ -38,11 +38,11 @@ object Notification "<%= @object_notificationname %>" {
   <%- end -%>
   <%- if @users.empty? !=true -%>
 
-  users = [ <% @users.each_with_index do |usr, i| %>"<%= usr -%>"<%= ', ' if i < (@users.size - 1) %><% end %> ]
+  users = [ <% @users.each_with_index do |usr, i| %><%= usr -%><%= ', ' if i < (@users.size - 1) %><% end %> ]
   <%- end -%>
   <%- if @user_groups.empty? !=true -%>
 
-  user_groups = [ <% @user_groups.each_with_index do |u_grp, i| %>"<%= u_grp -%>"<%= ', ' if i < (@user_groups.size - 1) %><% end %> ]
+  user_groups = [ <% @user_groups.each_with_index do |u_grp, i| %><%= u_grp -%><%= ', ' if i < (@user_groups.size - 1) %><% end %> ]
   <%- end -%>
   <%- if @times.empty? != true -%>
 

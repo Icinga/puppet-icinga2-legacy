@@ -10,19 +10,19 @@
  *
  */
 
-apply Dependency "<%= @object_name %>" to "<%= @object_type %>"{
+apply Dependency "<%= @object_name %>" to <%= @object_type %>{
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @parent_host_name -%>
-  parent_host_name =  "<%= @parent_host_name -%>"
+  parent_host_name =  <%= @parent_host_name %>
   <%- end -%>
   <%- if @child_host_name -%>
-  child_host_name = "<%= @child_host_name -%>"
+  child_host_name = <%= @child_host_name %>
   <%- end -%>
   <%- if @parent_service_name -%>
-  parent_service_name = "<%= @parent_service_name -%>"
+  parent_service_name = <%= @parent_service_name %>
   <%- end -%>
   <%- if @child_service_name -%>
-  child_service_name = "<%= @child_service_name -%>"
+  child_service_name = <%= @child_service_name %>
   <%- end -%>
   <%- if @disable_checks -%>
   disable_checks = <%= @disable_checks %>
@@ -31,7 +31,7 @@ apply Dependency "<%= @object_name %>" to "<%= @object_type %>"{
   disable_notifications = <%= @disable_notifications %>
   <%- end -%>
   <%- if @period -%>
-  period = "<%= @period -%>"
+  period = <%= @period %>
   <%- end -%>
   <%- if @states.length != 0 -%>
   states = [ <%- @states.each do |state| -%> <%= state %>, <%- end -%>]

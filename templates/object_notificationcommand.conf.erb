@@ -12,7 +12,7 @@
 
 object NotificationCommand "<%= @object_notificationcommandname %>" {
   <%- if @template_to_import -%>
-  import "<%= @template_to_import -%>"
+  import <%= @template_to_import %>
   <%- end -%>
   <%- if @command -%>
 

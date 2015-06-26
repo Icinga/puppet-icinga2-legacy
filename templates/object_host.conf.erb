@@ -12,25 +12,25 @@
 
 object Host "<%= @object_hostname %>" {
   <%- if @template_to_import -%>
-  import "<%= @template_to_import -%>"
+  import <%= @template_to_import %>
   <%- end -%>
   <%- if @display_name -%>
-  display_name = "<%= @display_name -%>"
+  display_name = <%= @display_name %>
   <%- end -%>
   <%- if @ipv4_address -%>
-  address = "<%= @ipv4_address -%>"
+  address = <%= @ipv4_address %>
   <%- end -%>
   <%- if @ipv6_address -%>
-  address6 = "<%= @ipv6_address -%>"
+  address6 = <%= @ipv6_address %>
   <%- end -%>
   <%- if @groups.length != 0 -%>
-  groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
+  groups = [ <%- @groups.each do |group| -%> <%= group %>, <%- end -%>]
   <%- end -%>
   <%- if @vars.any? -%>
   vars += <%= scope.function_icinga2_config_value([@vars]) %>
   <%- end -%>
   <%- if @check_command -%>
-  check_command = "<%= @check_command -%>"
+  check_command = <%= @check_command %>
   <%- end -%>
   <%- if @max_check_attempts -%>
   max_check_attempts = <%= @max_check_attempts %>
@@ -65,27 +65,27 @@ object Host "<%= @object_hostname %>" {
   enable_perfdata = <%= @enable_perfdata %>
   <%- end -%>
   <%- if @event_command -%>
-  event_command = "<%= @event_command -%>"
+  event_command = <%= @event_command %>
   <%- end -%>
   <%- if @flapping_threshold -%>
-  flapping_threshold = "<%= @flapping_threshold -%>"
+  flapping_threshold = <%= @flapping_threshold %>
   <%- end -%>
   <%- if @volatile -%>
-  volatile = "<%= @volatile -%>"
+  volatile = <%= @volatile %>
   <%- end -%>
   <%- if @notes -%>
-  notes = "<%= @notes -%>"
+  notes = <%= @notes %>
   <%- end -%>
   <%- if @notes_url -%>
-  notes_url = "<%= @notes_url -%>"
+  notes_url = <%= @notes_url %>
   <%- end -%>
   <%- if @action_url -%>
-  action_url = "<%= @action_url -%>"
+  action_url = <%= @action_url %>
   <%- end -%>
   <%- if @icon_image -%>
-  icon_image = "<%= @icon_image -%>"
+  icon_image = <%= @icon_image %>
   <%- end -%>
   <%- if @icon_image_alt -%>
-  icon_image_alt = "<%= @icon_image_alt -%>"
+  icon_image_alt = <%= @icon_image_alt %>
   <%- end -%>
 }
