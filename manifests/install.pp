@@ -33,7 +33,7 @@ class icinga2::install::repos inherits icinga2 {
   if $manage_repos == true {
     case $::operatingsystem {
       #CentOS or RedHat systems:
-      'CentOS', 'RedHat': {
+      'CentOS', 'RedHat', 'Scientific': {
         #Add the official Icinga Yum repository: http://packages.icinga.org/epel/
         yumrepo { 'icinga2_yum_repo':
           baseurl  => "http://packages.icinga.org/epel/${::operatingsystemmajrelease}/release/",
