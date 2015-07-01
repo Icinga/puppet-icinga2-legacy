@@ -236,6 +236,8 @@ class icinga2::params {
       $etc_icinga2_obejcts_sub_dir_owner = 'root'
       $etc_icinga2_obejcts_sub_dir_group = 'root'
       $etc_icinga2_obejcts_sub_dir_mode  = '0755'
+      #Settings for service restart
+      $service_restart = '/etc/init.d/icinga2 checkconfig && /etc/init.d/icinga2 restart'
     }
 
     #Fail if we're on any other OS:
@@ -244,7 +246,9 @@ class icinga2::params {
   
   #Whether to purge object files or directories in /etc/icinga2/objects that aren't managed by Puppet
   $purge_unmanaged_object_files = false
-
+  
+  #Wheter to check config before service restart
+  $configtest_enable = false
   ##################
   # Icinga 2 server service settings
 
