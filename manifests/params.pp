@@ -20,7 +20,7 @@ class icinga2::params {
   ##################
   # Icinga 2 common package parameters
   case $::operatingsystem {
-    'CentOS', 'RedHat': {
+    'CentOS', 'RedHat', 'Scientific': {
       #Pick the right package provider:
       $package_provider = 'yum'
     }
@@ -59,7 +59,7 @@ class icinga2::params {
   #Pick the right package parameters based on the OS:
   case $::operatingsystem {
     #CentOS systems:
-    'CentOS', 'RedHat': {
+    'CentOS', 'RedHat', 'Scientific': {
       case $::operatingsystemmajrelease {
         '5': {
           #Icinga 2 package:
@@ -157,7 +157,7 @@ class icinga2::params {
 
   case $::operatingsystem {
     #Icinga 2 server daemon names for Red Had/CentOS systems:
-    'CentOS', 'RedHat': {
+    'CentOS', 'RedHat', 'Scientific': {
       case $::operatingsystemmajrelease {
         '5': {
           $icinga2_daemon_name = 'icinga2'
@@ -228,7 +228,7 @@ class icinga2::params {
   #Pick the right package parameters based on the OS:
   case $::operatingsystem {
     #CentOS systems:
-    'CentOS', 'RedHat': {
+    'CentOS', 'RedHat', 'Scientific': {
       case $::operatingsystemmajrelease {
         '5': {
           #Icinga 2 server package
@@ -308,7 +308,7 @@ class icinga2::params {
 
   case $::operatingsystem {
     #CentOS or RedHat systems:
-    'CentOS', 'RedHat': {
+    'CentOS', 'RedHat', 'Scientific': {
       #Settings for /etc/icinga2/:
       $config_owner = 'icinga'
       $config_group = 'icinga'
@@ -353,7 +353,7 @@ class icinga2::params {
 
   case $::operatingsystem {
     #File and template variable names for Red Had/CentOS systems:
-    'CentOS', 'RedHat': {
+    'CentOS', 'RedHat', 'Scientific': {
       $nrpe_config_basedir = '/etc/nagios'
       $nrpe_plugin_libdir  = '/usr/lib64/nagios/plugins'
       $checkplugin_libdir  = '/usr/lib64/nagios/plugins'
@@ -390,7 +390,7 @@ class icinga2::params {
   # Icinga 2 client package parameters
   case $::operatingsystem {
     #CentOS or RedHat systems:
-    'CentOS', 'RedHat': {
+    'CentOS', 'RedHat', 'Scientific': {
       case $::operatingsystemmajrelease {
         '5': {
           #Pick the right list of client packages:
@@ -456,7 +456,7 @@ class icinga2::params {
   # Icinga 2 client service parameters
   case $::operatingsystem {
     #Daemon names for Red Had/CentOS systems:
-    'CentOS', 'RedHat': {
+    'CentOS', 'RedHat', 'Scientific': {
       $nrpe_daemon_name = 'nrpe'
     }
 
