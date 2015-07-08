@@ -34,7 +34,6 @@ class icinga2::config {
 
   file {
     [
-      '/etc/icinga2/features-available',
       '/etc/icinga2/features-enabled',
       '/etc/icinga2/objects',
     ]:
