@@ -26,7 +26,7 @@ class icinga2::database {
     exec { 'mysql_schema_load':
       user    => 'root',
       path    => $::path,
-      command => "mysql -u '${::icinga2::db_user}' -p'${::icinga2::db_pass}' '${::icinga2::db_name}' < '${db_schema}' && touch /etc/icinga2/mysql_schema_loaded.txt",
+      command => "mysql -H '${::icinga2::db_host}' -u '${::icinga2::db_user}' -p'${::icinga2::db_pass}' '${::icinga2::db_name}' < '${db_schema}' && touch /etc/icinga2/mysql_schema_loaded.txt",
       creates => '/etc/icinga2/mysql_schema_loaded.txt',
     }
   }
