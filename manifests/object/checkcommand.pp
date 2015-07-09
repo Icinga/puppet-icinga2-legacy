@@ -16,7 +16,7 @@ define icinga2::object::checkcommand (
   $command                               = undef,
   $cmd_path                              = 'PluginDir',
   $arguments                             = {},
-  $env                                   = undef,
+  $env                                   = {},
   $vars                                  = {},
   $timeout                               = undef,
   $target_dir                            = '/etc/icinga2/objects/checkcommands',
@@ -38,9 +38,9 @@ define icinga2::object::checkcommand (
     validate_string($template_to_import)
     validate_array($command)
     validate_string($cmd_path)
-    if $env {
-      validate_hash($env)
-    }
+    
+    validate_hash($env)
+      
     validate_hash($vars)
     if $timeout {
       validate_re($timeout, '^\d+$')
