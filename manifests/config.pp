@@ -17,6 +17,7 @@ class icinga2::config {
       '/etc/icinga2/pki',
       '/etc/icinga2/scripts',
       '/etc/icinga2/zones.d',
+      '/etc/icinga2/features-available',
     ]:
       ensure => directory,
   }
