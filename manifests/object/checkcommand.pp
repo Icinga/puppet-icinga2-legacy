@@ -40,7 +40,7 @@ define icinga2::object::checkcommand (
     validate_string($cmd_path)
     
     validate_hash($env)
-      
+    
     validate_hash($vars)
     if $timeout {
       validate_re($timeout, '^\d+$')
