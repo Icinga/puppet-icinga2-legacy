@@ -1,4 +1,4 @@
-# == Defined type: icinga2::object::apply_service_to_host
+# == Defined type: icinga2::object::apply_service
 #
 # This is a defined type for Icinga 2 apply objects that apply services to hosts.
 # See the following Icinga 2 doc page for more info:
@@ -10,8 +10,9 @@
 # See the inline comments.
 #
 
-define icinga2::object::apply_service_to_host (
+define icinga2::object::apply_service (
   $object_servicename = $name,
+  $apply = 'to Host',
   $template_to_import = 'generic-service',
   $display_name = $name,
   $assign_where = undef,
@@ -62,29 +63,20 @@ define icinga2::object::apply_service_to_host (
 
   #If the refresh_icinga2_service parameter is set to true...
   if $refresh_icinga2_service == true {
-
-    file { "${target_dir}/${target_file_name}":
-      ensure  => $target_file_ensure,
-      owner   => $target_file_owner,
-      group   => $target_file_group,
-      mode    => $target_file_mode,
-      content => template('icinga2/object_apply_service_to_host.conf.erb'),
-      #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
-      notify  => Service['icinga2'],
-    }
-
+    $_notify = Service['icinga2']
   }
   #...otherwise, use the same file resource but without a notify => parameter:
   else {
-
-    file { "${target_dir}/${target_file_name}":
-      ensure  => $target_file_ensure,
-      owner   => $target_file_owner,
-      group   => $target_file_group,
-      mode    => $target_file_mode,
-      content => template('icinga2/object_apply_service_to_host.conf.erb'),
-    }
-
+    $_notify = undef
   }
 
+  file { "${target_dir}/${target_file_name}":
+    ensure  => $target_file_ensure,
+    owner   => $target_file_owner,
+    group   => $target_file_group,
+    mode    => $target_file_mode,
+    content => template('icinga2/object_apply_service.conf.erb'),
+    #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
+    notify  => $_notify,
+  }
 }
