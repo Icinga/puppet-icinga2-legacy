@@ -11,6 +11,7 @@
 
 define icinga2::object::notification (
   $object_notificationname = $name,
+  $is_template             = false,
   $command                 = undef,
   $host_name               = undef,
   $service_name            = undef,
@@ -33,6 +34,7 @@ define icinga2::object::notification (
 
   #Do some validation of the class' parameters:
   validate_string($object_notificationname)
+  validate_bool($is_template)
   validate_string($command)
   if $host_name {
     validate_string($host_name)
