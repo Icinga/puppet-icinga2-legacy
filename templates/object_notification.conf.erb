@@ -10,7 +10,7 @@
 *
 */
 
-object Notification "<%= @object_notificationname %>" {
+<%- if @is_template -%>template<%- else -%>object<%- end -%> Notification "<%= @object_notificationname %>" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @host_name -%>
 
