@@ -6,9 +6,7 @@
 #
 # See the inline comments.
 #
-
 class icinga2::params {
-
   ##############################
   # Icinga 2 common parameters
   ##############################
@@ -343,7 +341,7 @@ class icinga2::params {
   #in seconds:
   $nrpe_connection_timeout = '300'
   #Note: because we use .join in the nrpe.cfg.erb template, this value *must* be an array
-  $nrpe_allowed_hosts      = ['127.0.0.1',]
+  $nrpe_allowed_hosts      = ['127.0.0.1']
   #Determines whether or not the NRPE daemon will allow clients to specify arguments to commands that are executed
   # *** ENABLING THIS OPTION IS A SECURITY RISK! ***
   # Defaults to NOT allow command arguments
@@ -474,5 +472,5 @@ class icinga2::params {
     #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
   }
-
 }
+

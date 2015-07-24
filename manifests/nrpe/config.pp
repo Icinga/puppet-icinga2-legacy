@@ -2,11 +2,7 @@
 #
 # This subclass configures Icinga clients.
 #
-
-class icinga2::nrpe::config inherits icinga2::nrpe {
-
-  #config resources here
-
+class icinga2::nrpe::config {
   #The NRPE configuration base directory:
   file { $::icinga2::params::nrpe_config_basedir:
     ensure  => directory,
@@ -47,5 +43,5 @@ class icinga2::nrpe::config inherits icinga2::nrpe {
     content => template('icinga2/nrpe.cfg.erb'),
     require => Package[$::icinga2::nrpe::icinga2_client_packages],
   }
-
 }
+

@@ -8,14 +8,13 @@
 # * $nrpe_plugin_name = The name of the plugin the command will run
 # * $nrpe_plugin_args = The arguments to pass to the plugin. This may be optional,
 #                       depending on the plugin and whether it expects any arguments or parameters
-
+#
 define icinga2::nrpe::command (
   $command_name       = $name,
-  $nrpe_plugin_libdir = $icinga2::params::nrpe_plugin_libdir,
+  $nrpe_plugin_libdir = $::icinga2::nrpe_plugin_libdir,
   $nrpe_plugin_name   = undef,
   $nrpe_plugin_args   = undef,
 ) {
-
   #Do some validation of the class' parameters:
   validate_string($command_name)
   validate_string($nrpe_plugin_libdir)
@@ -27,8 +26,8 @@ define icinga2::nrpe::command (
     group   => 'root',
     mode    => '0644',
     content => template('icinga2/nrpe_command.cfg.erb'),
-    require => Package[$icinga2::nrpe::icinga2_client_packages],
-    notify  => Service[$icinga2::params::nrpe_daemon_name],
+    require => Package[$::icinga2::nrpe::icinga2_client_packages],
+    notify  => Service[$::icinga2::nrpe_daemon_name],
   }
-
 }
+

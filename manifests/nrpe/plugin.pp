@@ -13,13 +13,12 @@
 #                  be anywhere on your Puppet master. See  http://docs.puppetlabs.com/references/3.stable/type.html#file-attribute-source
 #                  for more info on what formats of URLs you can use to specify which files
 #                  you want to distribute.
-
+#
 define icinga2::nrpe::plugin (
   $plugin_name        = $name,
   $nrpe_plugin_libdir = $icinga2::params::nrpe_plugin_libdir,
   $source_file        = undef,
 ) {
-
   #Do some validation of the class' parameters:
   validate_string($name)
   validate_string($nrpe_plugin_libdir)
@@ -32,5 +31,5 @@ define icinga2::nrpe::plugin (
     require => Package[$icinga2::nrpe::icinga2_client_packages],
     notify  => Service[$icinga2::params::nrpe_daemon_name],
   }
-
 }
+

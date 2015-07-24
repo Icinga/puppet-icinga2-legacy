@@ -1,5 +1,4 @@
 class IcingaPuppet
-
   def self.variants
     {
       'Debian wheezy' => {
@@ -31,5 +30,4 @@ class IcingaPuppet
       },
     }
   end
-
 end

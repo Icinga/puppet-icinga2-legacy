@@ -1,8 +1,7 @@
 # Setup repositories for Icinga
 # lint:ignore:autoloader_layout lint:ignore:variable_scope
-class icinga2::install::repos inherits icinga2 {
-
-  if $manage_repos == true {
+class icinga2::install::repos {
+  if $::icinga2::manage_repos == true {
     case $::operatingsystem {
       #CentOS or RedHat systems:
       'CentOS', 'RedHat', 'Scientific': {
@@ -28,11 +27,10 @@ class icinga2::install::repos inherits icinga2 {
       #Debian systems:
       'Debian': {
         include ::apt
-        $icinga2_server_service_name = 'icinga2'
-        if $use_debmon_repo == true {
+        if $::icinga2::use_debmon_repo == true {
           apt::source { 'debmon':
             location    => 'http://debmon.org/debmon',
-            release     => "debmon-${lsbdistcodename}",
+            release     => "debmon-${::lsbdistcodename}",
             repos       => 'main',
             key         => '7E55BD75930BB3674BFD6582DC0EE15A29D662D2',
             key_source  => 'http://debmon.org/debmon/repo.key',
@@ -55,6 +53,5 @@ class icinga2::install::repos inherits icinga2 {
       default: { fail("${::operatingsystem} is not supported!") }
     }
   }
-
 }
 
