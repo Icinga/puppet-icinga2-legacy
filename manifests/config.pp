@@ -46,7 +46,7 @@ class icinga2::config {
 
   file { '/etc/icinga2/icinga2.conf':
     ensure  => file,
-    content => template('icinga2/icinga2.conf.erb'),
+    content => template($::icinga2::config_template),
   }
 
   # maintained object directories
