@@ -10,27 +10,30 @@
 # Please see the README for details on how to use this module.
 #
 class icinga2 (
-  $config_template              = $::icinga2::params::config_template,
-  $default_features             = true,
-  $db_type                      = $::icinga2::params::db_type,
-  $db_host                      = 'localhost',
-  $db_port                      = undef,
-  $db_name                      = $::icinga2::params::db_name,
-  $db_user                      = $::icinga2::params::db_user,
-  $db_pass                      = $::icinga2::params::db_pass,
-  $db_schema                    = undef,
-  $manage_database              = false,
-  $manage_repos                 = $icinga2::params::manage_repos,
-  $manage_service               = $icinga2::params::manage_service,
-  $use_debmon_repo              = $icinga2::params::use_debmon_repo,
-  $package_provider             = $icinga2::params::package_provider,
-  $icinga2_package              = $icinga2::params::icinga2_package,
-  $install_nagios_plugins       = $icinga2::params::install_nagios_plugins,
-  $install_mail_utils_package   = $icinga2::params::install_mail_utils_package,
-  $purge_configs                = true,
-  $purge_confd                  = false,
-) inherits icinga2::params {
-
+  $config_template                       = $::icinga2::params::config_template,
+  $default_features                      = true,
+  $db_type                               = $::icinga2::params::db_type,
+  $db_host                               = 'localhost',
+  $db_port                               = undef,
+  $db_name                               = $::icinga2::params::db_name,
+  $db_user                               = $::icinga2::params::db_user,
+  $db_pass                               = $::icinga2::params::db_pass,
+  $db_schema                             = undef,
+  $manage_database                       = false,
+  $manage_repos                          = $::icinga2::params::manage_repos,
+  $manage_service                        = $::icinga2::params::manage_service,
+  $use_debmon_repo                       = $::icinga2::params::use_debmon_repo,
+  $package_provider                      = $::icinga2::params::package_provider,
+  $icinga2_package                       = $::icinga2::params::icinga2_package,
+  $install_nagios_plugins                = $::icinga2::params::install_nagios_plugins,
+  $install_mail_utils_package            = $::icinga2::params::install_mail_utils_package,
+  $purge_configs                         = true,
+  $purge_confd                           = false,
+  $nrpe_plugin_libdir                    = $::icinga2::params::nrpe_plugin_libdir,
+  $nrpe_allowed_hosts                    = $::icinga2::params::nrpe_allowed_hosts,
+  $nagios_plugin_packages                = $::icinga2::params::nagios_plugin_packages,
+  $nagios_plugin_package_install_options = $::icinga2::params::nagios_plugin_package_install_options,
+) inherits ::icinga2::params {
   # TODO: temporary parameter until we provide some default templates
   validate_bool($purge_confd)
   if $purge_confd {
@@ -66,5 +69,5 @@ class icinga2 (
       Class['icinga2::database'] ~> Class['icinga2::service']
     }
   }
-
 }
+
