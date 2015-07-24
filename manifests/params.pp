@@ -15,6 +15,7 @@ class icinga2::params {
 
   #This section has parameters that are used by both the node and server subclasses
 
+  $config_template = 'icinga2/icinga2.conf.erb'
   $manage_service = true
 
   ##################

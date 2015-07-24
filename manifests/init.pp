@@ -10,6 +10,7 @@
 # Please see the README for details on how to use this module.
 #
 class icinga2 (
+  $config_template              = $::icinga2::params::config_template,
   $default_features             = true,
   $db_type                      = $::icinga2::params::db_type,
   $db_host                      = 'localhost',
