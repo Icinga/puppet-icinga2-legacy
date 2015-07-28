@@ -492,6 +492,7 @@ Object types:
 * [icinga2::object::timeperiod](#icinga2objecttimeperiod)
 * [icinga2::object::user](#icinga2objectuser)
 * [icinga2::object::usergroup](#icinga2objectusergroup)
+* [icinga2::object::zone](#icinga2objectzone)
 
 ####[`icinga2::object::apilistener`](id:icinga2objectapilistener)
 
@@ -1048,6 +1049,27 @@ icinga2::object::graphitewriter { 'graphite_relay':
   target_file_name => 'graphite.conf',
   graphite_host    => '127.0.0.1',
   graphite_port    => 2003,
+}
+````
+
+####[`icinga2::object::zone`](id:object_zone)
+
+This defined type creates a **Zone** object
+
+Example Usage to create an HA master zone:
+
+````
+icinga2::object::zone { 'master':
+    endpoints => ['icinga-master1', 'icinga-master2'],
+}
+````
+
+Example Usage to create a satellite zone and specify a parent:
+
+````
+icinga2::object::zone { 'satellite':
+    endpoints => ['icinga-satellite1', 'icinga-satellite2'],
+    parent    => 'master'
 }
 ````
 
