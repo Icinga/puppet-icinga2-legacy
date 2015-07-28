@@ -9,8 +9,6 @@ describe 'icinga2::nrpe' do
       end
 
       it { should compile }
-      it { should contain_class('::icinga2::nrpe') }
-      it { should contain_class('::icinga2::params') }
     end
   end
 end

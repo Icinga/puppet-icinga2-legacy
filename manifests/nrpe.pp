@@ -15,6 +15,8 @@ class icinga2::nrpe (
   $nrpe_pid_file_path                     = $::icinga2::nrpe_pid_file_path,
   $nrpe_purge_unmanaged                   = $::icinga2::nrpe_purge_unmanaged,
 ) {
+  require ::icinga2
+
   #Do some validation of the parameters that are passed in:
   #validate_array($nrpe_allowed_hosts)
   validate_string($nrpe_log_facility)
@@ -22,7 +24,7 @@ class icinga2::nrpe (
   #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
   #class left is applied before the class on the right and that it also refreshes the
   #class on the right.
-  class {'::icinga2::nrpe::install':} ~>
+  class {'::icinga2::nrpe::install':} ->
   class {'::icinga2::nrpe::config':} ~>
   class {'::icinga2::nrpe::service':} ->
   Class['::icinga2::nrpe']
