@@ -1073,6 +1073,8 @@ icinga2::object::zone { 'satellite':
 }
 ````
 
+See [Zone](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-zone) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-zone) for more info.
+
 [`Hiera`](id:hiera)
 ---------
 
