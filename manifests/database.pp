@@ -11,8 +11,8 @@ class icinga2::database {
   }
   else {
     $db_schema = $::icinga2::db_type ? {
-      'mysql' => $::icinga2::params::db_schema_mysql,
-      'pgsql' => $::icinga2::params::db_schema_pgsql,
+      'mysql' => $::icinga2::db_schema_mysql,
+      'pgsql' => $::icinga2::db_schema_pgsql,
       default => undef,
     }
   }

@@ -16,7 +16,7 @@
 #
 define icinga2::nrpe::plugin (
   $plugin_name        = $name,
-  $nrpe_plugin_libdir = $icinga2::params::nrpe_plugin_libdir,
+  $nrpe_plugin_libdir = $::icinga2::nrpe_plugin_libdir,
   $source_file        = undef,
 ) {
   #Do some validation of the class' parameters:
@@ -28,8 +28,8 @@ define icinga2::nrpe::plugin (
     group   => 'root',
     mode    => '0755',
     source  => $source_file,
-    require => Package[$icinga2::nrpe::icinga2_client_packages],
-    notify  => Service[$icinga2::params::nrpe_daemon_name],
+    require => Package[$::icinga2::icinga2_client_packages],
+    notify  => Service[$::icinga2::nrpe_daemon_name],
   }
 }
 

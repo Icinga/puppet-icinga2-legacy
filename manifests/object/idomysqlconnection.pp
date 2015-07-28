@@ -56,9 +56,9 @@ define icinga2::object::idomysqlconnection (
   file { "icinga2 object idomysqlconnection ${title}":
     ensure  => file,
     path    => $target_file,
-    owner   => $icinga2::params::config_owner,
-    group   => $icinga2::params::config_group,
-    mode    => $icinga2::params::config_mode,
+    owner   => $::icinga2::config_owner,
+    group   => $::icinga2::config_group,
+    mode    => $::icinga2::config_mode,
     content => template('icinga2/object/idomysqlconnection.conf.erb'),
   }
 

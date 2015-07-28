@@ -3,11 +3,10 @@
 # Manages the config environment of Icinga 2.
 #
 class icinga2::config {
-
   File {
-    owner => $icinga2::params::config_owner,
-    group => $icinga2::params::config_group,
-    mode  => $icinga2::params::config_mode,
+    owner => $::icinga2::config_owner,
+    group => $::icinga2::config_group,
+    mode  => $::icinga2::config_mode,
   }
 
   # maintained directories
@@ -82,5 +81,4 @@ class icinga2::config {
       recurse => $::icinga2::purge_configs,
       force   => $::icinga2::purge_configs,
   }
-
 }

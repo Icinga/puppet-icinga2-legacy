@@ -60,7 +60,7 @@ class icinga2::params {
   #Determines whether or not the NRPE daemon will allow clients to specify arguments to commands that are executed
   # *** ENABLING THIS OPTION IS A SECURITY RISK! ***
   # Defaults to NOT allow command arguments
-  $allow_command_argument_processing = '0'
+  $nrpe_allow_command_argument_processing = '0'
 
   # Whether or not to purge nrpe config files NOT managed by Puppet.
   $nrpe_purge_unmanaged = false

@@ -56,9 +56,9 @@ define icinga2::object::idopgsqlconnection (
   file { "icinga2 object idopgsqlconnection ${title}":
     ensure  => file,
     path    => $target_file,
-    owner   => $icinga2::params::config_owner,
-    group   => $icinga2::params::config_group,
-    mode    => $icinga2::params::config_mode,
+    owner   => $::icinga2::config_owner,
+    group   => $::icinga2::config_group,
+    mode    => $::icinga2::config_mode,
     content => template('icinga2/object/idopgsqlconnection.conf.erb'),
   }
 

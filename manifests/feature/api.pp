@@ -48,9 +48,9 @@ class icinga2::feature::api (
   }
 
   File {
-    owner  => $::icinga2::params::config_owner,
-    group  => $::icinga2::params::config_group,
-    mode   => $::icinga2::params::config_mode,
+    owner  => $::icinga2::config_owner,
+    group  => $::icinga2::config_group,
+    mode   => $::icinga2::config_mode,
     notify => $notify,
   }
 

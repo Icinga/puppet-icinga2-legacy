@@ -5,13 +5,14 @@
 #
 class icinga2::nrpe (
   $icinga2_client_packages                = $::icinga2::icinga2_client_packages,
-  $nrpe_allow_command_argument_processing = $::icinga2::allow_command_argument_processing,
+  $nrpe_allow_command_argument_processing = $::icinga2::nrpe_allow_command_argument_processing,
   $nrpe_allowed_hosts                     = $::icinga2::nrpe_allowed_hosts,
   $nrpe_command_timeout                   = $::icinga2::nrpe_command_timeout,
   $nrpe_connection_timeout                = $::icinga2::nrpe_connection_timeout,
   $nrpe_debug_level                       = $::icinga2::nrpe_debug_level,
   $nrpe_listen_port                       = $::icinga2::nrpe_listen_port,
   $nrpe_log_facility                      = $::icinga2::nrpe_log_facility,
+  $nrpe_pid_file_path                     = $::icinga2::nrpe_pid_file_path,
   $nrpe_purge_unmanaged                   = $::icinga2::nrpe_purge_unmanaged,
 ) {
   #Do some validation of the parameters that are passed in:
