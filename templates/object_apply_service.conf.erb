@@ -10,7 +10,7 @@
  *
  */
 
-apply Service "<%= @object_servicename %>" to Host {
+apply Service "<%= @object_servicename %>" <%= @apply %> {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @template_to_import -%>
   <%#- Otherwise, include the parameter: -%>

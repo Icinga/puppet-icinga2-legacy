@@ -509,13 +509,13 @@ The `accept_config` and `accept_commands` parameters default to **false**.
 
 See the Icinga 2 documention for more info: [http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-apilistener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-apilistener)
 
-####[`icinga2::object::apply_service_to_host`](id:object_apply_service_to_host)
+####[`icinga2::object::apply_service`](id:object_apply_service)
 
-The `apply_service_to_host` defined type can create `apply` objects to apply services to hosts:
+The `apply_service` defined type can create `apply` objects to apply services to hosts:
 
 <pre>
 #Create an apply that checks the number of zombie processes:
-icinga2::object::apply_service_to_host { 'check_zombie_procs':
+icinga2::object::apply_service { 'check_zombie_procs':
   display_name => 'Zombie procs',
   check_command => 'nrpe',
   vars => {
@@ -527,7 +527,13 @@ icinga2::object::apply_service_to_host { 'check_zombie_procs':
 }
 </pre>
 
-This defined type has the same available parameters that the `icinga2::object::service` defined type does.
+This defined type has the same available parameters that the `icinga2::object::service` defined type does except the apply parameter.
+
+The `apply` allows multiple services with one definition based on host variables. See [http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/monitoring-basics#using-apply-for-custom-attribute-override](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/monitoring-basics#using-apply-for-custom-attribute-override) for more information.
+
+<pre>
+apply => 'for (interface_name => interface_config in host.vars.interfaces)';
+</pre>
 
 The `assign_where` and `ignore_where` parameter values are meant to be provided as strings. Since Icinga 2 requires that string literals be double-quoted, the whole string in your Puppet site manifests will have to be single-quoted (leaving the double quotes intact inside):
 
@@ -1084,7 +1090,7 @@ Objects available:
 * `apply_dependency`
 * `apply_notification_to_host`
 * `apply_notification_to_service`
-* `apply_service_to_host`
+* `apply_service`
 * `checkcommand`
 * `dependency`
 * `eventcommand`
