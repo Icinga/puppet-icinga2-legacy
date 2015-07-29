@@ -8,22 +8,19 @@
 #
 # See the inline comments.
 #
-
-
 define icinga2::object::zone(
-  $object_name = $name,
-  $endpoints = undef,
-  $parent = undef,
-  $global = false,
+  $endpoints               = undef,
+  $global                  = false,
+  $object_name             = $name,
+  $parent                  = undef,
+  $refresh_icinga2_service = true,
   $target_dir              = '/etc/icinga2/objects/zones',
-  $target_file_name        = "${name}.conf",
   $target_file_ensure      = file,
-  $target_file_owner       = 'root',
   $target_file_group       = 'root',
   $target_file_mode        = '0644',
-  $refresh_icinga2_service = true,
-){
-
+  $target_file_name        = "${name}.conf",
+  $target_file_owner       = 'root',
+) {
   validate_string($target_dir)
   validate_string($target_file_name)
   validate_string($target_file_owner)
@@ -33,7 +30,6 @@ define icinga2::object::zone(
 
   #If the refresh_icinga2_service parameter is set to true...
   if $refresh_icinga2_service == true {
-
     file { "${target_dir}/${target_file_name}":
       ensure  => $target_file_ensure,
       owner   => $target_file_owner,
@@ -41,13 +37,11 @@ define icinga2::object::zone(
       mode    => $target_file_mode,
       content => template('icinga2/object_zone.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
-      notify  => Service['icinga2'],
+      notify  => Service[$::icinga2::icinga2_daemon_name],
     }
-
   }
   #...otherwise, use the same file resource but without a notify => parameter:
   else {
-
     file { "${target_dir}/${target_file_name}":
       ensure  => $target_file_ensure,
       owner   => $target_file_owner,
@@ -57,3 +51,4 @@ define icinga2::object::zone(
     }
   }
 }
+
