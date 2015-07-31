@@ -9,6 +9,7 @@ class IcingaPuppet
         :lsbdistcodename           => 'wheezy',
         :lsbdistid                 => 'debian',
         :path                      => '/dummy',
+        :nrpe_daemon_name          => 'nagios-nrpe-server',
       },
       'Ubuntu trusty' => {
         :osfamily                  => 'Debian',
@@ -18,6 +19,7 @@ class IcingaPuppet
         :lsbdistcodename           => 'trusty',
         :lsbdistid                 => 'ubuntu',
         :path                      => '/dummy',
+        :nrpe_daemon_name          => 'nagios-nrpe-server',
       },
       'RedHat 6' => {
         :osfamily                  => 'RedHat',
@@ -27,6 +29,7 @@ class IcingaPuppet
         #:lsbdistcodename          => '',
         #:lsbdistid                => 'ubuntu',
         :path                      => '/dummy',
+        :nrpe_daemon_name          => 'nrpe',
       },
     }
   end

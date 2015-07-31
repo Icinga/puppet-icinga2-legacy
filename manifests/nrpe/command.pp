@@ -17,9 +17,9 @@ define icinga2::nrpe::command (
 ) {
   #Do some validation of the class' parameters:
   validate_string($command_name)
+  validate_string($nrpe_plugin_args)
   validate_string($nrpe_plugin_libdir)
   validate_string($nrpe_plugin_name)
-  validate_string($nrpe_plugin_args)
 
   file { "/etc/nagios/nrpe.d/${command_name}.cfg":
     owner   => 'root',
