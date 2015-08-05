@@ -16,7 +16,7 @@ describe 'icinga2::nrpe' do
       it { should contain_class('icinga2::nrpe') }
       it { should contain_class('icinga2::nrpe::service') }
       it { should contain_class('icinga2::params') }
-      it { should contain_service(facts[:nrpe_daemon_name]) }
+      it { should contain_service('nrpe').with(:name => facts[:nrpe_daemon_name]) }
     end
   end
 end

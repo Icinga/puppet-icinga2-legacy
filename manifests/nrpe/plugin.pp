@@ -23,13 +23,15 @@ define icinga2::nrpe::plugin (
   validate_string($name)
   validate_string($nrpe_plugin_libdir)
 
+  include icinga2::nrpe
+
   file { "${nrpe_plugin_libdir}/${plugin_name}":
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
     source  => $source_file,
-    require => Package[$::icinga2::icinga2_client_packages],
-    notify  => Service[$::icinga2::nrpe_daemon_name],
+    require => Anchor['icinga2::nrpe::packages'],
+    notify  => Service['nrpe'],
   }
 }
 

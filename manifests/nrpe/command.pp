@@ -21,13 +21,15 @@ define icinga2::nrpe::command (
   validate_string($nrpe_plugin_libdir)
   validate_string($nrpe_plugin_name)
 
+  include icinga2::nrpe
+
   file { "/etc/nagios/nrpe.d/${command_name}.cfg":
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
     content => template('icinga2/nrpe_command.cfg.erb'),
-    require => Package[$::icinga2::icinga2_client_packages],
-    notify  => Service[$::icinga2::nrpe_daemon_name],
+    require => Anchor['icinga2::nrpe::packages'],
+    notify  => Service['nrpe'],
   }
 }
 
