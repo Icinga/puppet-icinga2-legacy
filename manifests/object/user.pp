@@ -21,7 +21,7 @@ define icinga2::object::user (
   $period = undef,
   $types = [],
   $states = [],
-  $target_dir = '/etc/icinga2/objects',
+  $target_dir = '/etc/icinga2/objects/users',
   $target_file_name = "${name}.conf",
   $target_file_ensure = file,
   $target_file_owner = 'root',
