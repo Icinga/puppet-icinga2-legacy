@@ -14,6 +14,12 @@ describe 'icinga2::nrpe::plugin', :type => :define do
         facts
       end
 
+      let :pre_condition do
+        "class {
+          '::icinga2::nrpe':
+        }"
+      end
+
       let (:title) { '_COMMAND_' }
 
       let (:params) {
@@ -34,6 +40,12 @@ describe 'icinga2::nrpe::plugin', :type => :define do
         facts
       end
 
+      let :pre_condition do
+        "class {
+          '::icinga2::nrpe':
+        }"
+      end
+
       let (:title) { '_COMMAND_' }
 
       let (:params) {
@@ -52,6 +64,12 @@ describe 'icinga2::nrpe::plugin', :type => :define do
     context "on #{name} with parameter: source_file" do
       let :facts do
         facts
+      end
+
+      let :pre_condition do
+        "class {
+          '::icinga2::nrpe':
+        }"
       end
 
       let (:title) { '_COMMAND_' }

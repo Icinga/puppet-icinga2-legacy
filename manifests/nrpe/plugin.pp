@@ -23,8 +23,6 @@ define icinga2::nrpe::plugin (
   validate_string($name)
   validate_string($nrpe_plugin_libdir)
 
-  include icinga2::nrpe
-
   file { "${nrpe_plugin_libdir}/${plugin_name}":
     owner   => 'root',
     group   => 'root',

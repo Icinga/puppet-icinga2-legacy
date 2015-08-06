@@ -8,6 +8,12 @@ describe 'icinga2::nrpe::command', :type => :define do
         facts
       end
 
+      let :pre_condition do
+        "class {
+          '::icinga2::nrpe':
+        }"
+      end
+
       let (:title) { '_COMMAND_' }
       let (:params) { { } }
 
@@ -24,6 +30,12 @@ describe 'icinga2::nrpe::command', :type => :define do
     context "on #{name} with parameter: nrpe_plugin_args" do
       let :facts do
         facts
+      end
+
+      let :pre_condition do
+        "class {
+          '::icinga2::nrpe':
+        }"
       end
 
       let (:title) { '_COMMAND_' }
@@ -47,6 +59,12 @@ describe 'icinga2::nrpe::command', :type => :define do
         facts
       end
 
+      let :pre_condition do
+        "class {
+          '::icinga2::nrpe':
+        }"
+      end
+
       let (:title) { '_COMMAND_' }
 
       let (:params) {
@@ -66,6 +84,12 @@ describe 'icinga2::nrpe::command', :type => :define do
     context "on #{name} with parameter: nrpe_plugin_name" do
       let :facts do
         facts
+      end
+
+      let :pre_condition do
+        "class {
+          '::icinga2::nrpe':
+        }"
       end
 
       let (:title) { '_COMMAND_' }

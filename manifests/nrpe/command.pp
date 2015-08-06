@@ -21,8 +21,6 @@ define icinga2::nrpe::command (
   validate_string($nrpe_plugin_libdir)
   validate_string($nrpe_plugin_name)
 
-  include icinga2::nrpe
-
   file { "/etc/nagios/nrpe.d/${command_name}.cfg":
     owner   => 'root',
     group   => 'root',
