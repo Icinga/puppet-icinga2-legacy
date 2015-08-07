@@ -26,11 +26,11 @@ describe 'icinga2::object::host' do
       }
     end
 
-    object_file = '/etc/icinga2/objects/testhost.conf'
+    object_file = '/etc/icinga2/objects/hosts/testhost.conf'
     it { should contain_icinga2__object__host('testhost') }
     it { should contain_file(object_file).with({
           :ensure => 'file',
-          :path => '/etc/icinga2/objects/testhost.conf',
+          :path => '/etc/icinga2/objects/hosts/testhost.conf',
           :content => /object Host "testhost"/,
         }) }
     it { should contain_file(object_file).with_content(/^\s*import "generic-host"$/) }
@@ -78,11 +78,11 @@ describe 'icinga2::object::host' do
       }
     end
 
-    object_file = '/etc/icinga2/objects/testhost.conf'
+    object_file = '/etc/icinga2/objects/hosts/testhost.conf'
     it { should contain_icinga2__object__host('testhost') }
     it { should contain_file(object_file).with({
           :ensure => 'file',
-          :path => '/etc/icinga2/objects/testhost.conf',
+          :path => '/etc/icinga2/objects/hosts/testhost.conf',
           :content => /object Host "testhost"/,
         }) }
     it { should contain_file(object_file).with_content(/^\s*vars \+= {$/) }

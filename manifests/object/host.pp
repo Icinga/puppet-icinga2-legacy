@@ -37,7 +37,7 @@ define icinga2::object::host (
   $action_url = undef,
   $icon_image = undef,
   $icon_image_alt = undef,
-  $target_dir = '/etc/icinga2/objects',
+  $target_dir = '/etc/icinga2/objects/hosts',
   $target_file_name = "${fqdn}.conf",
   $target_file_ensure = file,
   $target_file_owner = 'root',
