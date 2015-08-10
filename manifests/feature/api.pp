@@ -23,6 +23,7 @@ class icinga2::feature::api (
   $crl_content     = undef,
   $bind_host       = undef,
   $bind_port       = undef,
+  $ticket_salt     = false,
 ) {
 
   validate_bool($accept_commands)
@@ -86,6 +87,10 @@ class icinga2::feature::api (
         source  => $crl_source,
       }
     }
+  }
+
+  if $ticket_salt {
+    validate_bool($ticket_salt)
   }
 
   ::icinga2::feature { 'api':
