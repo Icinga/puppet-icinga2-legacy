@@ -12,14 +12,15 @@
 #
 
 class icinga2::install {
-  #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
-  #class left is applied before the class on the right and that it also refreshes the
-  #class on the right.
+  # Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
+  # class left is applied before the class on the right and that it also refreshes the
+  # class on the right.
 
-  #Here, we're setting up the package repos first, then installing the packages, then
-  #running any execs that are needed to set things up further:
-  class{'::icinga2::install::repos':} ~>
-  class{'::icinga2::install::packages':} ~>
-  class{'::icinga2::install::execs':} ->
+  # Here, we're installing the packages, then
+  # running any execs that are needed to set things up further:
+  include '::icinga2::install::packages'
+  include '::icinga2::install::execs'
+  Class['::icinga2::install::packages'] ~>
+  Class['::icinga2::install::execs'] ->
   Class['::icinga2::install']
 }

@@ -45,7 +45,6 @@ class icinga2 (
   $icinga2_client_packages                = $::icinga2::params::icinga2_client_packages,
   $icinga2_daemon_name                    = $::icinga2::params::icinga2_daemon_name,
   $nrpe_allow_command_argument_processing = $::icinga2::params::nrpe_allow_command_argument_processing,
-  $nrpe_allow_command_argument_processing = $::icinga2::params::nrpe_allow_command_argument_processing,
   $nrpe_command_timeout                   = $::icinga2::params::nrpe_command_timeout,
   $nrpe_config_basedir                    = $::icinga2::params::nrpe_config_basedir,
   $nrpe_connection_timeout                = $::icinga2::params::nrpe_connection_timeout,
@@ -72,6 +71,11 @@ class icinga2 (
   validate_string($icinga2_package)
   validate_bool($install_nagios_plugins)
 
+  if $manage_repos != false {
+    include "::icinga2::repo::${package_provider}"
+    Class["::icinga2::repo::${package_provider}"] ->
+    Class['::icinga2::install']
+  }
   anchor {'icinga2::start':} ->
   class {'::icinga2::install':} ~>
   class {'::icinga2::config':} ~>
