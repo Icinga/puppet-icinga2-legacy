@@ -1,4 +1,4 @@
-require "puppet/icinga2/utils"
+require File.join(File.dirname(__FILE__), '../..', 'icinga2/utils.rb')
 
 module Puppet::Parser::Functions
   newfunction(:icinga2_config_value, :type => :rvalue) do |args|
