@@ -17,12 +17,11 @@ describe 'icinga2::feature::ido_mysql' do
     it { should contain_class('icinga2::feature::ido_mysql') }
     it { should contain_icinga2__feature('ido-mysql') }
     it { should contain_icinga2__object__idomysqlconnection('ido-mysql') }
-    it { should contain_file('icinga2 object idomysqlconnection ido-mysql').with({
-      :path    => '/etc/icinga2/features-available/ido-mysql.conf',
+    it { should contain_file('/etc/icinga2/features-available/ido-mysql.conf').with({
       :content => /database = "icinga2_data"/,
     })}
-    it { should contain_file('icinga2 object idomysqlconnection ido-mysql').without_content(/port =/) }
-    it { should contain_file('icinga2 feature ido-mysql enabled') }
+    it { should contain_file('/etc/icinga2/features-available/ido-mysql.conf').without_content(/port =/) }
+    it { should contain_file('/etc/icinga2/features-available/ido-mysql.conf') }
   end
 
   context "on #{default} with changed parameters" do
@@ -38,8 +37,7 @@ describe 'icinga2::feature::ido_mysql' do
     it { should contain_class('icinga2::feature::ido_mysql') }
     it { should contain_icinga2__feature('ido-mysql') }
     it { should contain_icinga2__object__idomysqlconnection('ido-mysql') }
-    it { should contain_file('icinga2 object idomysqlconnection ido-mysql').with({
-      :path    => '/etc/icinga2/features-available/ido-mysql.conf',
+    it { should contain_file('/etc/icinga2/features-available/ido-mysql.conf').with({
       :content => /database = "foobar"/,
     })}
   end
