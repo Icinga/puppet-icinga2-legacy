@@ -35,7 +35,7 @@ define icinga2::object::graphitewriter (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_graphitewriter.conf.erb'),
+      content => template('icinga2/object/graphitewriter.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
       notify  => Service['icinga2'],
     }
@@ -49,7 +49,7 @@ define icinga2::object::graphitewriter (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_graphitewriter.conf.erb'),
+      content => template('icinga2/object/graphitewriter.conf.erb'),
     }
 
   }
