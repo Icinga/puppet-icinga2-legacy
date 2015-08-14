@@ -10,7 +10,7 @@
 
 library "perfdata"
 
-object GraphiteWriter "graphite" {
+object GraphiteWriter "<%= @name -%>" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @graphite_host -%>
   <%#- Otherwise, include the parameter: -%>
