@@ -15,4 +15,7 @@ object ApiListener "api" {
   <%- end -%>
   accept_config = <%= @accept_config %>
   accept_commands = <%= @accept_commands %>
+  <%- if @ticket_salt -%>
+  ticket_salt = TicketSalt
+  <%- end -%>
 }
