@@ -17,12 +17,12 @@ describe 'icinga2::feature::ido_pgsql' do
     it { should contain_class('icinga2::feature::ido_pgsql') }
     it { should contain_icinga2__feature('ido-pgsql') }
     it { should contain_icinga2__object__idopgsqlconnection('ido-pgsql') }
-    it { should contain_file('icinga2 object idopgsqlconnection ido-pgsql').with({
+    it { should contain_file('/etc/icinga2/features-available/ido-pgsql.conf').with({
       :path    => '/etc/icinga2/features-available/ido-pgsql.conf',
       :content => /database = "icinga2_data"/,
     })}
-    it { should contain_file('icinga2 object idopgsqlconnection ido-pgsql').without_content(/port =/) }
-    it { should contain_file('icinga2 feature ido-pgsql enabled') }
+    it { should contain_file('/etc/icinga2/features-available/ido-pgsql.conf').without_content(/port =/) }
+    it { should contain_file('/etc/icinga2/features-available/ido-pgsql.conf') }
   end
 
   context "on #{default} with changed parameters" do
@@ -38,7 +38,7 @@ describe 'icinga2::feature::ido_pgsql' do
     it { should contain_class('icinga2::feature::ido_pgsql') }
     it { should contain_icinga2__feature('ido-pgsql') }
     it { should contain_icinga2__object__idopgsqlconnection('ido-pgsql') }
-    it { should contain_file('icinga2 object idopgsqlconnection ido-pgsql').with({
+    it { should contain_file('/etc/icinga2/features-available/ido-pgsql.conf').with({
       :path    => '/etc/icinga2/features-available/ido-pgsql.conf',
       :content => /database = "foobar"/,
     })}
