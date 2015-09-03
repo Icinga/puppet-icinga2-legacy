@@ -278,6 +278,30 @@ class { 'icinga2::server':
 
 This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
 
+
+**NRPE commands**
+To configure NRPE commands for a desired command on the local machine:
+<pre>
+icinga2::nrpe::command { 'load':
+  command_name     => 'load',
+  nrpe_plugin_name => 'check_load',
+  nrpe_plugin_args => '-r -w 5,4,3 -c 10,6,4',
+}
+</pre>
+**Note:** The default location for the scripts is `/usr/lib/nagios/plugins`. If the script or application to run is not in this directory you need to specifiy it with the `nrpe_plugin_libdir` parameter.
+
+
+If a specific command requires root access use the `use_sudo` parameter:
+<pre>
+icinga2::nrpe::command { 'check_mysql':
+  command_name     => 'check_mysql',
+  use_sudo         => true,
+  nrpe_plugin_name => 'check_mysql',
+  nrpe_plugin_args => '-f /etc/mysql/debian.cnf',
+}
+</pre>
+**Note:** This will create a new suoders file for the specific nrpe command and arguments for the `nagios` user.
+
 ### Check Plugins
 
 Agents installed on nodes (such as NRPE) that Icinga is performing active checks against often require additional or custom check plugins. In order to deploy these check pluings on a node you can call the checkplugin defined resource.
