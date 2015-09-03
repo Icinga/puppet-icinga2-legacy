@@ -325,6 +325,8 @@ class icinga2::params {
       $nrpe_plugin_libdir  = '/usr/lib64/nagios/plugins'
       $checkplugin_libdir  = '/usr/lib64/nagios/plugins'
       $nrpe_pid_file_path  = '/var/run/nrpe/nrpe.pid'
+      $sudo_file_path      = '/usr/bin/sudo'
+      $sudoers_dir_path    = '/etc/sudoers.d'
       $nrpe_user           = 'nrpe'
       $nrpe_group          = 'nrpe'
     }
@@ -335,6 +337,8 @@ class icinga2::params {
       $nrpe_plugin_libdir   = '/usr/lib/nagios/plugins'
       $checkplugin_libdir   = '/usr/lib/nagios/plugins'
       $nrpe_pid_file_path   = '/var/run/nagios/nrpe.pid'
+      $sudo_file_path       = '/usr/bin/sudo'
+      $sudoers_dir_path     = '/etc/sudoers.d'
       $nrpe_user            = 'nagios'
       $nrpe_group           = 'nagios'
     }
@@ -345,6 +349,8 @@ class icinga2::params {
       $nrpe_plugin_libdir   = '/usr/lib/nagios/plugins'
       $checkplugin_libdir   = '/usr/lib/nagios/plugins'
       $nrpe_pid_file_path   = '/var/run/nagios/nrpe.pid'
+      $sudo_file_path       = '/usr/bin/sudo'
+      $sudoers_dir_path     = '/etc/sudoers.d'
       $nrpe_user            = 'nagios'
       $nrpe_group           = 'nagios'
     }
