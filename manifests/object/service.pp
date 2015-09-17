@@ -42,7 +42,8 @@ define icinga2::object::service (
   $target_file_owner  = 'root',
   $target_file_group  = 'root',
   $target_file_mode   = '0644',
-  $refresh_icinga2_service = true
+  $refresh_icinga2_service = true,
+  $zone = undef,
 ) {
 
   #Do some validation of the class' parameters:
@@ -50,6 +51,7 @@ define icinga2::object::service (
   validate_string($template_to_import)
   validate_string($display_name)
   validate_string($host_name)
+  validate_string($zone)
   validate_array($groups)
   validate_hash($vars)
   validate_string($target_dir)
