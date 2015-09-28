@@ -43,7 +43,8 @@ define icinga2::object::host (
   $target_file_owner = 'root',
   $target_file_group = 'root',
   $target_file_mode = '0644',
-  $refresh_icinga2_service = true
+  $refresh_icinga2_service = true,
+  $zone = undef,
 ) {
 
   #Do some validation of the class' parameters:
@@ -59,6 +60,7 @@ define icinga2::object::host (
   validate_string($target_file_group)
   validate_string($target_file_mode)
   validate_bool($refresh_icinga2_service)
+  validate_string($zone)
 
   #If the refresh_icinga2_service parameter is set to true...
   if $refresh_icinga2_service == true {
