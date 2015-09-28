@@ -51,7 +51,8 @@ class icinga2::feature::ido_pgsql (
     enable_ha            => $enable_ha,
     cleanup              => $cleanup,
     categories           => $categories,
-    target_file          => '/etc/icinga2/features-available/ido-pgsql.conf',
+    target_file_name     => 'ido-pgsql.conf',
+    target_dir           => '/etc/icinga2/features-available',
   } ->
 
   ::icinga2::feature { 'ido-pgsql':
