@@ -9,7 +9,7 @@ gem 'facter', '>= 1.7.0'
 gem 'puppet-lint-strict_indent-check'
 
 group :system_tests do
-  gem 'fog-google', '< 0.1.0' # a higher version is incompatible with ruby 1.9.3
+  gem 'fog-google', '< 0.1.0' if RUBY_VERSION < "2.0.0"
   gem 'beaker',          :require => false
   gem 'beaker-rspec',    :require => false
   gem 'serverspec',      :require => false
