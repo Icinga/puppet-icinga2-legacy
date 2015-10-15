@@ -103,4 +103,15 @@ describe 'icinga2' do
     it { should contain_class('icinga2::params') }
   end
 
+  context 'on FreeBSD' do
+    let :facts do
+      IcingaPuppet.variants['FreeBSD 10.2']
+    end
+
+    it { should compile }
+    it { should contain_class('icinga2') }
+    it { should contain_class('icinga2::params') }
+    it { should contain_file('/usr/local/etc/icinga2') }
+  end
+
 end
