@@ -1,7 +1,7 @@
 # == Class: icinga2::objects
 #
 # This class will search for icinga2 objects inside hiera's database and will create them.
-# This class is called by icinga2::server
+# This class is called by icinga2
 #
 # === Parameters
 #
