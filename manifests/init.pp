@@ -71,11 +71,10 @@ class icinga2 (
   validate_string($icinga2_package)
   validate_bool($install_nagios_plugins)
 
-  if $manage_repos != false {
-    include "::icinga2::repo::${package_provider}"
-    Class["::icinga2::repo::${package_provider}"] ->
-    Class['::icinga2::install']
+  if $manage_repos == true {
+    include icinga2::repo
   }
+
   anchor {'icinga2::start':} ->
   class {'::icinga2::install':} ~>
   class {'::icinga2::config':} ~>
