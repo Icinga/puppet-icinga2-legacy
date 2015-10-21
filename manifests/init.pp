@@ -35,7 +35,7 @@ class icinga2 (
   $config_owner                           = $::icinga2::params::config_owner,
   $db_schema_mysql                        = $::icinga2::params::db_schema_mysql,
   $db_schema_pgsql                        = $::icinga2::params::db_schema_pgsql,
-  $icinga2_daemon_name                    = $::icinga2::params::icinga2_daemon_name,
+  $pid_file                               = $::icinga2::params::pid_file,
 ) inherits ::icinga2::params {
   # TODO: temporary parameter until we provide some default templates
   validate_bool($purge_confd)
