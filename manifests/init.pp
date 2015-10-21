@@ -29,33 +29,15 @@ class icinga2 (
   $install_mail_utils_package             = $::icinga2::params::install_mail_utils_package,
   $purge_configs                          = true,
   $purge_confd                            = false,
-  $nrpe_plugin_libdir                     = $::icinga2::params::nrpe_plugin_libdir,
-  $nrpe_allowed_hosts                     = $::icinga2::params::nrpe_allowed_hosts,
   $nagios_plugin_packages                 = $::icinga2::params::nagios_plugin_packages,
   $nagios_plugin_package_install_options  = $::icinga2::params::nagios_plugin_package_install_options,
-  $nrpe_pid_file_path                     = $::icinga2::params::nrpe_pid_file_path,
-
   $checkplugin_libdir                     = $::icinga2::params::checkplugin_libdir,
-  $client_plugin_package_install_options  = $::icinga2::params::client_plugin_package_install_options,
   $config_group                           = $::icinga2::params::config_group,
   $config_mode                            = $::icinga2::params::config_mode,
   $config_owner                           = $::icinga2::params::config_owner,
   $db_schema_mysql                        = $::icinga2::params::db_schema_mysql,
   $db_schema_pgsql                        = $::icinga2::params::db_schema_pgsql,
-  $icinga2_client_packages                = $::icinga2::params::icinga2_client_packages,
   $icinga2_daemon_name                    = $::icinga2::params::icinga2_daemon_name,
-  $nrpe_allow_command_argument_processing = $::icinga2::params::nrpe_allow_command_argument_processing,
-  $nrpe_command_timeout                   = $::icinga2::params::nrpe_command_timeout,
-  $nrpe_config_basedir                    = $::icinga2::params::nrpe_config_basedir,
-  $nrpe_connection_timeout                = $::icinga2::params::nrpe_connection_timeout,
-  $nrpe_daemon_name                       = $::icinga2::params::nrpe_daemon_name,
-  $nrpe_debug_level                       = $::icinga2::params::nrpe_debug_level,
-  $nrpe_group                             = $::icinga2::params::nrpe_group,
-  $nrpe_listen_port                       = $::icinga2::params::nrpe_listen_port,
-  $nrpe_log_facility                      = $::icinga2::params::nrpe_log_facility,
-  $nrpe_purge_unmanaged                   = $::icinga2::params::nrpe_purge_unmanaged,
-  $nrpe_user                              = $::icinga2::params::nrpe_user,
-
 ) inherits ::icinga2::params {
   # TODO: temporary parameter until we provide some default templates
   validate_bool($purge_confd)
