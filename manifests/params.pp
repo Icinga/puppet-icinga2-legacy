@@ -18,7 +18,7 @@ class icinga2::params {
   $manage_repos = true
   $use_debmon_repo = false
 
-  #Whether to install the plugin packages when the icinga2::server class is applied:
+  #Whether to install the plugin packages when the icinga2 class is applied:
   $install_nagios_plugins = true
 
   #whether to install packages that provide the 'mail' binary
@@ -38,7 +38,7 @@ class icinga2::params {
   $db_schema_mysql = '/usr/share/icinga2-ido-mysql/schema/mysql.sql'
   $db_schema_pgsql = '/usr/share/icinga2-ido-pgsql/schema/pgsql.sql'
 
-  #Whether to install the plugin packages when the icinga2::server class is applied:
+  #Whether to install the plugin packages when the icinga2 class is applied:
   $server_install_nagios_plugins = true
 
 
