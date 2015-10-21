@@ -179,6 +179,7 @@ icinga2::object::idopgsqlconnection { 'postgres_connection':
    user             => 'icinga2',
    password         => 'password',
    database         => 'icinga2_data',
+   # you should not set categories if you do not have special needs!
    categories => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
 }
 </pre>
