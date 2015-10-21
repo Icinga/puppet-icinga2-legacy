@@ -63,7 +63,7 @@ define icinga2::object::checkcommand (
         group   => $target_file_group,
         mode    => $target_file_mode,
         content => template("${checkcommand_template_module}/${checkcommand_template}"),
-        notify  => Service['icinga2'],
+        notify  => Class['::icinga2::service'],
       }
     }
     elsif $checkcommand_file_distribution_method == 'source' {
@@ -73,7 +73,7 @@ define icinga2::object::checkcommand (
         group  => $target_file_group,
         mode   => $target_file_mode,
         source => $checkcommand_source_file,
-        notify => Service['icinga2'],
+        notify => Class['::icinga2::service'],
       }
     }
     else {

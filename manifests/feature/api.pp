@@ -42,7 +42,7 @@ class icinga2::feature::api (
   }
 
   if $::icinga2::manage_service {
-    $notify = Class['icinga2::service']
+    $notify = Class['::icinga2::service']
   }
   else {
     $notify = undef

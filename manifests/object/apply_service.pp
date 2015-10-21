@@ -63,7 +63,7 @@ define icinga2::object::apply_service (
 
   #If the refresh_icinga2_service parameter is set to true...
   if $refresh_icinga2_service == true {
-    $_notify = Service['icinga2']
+    $_notify = Class['::icinga2::service']
   }
   #...otherwise, use the same file resource but without a notify => parameter:
   else {

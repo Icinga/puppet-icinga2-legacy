@@ -70,7 +70,7 @@ class icinga2 (
     } -> Anchor['icinga2::end']
 
     if $manage_service {
-      Class['icinga2::database'] ~> Class['icinga2::service']
+      Class['::icinga2::database'] ~> Class['::icinga2::service']
     }
   }
 }

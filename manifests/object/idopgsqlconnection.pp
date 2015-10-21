@@ -63,7 +63,7 @@ define icinga2::object::idopgsqlconnection (
   }
 
   if $refresh_service == true {
-    File["${target_dir}/${target_file_name}"] ~> Class['icinga2::service']
+    File["${target_dir}/${target_file_name}"] ~> Class['::icinga2::service']
   }
 
 }

@@ -37,7 +37,7 @@ define icinga2::object::zone(
       mode    => $target_file_mode,
       content => template('icinga2/object_zone.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
-      notify  => Class['icinga2::service'],
+      notify  => Class['::icinga2::service'],
     }
   }
   #...otherwise, use the same file resource but without a notify => parameter:
