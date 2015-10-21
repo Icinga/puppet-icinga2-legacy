@@ -29,7 +29,7 @@ Table of Contents
 [Overview](id:overview)
 --------
 
-This module installs and configures the [Icinga 2 monitoring system](https://www.icinga.org/icinga2/). It can also install and configure [NRPE](http://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details) on client systems that are being monitored by an Icinga 2 server.
+This module installs and configures the [Icinga 2 monitoring system](https://www.icinga.org/icinga2/).
 
 [Module Description](id:module-description)
 -------------------
@@ -47,7 +47,7 @@ This module requires the [Puppet Labs stdlib module](https://github.com/puppetla
 
 For Ubuntu systems, this module requires the [Puppet Labs apt module](https://github.com/puppetlabs/puppetlabs-apt).
 
-On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required. You can also use the [icinga2::nrpe class](#nrpe-usage) to set up NRPE on CentOS 5. It is discouraged to set up Icinga2 Server on this old of a distribution. You are encouraged to use at least CentOS 6 or higher.
+On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required.
 
 ####Note for RedHat
 
@@ -201,21 +201,6 @@ class { 'icinga2':
 }
 </pre>
 
-**NRPE and Nagios plugin packages**
-
-If you will be installing NRPE or the Nagios plugins packages with the `icinga2::nrpe` class on a node that also has the `icinga2` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2` to `false`:
-
-<pre>
-#Install Icinga 2:
-class { 'icinga2':
-  ...
-  server_install_nagios_plugins => false,
-  ...
- }
-</pre>
-
-This will stop the `icinga2` class from trying to install the plugins packages and will prevent a duplicate resource error, since the `icinga2::nrpe` class will already be installing the plugin packages.
-
 **`mail` binaries**
 
 If you would like to install packages to make a `mail` command binary available so that Icinga 2 can send out email notifications, set the `install_mail_utils_package` parameter to **true**:
@@ -246,51 +231,9 @@ class { 'icinga2':
 }
 ````
 
-###NRPE usage
-
-To install NRPE and allow the local machine and Icinga 2 servers (or Icinga 1 or plain old Nagios servers) with various IP addresess to connect:
-
-<pre>
-class { 'icinga2::nrpe':
-  nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
-}
-</pre>
-
-By default the NRPE daemon will not allow clients to specify arguments to the commands that are executed.  To enable NRPE to allow client argument processing you can call the icinga2::nrpe class with the **allow_command_argument_processing** parameter.
-
-Valid parameter values are: 0=do not allow arguments, 1=allow command arguments
-
-**WARNING! - ENABLING THIS OPTION IS A SECURITY RISK!**
-
-````
-class { 'icinga2::nrpe':
-  allow_command_argument_processing => 1,
-}
-````
-
-If you'd like to purge NRPE config files that are not managed by Puppet you can set $nrpe_purge_unmanaged to true.
-
-```
-class { 'icinga2::nrpe':
-  nrpe_purge_unmanaged => true,
-}
-```
-
-**Note:** If you would like to install NRPE on a node that also has the `icinga2` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2` to `false`:
-
-<pre>
-#Install Icinga 2:
-class { 'icinga2':
-  db_type => 'pgsql',
-  server_install_nagios_plugins => false,
- }
-</pre>
-
-This will stop the `icinga2` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
-
 ### Check Plugins
 
-Agents installed on nodes (such as NRPE) that Icinga is performing active checks against often require additional or custom check plugins. In order to deploy these check pluings on a node you can call the checkplugin defined resource.
+Agents installed on nodes that Icinga is performing active checks against often require additional or custom check plugins. In order to deploy these check pluings on a node you can call the checkplugin defined resource.
 
 The checkplugin defined resource can distribute files via both content (templates) and source (files).  By default the checkpluin resource will assume your distribution method is content (template) and that your template resides in the icinga2 module
 
