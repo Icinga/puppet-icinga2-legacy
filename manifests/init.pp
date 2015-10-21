@@ -23,14 +23,12 @@ class icinga2 (
   $manage_repos                           = $::icinga2::params::manage_repos,
   $manage_service                         = $::icinga2::params::manage_service,
   $use_debmon_repo                        = $::icinga2::params::use_debmon_repo,
-  $package_provider                       = $::icinga2::params::package_provider,
-  $icinga2_package                        = $::icinga2::params::icinga2_package,
-  $install_nagios_plugins                 = $::icinga2::params::install_nagios_plugins,
-  $install_mail_utils_package             = $::icinga2::params::install_mail_utils_package,
+  $install_plugins                        = true,
+  $install_mailutils                      = true,
   $purge_configs                          = true,
   $purge_confd                            = false,
-  $nagios_plugin_packages                 = $::icinga2::params::nagios_plugin_packages,
-  $nagios_plugin_package_install_options  = $::icinga2::params::nagios_plugin_package_install_options,
+  $plugin_packages                        = $::icinga2::params::plugin_packages,
+  $plugin_packages_extra                  = [],
   $checkplugin_libdir                     = $::icinga2::params::checkplugin_libdir,
   $config_group                           = $::icinga2::params::config_group,
   $config_mode                            = $::icinga2::params::config_mode,
@@ -49,9 +47,6 @@ class icinga2 (
   validate_bool($manage_service)
   validate_bool($manage_repos)
   validate_bool($use_debmon_repo)
-  validate_string($package_provider)
-  validate_string($icinga2_package)
-  validate_bool($install_nagios_plugins)
 
   if $manage_repos == true {
     include icinga2::repo
