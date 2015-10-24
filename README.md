@@ -989,6 +989,23 @@ icinga2::object::graphitewriter { 'graphite_relay':
 }
 ````
 
+####[`icinga2::object::opentsdbwriter`](id:object_opentsdbwriter)
+
+This defined type creates an **OpenTsdbWriter** object
+
+Though you can create the file anywhere and with any name via the target_dir and file_name parameters, you should set the target_dir parameter to /etc/icinga2/features-enabled, as that's where Icinga 2 will look for opentsdbwriter connection objects by default.
+
+Example Usage:
+
+````
+icinga2::object::opentsdbwriter { 'opentsdb_server':
+  target_dir => '/etc/icinga2/features-enabled',
+  file_name  => 'opentsdb.conf',
+  host       => '127.0.0.1',
+  port       => 4242,
+}
+````
+
 ####[`icinga2::object::zone`](id:object_zone)
 
 This defined type creates a **Zone** object
@@ -1062,6 +1079,7 @@ Objects available:
 * `idopgsqlconnection`
 * `notificationcommand`
 * `notification`
+* `opentsdbwriter`
 * `perfdatawriter`
 * `scheduleddowntime`
 * `servicegroup`

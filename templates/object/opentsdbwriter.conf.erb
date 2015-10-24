@@ -1,0 +1,13 @@
+<%= ERB.new(File.read(File.expand_path('_header.erb',File.dirname(File.dirname(file))))).result(binding) -%>
+
+/**
+ * The OpenTsdbWriter type writes check result metrics and
+ * performance data to a OpenTSDB tcp socket.
+ */
+
+library "perfdata"
+
+object OpenTsdbWriter "<%= @name -%>" {
+  host = "<%= @host -%>"
+  port = <%= @port %>
+}
