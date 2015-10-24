@@ -989,6 +989,23 @@ icinga2::object::graphitewriter { 'graphite_relay':
 }
 ````
 
+####[`icinga2::object::gelfwriter`](id:object_gelfwriter)
+
+This defined type creates an **GelfWriter** object
+
+Though you can create the file anywhere and with any name via the target_dir and file_name parameters, you should set the target_dir parameter to /etc/icinga2/features-enabled, as that's where Icinga 2 will look for gelfwriter connection objects by default.
+
+Example Usage:
+
+````
+icinga2::object::gelfwriter { 'gelf_server':
+  target_dir => '/etc/icinga2/features-enabled',
+  file_name  => 'gelf.conf',
+  host       => '127.0.0.1',
+  port       => 12201,
+}
+````
+
 ####[`icinga2::object::zone`](id:object_zone)
 
 This defined type creates a **Zone** object
@@ -1056,6 +1073,7 @@ Objects available:
 * `dependency`
 * `eventcommand`
 * `graphitewriter`
+* `gelfwriter`
 * `hostgroup`
 * `host`
 * `idomysqlconnection`

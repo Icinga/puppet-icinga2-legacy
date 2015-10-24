@@ -1,0 +1,15 @@
+/**
+ * The GelfWriter type writes event log entries
+ * to a GELF tcp socket provided by graylog2,
+ * logstash or any other receiver.
+ */
+
+library "perfdata"
+
+object GelfWriter "<%= @name -%>" {
+  host = "<%= @host -%>"
+  port = <%= @port %>
+  <%- if @source -%>
+  source = "<%= @source -%>"
+  <%- end -%>
+}
