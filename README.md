@@ -995,14 +995,28 @@ This defined type creates an **GelfWriter** object
 
 Though you can create the file anywhere and with any name via the target_dir and file_name parameters, you should set the target_dir parameter to /etc/icinga2/features-enabled, as that's where Icinga 2 will look for gelfwriter connection objects by default.
 
+####[`icinga2::object::opentsdbwriter`](id:object_opentsdbwriter)
+
+This defined type creates an **OpenTsdbWriter** object
+
+Though you can create the file anywhere and with any name via the target_dir and file_name parameters, you should set the target_dir parameter to /etc/icinga2/features-enabled, as that's where Icinga 2 will look for opentsdbwriter connection objects by default.
+
 Example Usage:
 
 ````
+<<<<<<< HEAD
 icinga2::object::gelfwriter { 'gelf_server':
   target_dir => '/etc/icinga2/features-enabled',
   file_name  => 'gelf.conf',
   host       => '127.0.0.1',
   port       => 12201,
+=======
+icinga2::object::opentsdbwriter { 'opentsdb_server':
+  target_dir => '/etc/icinga2/features-enabled',
+  file_name  => 'opentsdb.conf',
+  host       => '127.0.0.1',
+  port       => 4242,
+>>>>>>> pull/144/head
 }
 ````
 
@@ -1080,6 +1094,7 @@ Objects available:
 * `idopgsqlconnection`
 * `notificationcommand`
 * `notification`
+* `opentsdbwriter`
 * `perfdatawriter`
 * `scheduleddowntime`
 * `servicegroup`
