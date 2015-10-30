@@ -14,8 +14,10 @@ module Puppet
           value
         else
           if value.class == String
-            if value.match(/^\d+(\.\d+)?$/)
-              return value # return bare value
+            if value.match(/^\d+$/)
+              return value.to_i
+            elsif value.match(/^\d+\.\d+$/)
+              return value.to_f
             else
               # remove quotes from oldstyle values "something"
               value = value.gsub(/(^"|"$)/, '')

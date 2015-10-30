@@ -11,9 +11,9 @@ describe 'icinga2::service' do
     it { should contain_class('icinga2::service') }
     it { should contain_exec('icinga2 config stamp') }
     it { should contain_exec('icinga2 daemon config test') }
-    it { should contain_service('icinga2').with(
-      :ensure => :running,
-    )}
+    it { should contain_service('icinga2').with({
+      :ensure => 'running',
+    })}
   end
 
 end
