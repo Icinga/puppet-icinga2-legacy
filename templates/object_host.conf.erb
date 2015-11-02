@@ -91,5 +91,7 @@ object Host "<%= @object_hostname %>" {
   <%- if @zone-%>
   zone = "<%= @zone -%>"
   <%- end -%>
-
+  <%- if @command_endpoint -%>
+  command_endpoint = "<%= @command_endpoint -%>"
+  <%- end -%>
 }

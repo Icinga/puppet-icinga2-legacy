@@ -55,6 +55,7 @@ describe 'icinga2::object::host' do
         :object_hostname => 'testhost',
         :display_name => 'testhost',
         :target_file_name => 'testhost.conf',
+        :command_endpoint => 'testcmdhost',
         :vars => {
           'hash_test' => {
             'hash_var1' => 'test',
@@ -84,6 +85,7 @@ describe 'icinga2::object::host' do
           :ensure => 'file',
           :path => '/etc/icinga2/objects/hosts/testhost.conf',
           :content => /object Host "testhost"/,
+          :content => /command_endpoint = "testcmdhost"/,
         }) }
     it { should contain_file(object_file).with_content(/^\s*vars \+= {$/) }
     it { should contain_file(object_file).with_content(/^\s*"array" = \[\n\s+"array1",\n/) }

@@ -45,6 +45,7 @@ define icinga2::object::host (
   $target_file_mode = '0644',
   $refresh_icinga2_service = true,
   $zone = undef,
+  $command_endpoint = undef,
 ) {
 
   #Do some validation of the class' parameters:
@@ -61,6 +62,7 @@ define icinga2::object::host (
   validate_string($target_file_mode)
   validate_bool($refresh_icinga2_service)
   validate_string($zone)
+  validate_string($command_endpoint)
 
   #If the refresh_icinga2_service parameter is set to true...
   if $refresh_icinga2_service == true {
