@@ -160,7 +160,7 @@ class { 'icinga2':
   db_port => '5432',
   db_name => 'icinga2_data',
   db_user => 'icinga2',
-  db_password => hiera('icinga_db_password_key_here'),
+  db_pass => hiera('icinga_db_password_key_here'),
 }
 </pre>
 
@@ -197,7 +197,7 @@ class { 'icinga2':
   db_port => '5432'
   db_name => 'icinga2_data'
   db_user => 'icinga2'
-  db_password => 'password',
+  db_pass => 'password',
 }
 </pre>
 
