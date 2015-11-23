@@ -8,8 +8,8 @@ class icinga2::feature::graphite (
 ) {
 
   ::icinga2::object::graphitewriter { 'graphite':
-    graphite_host => $host,
-    graphite_port => $port,
+    host => $host,
+    port => $port,
   }
   ::icinga2::feature { 'graphite':
     manage_file => false,
