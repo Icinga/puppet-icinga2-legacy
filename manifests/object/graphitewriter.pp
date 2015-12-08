@@ -10,16 +10,34 @@
 #
 
 define icinga2::object::graphitewriter (
-  $host       = '127.0.0.1',
-  $port       = 2003,
-  #Put the object files this defined type generates in features-available
-  #since the Graphite writer feature is one that has to be explicitly enabled.
-  $target_dir = '/etc/icinga2/features-available',
-  $file_name  = "${name}.conf",
+  $host                   = '127.0.0.1',
+  $port                   = 2003,
+  $host_name_template     = undef,
+  $service_name_template  = undef,
+  # Only avaiable in icinga2 >= 2.4
+  $enable_send_thresholds = undef,
+  $enable_send_metadata   = undef,
+  # This will be only avaiable in some icinga 2 versions for examlple 2.4
+  $enable_legacy_mode     = undef,
+  # Put the object files this defined type generates in features-available
+  # since the Graphite writer feature is one that has to be explicitly enabled.
+  $target_dir             = '/etc/icinga2/objects/graphitewriters',
+  $file_name              = "${name}.conf",
 ) {
-
-  #Do some validation
+  # Do some validation
   validate_string($host)
+
+  if $enable_send_thresholds != undef {
+    validate_bool($enable_send_thresholds)
+  }
+
+  if $enable_send_metadata != undef {
+    validate_bool($enable_send_metadata)
+  }
+
+  if $enable_legacy_mode != undef {
+    validate_bool($enable_legacy_mode)
+  }
 
   file { "${target_dir}/${file_name}":
     ensure  => file,
@@ -28,6 +46,7 @@ define icinga2::object::graphitewriter (
     mode    => $::icinga2::config_mode,
     content => template('icinga2/object/graphitewriter.conf.erb'),
   }
+
   if $::icinga2::manage_service {
     File["${target_dir}/${file_name}"] ~> Class['::icinga2::service']
   }
