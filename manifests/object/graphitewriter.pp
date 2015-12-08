@@ -21,7 +21,7 @@ define icinga2::object::graphitewriter (
   $enable_legacy_mode     = undef,
   # Put the object files this defined type generates in features-available
   # since the Graphite writer feature is one that has to be explicitly enabled.
-  $target_dir             = '/etc/icinga2/features-available',
+  $target_dir             = '/etc/icinga2/objects/graphitewriters',
   $file_name              = "${name}.conf",
 ) {
   # Do some validation

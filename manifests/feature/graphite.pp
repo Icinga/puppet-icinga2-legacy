@@ -10,7 +10,7 @@ class icinga2::feature::graphite (
   # Only avaiable in icinga2 >= 2.4
   $enable_send_thresholds = undef,
   $enable_send_metadata   = undef,
-  # This will be only avaiable in some icinga 2 versions for examlple 2.4
+  # This will be only avaiable in some icinga 2 versions for example 2.4
   $enable_legacy_mode     = undef,
 ) {
   ::icinga2::object::graphitewriter { 'graphite':
@@ -21,6 +21,7 @@ class icinga2::feature::graphite (
     enable_send_thresholds => $enable_send_thresholds,
     enable_send_metadata   => $enable_send_metadata,
     enable_legacy_mode     => $enable_legacy_mode,
+    target_dir             => '/etc/icinga2/features-available',
   }
 
   ::icinga2::feature { 'graphite':
