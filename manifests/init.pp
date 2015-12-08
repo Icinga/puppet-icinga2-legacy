@@ -25,6 +25,7 @@ class icinga2 (
   $use_debmon_repo                        = $::icinga2::params::use_debmon_repo,
   $install_plugins                        = true,
   $install_mailutils                      = true,
+  $package_ensure                         = installed,
   $purge_configs                          = true,
   $purge_confd                            = false,
   $plugin_packages                        = $::icinga2::params::plugin_packages,

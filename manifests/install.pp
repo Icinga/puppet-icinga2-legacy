@@ -5,7 +5,7 @@
 class icinga2::install {
 
   package { 'icinga2':
-    ensure   => installed,
+    ensure   => $::icinga2::package_ensure,
   }
 
   validate_bool($::icinga2::install_plugins)

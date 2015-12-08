@@ -35,7 +35,7 @@ class icinga2::feature::ido_mysql (
 ) {
 
   package { 'icinga2-ido-mysql':
-    ensure   => installed,
+    ensure   => $::icinga2::package_ensure,
   }
 
   ::icinga2::object::idomysqlconnection { 'ido-mysql':
