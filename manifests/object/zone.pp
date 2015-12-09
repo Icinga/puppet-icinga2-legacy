@@ -26,7 +26,7 @@ define icinga2::object::zone(
     validate_hash($endpoints)
     $_endpoints = keys($endpoints)
 
-    create_resources('::icinga2::object::endpoint', $endpoints)
+    create_resources('icinga2::object::endpoint', $endpoints)
   }
   else {
     $_endpoints = undef

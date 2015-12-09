@@ -63,7 +63,7 @@ class icinga2::pki::icinga (
   file { $ca:
   }
 
-  contain icinga2::feature::api
+  include ::icinga2::feature::api
 
   # ordering of this class
   Class['::icinga2::config'] -> Class['::icinga2::pki::icinga'] ~> Class['icinga2::service']

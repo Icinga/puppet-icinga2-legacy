@@ -47,7 +47,7 @@ class icinga2::pki::puppet(
     }
   }
 
-  contain icinga2::feature::api
+  include ::icinga2::feature::api
 
   # ordering of this class
   Class['::icinga2::config'] -> Class['::icinga2::pki::puppet']
