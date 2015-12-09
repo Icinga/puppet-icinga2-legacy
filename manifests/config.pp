@@ -81,4 +81,10 @@ class icinga2::config {
       recurse => $::icinga2::purge_configs,
       force   => $::icinga2::purge_configs,
   }
+
+  file { '/etc/icinga2/zones.conf':
+    ensure  => file,
+    content => template('icinga2/zones.conf.erb'),
+  }
+
 }
