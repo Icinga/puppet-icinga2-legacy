@@ -94,4 +94,8 @@ class icinga2::objects {
   if $hash_user {
     create_resources(icinga2::object::user,$hash_user)
   }
+  $hash_zone = hiera_hash('icinga2::object::zone',undef)
+  if $hash_zone {
+    create_resources(icinga2::object::zone,$hash_zone)
+  }
 }
