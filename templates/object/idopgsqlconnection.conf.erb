@@ -1,0 +1,44 @@
+<%= scope.function_template(['icinga2/_header.erb']) -%>
+
+library "db_ido_pgsql"
+
+object IdoPgsqlConnection "<%= @name %>" {
+  <%- if @host -%>
+  host = "<%= @host -%>"
+  <%- end -%>
+  <%- if @port != nil -%>
+  port = <%= @port %>
+  <%- end -%>
+  <%- if @user -%>
+  user = "<%= @user -%>"
+  <%- end -%>
+  <%- if @password -%>
+  password = "<%= @password -%>"
+  <%- end -%>
+  <%- if @database -%>
+  database = "<%= @database -%>"
+  <%- end -%>
+  <%- if @table_prefix -%>
+  table_prefix = "<%= @table_prefix -%>"
+  <%- end -%>
+  <%- if @instance_name -%>
+  instance_name = "<%= @instance_name -%>"
+  <%- end -%>
+  <%- if @instance_description -%>
+  instance_description = "<%= @instance_description -%>"
+  <%- end -%>
+  enable_ha = <%= @enable_ha -%>
+
+  <%- if ! @cleanup.empty? -%>
+  cleanup = {
+    <%- @cleanup.sort.each do |key, value| -%>
+    <%- return if ! value -%>
+    <%= key %> = <%= value %>
+    <%- end -%>
+  }
+  <%- end -%>
+
+  <%- if @categories.length != 0 -%>
+  categories = <%= @categories.sort.join(' | ') %>
+  <%- end -%>
+}

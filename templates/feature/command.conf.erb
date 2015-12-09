@@ -1,0 +1,9 @@
+<%= scope.function_template(['icinga2/_header.erb']) -%>
+
+library "compat"
+
+object ExternalCommandListener "command" {
+  <%- if @command_path -%>
+  command_path = "<%= @command_path -%>"
+  <%- end -%>
+}

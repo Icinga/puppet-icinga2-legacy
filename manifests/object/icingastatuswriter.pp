@@ -39,6 +39,6 @@ define icinga2::object::icingastatuswriter (
     group   => $target_file_group,
     mode    => $target_file_mode,
     content => template('icinga2/object_icingastatuswriter.conf.erb'),
-    notify  => Service['icinga2'],
+    notify  => Class['::icinga2::service'],
   }
 }

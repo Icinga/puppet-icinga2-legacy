@@ -1,0 +1,10 @@
+---
+fixtures:
+  repositories:
+    apt:  # Version 2.x won't work with Puppet 2.7 anymore
+      repo:   'https://github.com/puppetlabs/puppetlabs-apt'
+      branch: '1.8.x'
+    stdlib: 'https://github.com/puppetlabs/puppetlabs-stdlib'
+
+  symlinks:
+    icinga2: "../../../"

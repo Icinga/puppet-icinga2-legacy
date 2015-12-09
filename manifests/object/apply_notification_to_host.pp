@@ -66,13 +66,13 @@ define icinga2::object::apply_notification_to_host (
       mode    => $target_file_mode,
       content => template('icinga2/object_apply_notification_to_host.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
-      notify  => Service['icinga2'],
+      notify  => Class['::icinga2::service'],
     }
 
   }
-  #...otherwise, use the same file resource but without a notify => parameter: 
+  #...otherwise, use the same file resource but without a notify => parameter:
   else {
-  
+
     file { "${target_dir}/${target_file_name}":
       ensure  => $target_file_ensure,
       owner   => $target_file_owner,
@@ -80,7 +80,7 @@ define icinga2::object::apply_notification_to_host (
       mode    => $target_file_mode,
       content => template('icinga2/object_apply_notification_to_host.conf.erb'),
     }
-  
+
   }
 
 }

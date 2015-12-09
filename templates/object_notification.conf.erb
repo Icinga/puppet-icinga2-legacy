@@ -10,8 +10,11 @@
 *
 */
 
-object Notification "<%= @object_notificationname %>" {
+<%- if @is_template -%>template<%- else -%>object<%- end -%> Notification "<%= @object_notificationname %>" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
+  <%- if @template_to_import -%>
+  import "<%= @template_to_import -%>"
+  <%- end -%>
   <%- if @host_name -%>
 
   host_name = "<%= @host_name -%>"
@@ -58,7 +61,7 @@ object Notification "<%= @object_notificationname %>" {
   <%- end -%>
   <%- if @period -%>
 
-  period = <%= @period %>
+  period = "<%= @period %>"
   <%- end -%>
   <%- if @types.empty? !=true -%>
 

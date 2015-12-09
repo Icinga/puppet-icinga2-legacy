@@ -1,0 +1,7 @@
+<%= scope.function_template(['icinga2/_header.erb']) -%>
+
+library "notification"
+
+object NotificationComponent "notification" {
+  enable_ha = <%= @enable_ha %>
+}

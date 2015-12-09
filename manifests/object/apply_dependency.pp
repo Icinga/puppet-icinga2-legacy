@@ -23,18 +23,18 @@ define icinga2::object::apply_dependency (
   $states                = [],
   $assign_where          = undef,
   $ignore_where          = undef,
-  $target_dir            = '/etc/icinga2/conf.d',
+  $target_dir            = '/etc/icinga2/objects/applys',
   $target_file_name      = "${name}.conf",
   $target_file_ensure    = file,
   $target_file_owner     = 'root',
   $target_file_group     = 'root',
   $target_file_mode      = '0644',
-  $refresh_icinga2_service = true
-  ) {
+  $refresh_icinga2_service = true,
+) {
+
   # Do some validation of the class' parameters:
   validate_string($object_name)
   validate_string($display_name)
-  validate_string($host_name)
   validate_string($parent_host_name)
   validate_string($child_host_name)
   validate_string($child_service_name)
@@ -62,13 +62,13 @@ define icinga2::object::apply_dependency (
       mode    => $target_file_mode,
       content => template('icinga2/object_apply_dependency.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
-      notify  => Service['icinga2'],
+      notify  => Class['::icinga2::service'],
     }
 
   }
-  #...otherwise, use the same file resource but without a notify => parameter: 
+  #...otherwise, use the same file resource but without a notify => parameter:
   else {
-  
+
     file { "${target_dir}/${target_file_name}":
       ensure  => $target_file_ensure,
       owner   => $target_file_owner,
@@ -76,7 +76,7 @@ define icinga2::object::apply_dependency (
       mode    => $target_file_mode,
       content => template('icinga2/object_apply_dependency.conf.erb'),
     }
-  
+
   }
 
 }

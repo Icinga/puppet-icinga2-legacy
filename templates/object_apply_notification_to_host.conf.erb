@@ -25,16 +25,8 @@ apply Notification "<%= @object_notificationname %>" to Host {
   <%- if @command -%>
   command = "<%= @command %>"
   <%- end -%>
-  <%- if @vars.empty? != true -%>
-  <%- @vars.sort_by {|key, value| key}.each do |key, value| -%>
-  <%= key %> = <% if value.class == String %><%= value %>
-  <%- else -%>{
-    <%- value.sort_by {|k, v| k}.each do |k, v| -%>
-    <%= k %> = <%= v %>
-    <%- end -%>
-  }
-    <%- end -%>
-  <%- end -%>
+  <%- if @vars.any? -%>
+  vars += <%= scope.function_icinga2_config_value([@vars]) %>
   <%- end -%>
   <%- if @users.empty? !=true -%>
   users = [ <% @users.each_with_index do |usr, i| %>"<%= usr -%>"<%= ', ' if i < (@users.size - 1) %><% end %> ]
@@ -50,7 +42,7 @@ apply Notification "<%= @object_notificationname %>" to Host {
   }
   <%- end -%>
   <%- if @interval -%>
-  interval = "<%= @interval -%>"
+  interval = <%= @interval %>
   <%- end -%>
   <%- if @period -%>
   period = "<%= @period -%>"

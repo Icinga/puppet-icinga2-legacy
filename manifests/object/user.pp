@@ -11,16 +11,17 @@
 
 define icinga2::object::user (
   $object_username = $name,
+  $template_to_import = undef,
   $display_name = $name,
   $email = undef,
   $pager = undef,
   $vars = {},
   $groups = [],
-  $enable_notifications = undef,
+  $enable_notifications = true,
   $period = undef,
   $types = [],
   $states = [],
-  $target_dir = '/etc/icinga2/objects',
+  $target_dir = '/etc/icinga2/objects/users',
   $target_file_name = "${name}.conf",
   $target_file_ensure = file,
   $target_file_owner = 'root',
@@ -31,8 +32,8 @@ define icinga2::object::user (
 
   #Do some validation of the class' parameters:
   validate_string($object_username)
+  validate_string($template_to_import)
   validate_string($display_name)
-  validate_string($host_name)
   validate_array($groups)
   validate_hash($vars)
   validate_array($types)
@@ -54,13 +55,13 @@ define icinga2::object::user (
       mode    => $target_file_mode,
       content => template('icinga2/object_user.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
-      notify  => Service['icinga2'],
+      notify  => Class['::icinga2::service'],
     }
 
   }
-  #...otherwise, use the same file resource but without a notify => parameter: 
+  #...otherwise, use the same file resource but without a notify => parameter:
   else {
-  
+
     file { "${target_dir}/${target_file_name}":
       ensure  => $target_file_ensure,
       owner   => $target_file_owner,
@@ -68,7 +69,7 @@ define icinga2::object::user (
       mode    => $target_file_mode,
       content => template('icinga2/object_user.conf.erb'),
     }
-  
+
   }
 
 }

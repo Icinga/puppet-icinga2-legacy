@@ -11,9 +11,7 @@
  */
 
 object Host "<%= @object_hostname %>" {
-  <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @template_to_import -%>
-  <%#- Otherwise, include the parameter: -%>
   import "<%= @template_to_import -%>"
   <%- end -%>
   <%- if @display_name -%>
@@ -28,18 +26,8 @@ object Host "<%= @object_hostname %>" {
   <%- if @groups.length != 0 -%>
   groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
   <%- end -%>
-  <%- if @vars.empty? != true  -%>
-  <%- @vars.sort_by {|key, value| key}.each do |key, value| -%>
-  <%- if value.is_a?(Hash) -%>
-  vars.<%= key %> = {
-  <%- value.sort_by {|subkey,subvalue| subkey}.each do |subkey,subvalue| -%>
-    <%= subkey %> = <%= subvalue %>
-  <%- end -%>
-  }
-  <%- else -%>
-  vars.<%= key %> = "<%= value %>"
-  <%- end -%>
-  <%- end -%>
+  <%- if @vars.any? -%>
+  vars += <%= scope.function_icinga2_config_value([@vars]) %>
   <%- end -%>
   <%- if @check_command -%>
   check_command = "<%= @check_command -%>"
@@ -58,6 +46,8 @@ object Host "<%= @object_hostname %>" {
   <%- end -%>
   <%- if @enable_notifications -%>
   enable_notifications = <%= @enable_notifications %>
+  <%- else -%>
+  enable_notifications = false
   <%- end -%>
   <%- if @enable_active_checks -%>
   enable_active_checks = <%= @enable_active_checks %>
@@ -97,5 +87,11 @@ object Host "<%= @object_hostname %>" {
   <%- end -%>
   <%- if @icon_image_alt -%>
   icon_image_alt = "<%= @icon_image_alt -%>"
+  <%- end -%>
+  <%- if @zone-%>
+  zone = "<%= @zone -%>"
+  <%- end -%>
+  <%- if @command_endpoint -%>
+  command_endpoint = "<%= @command_endpoint -%>"
   <%- end -%>
 }

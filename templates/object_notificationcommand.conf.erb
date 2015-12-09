@@ -11,8 +11,6 @@
 */
 
 object NotificationCommand "<%= @object_notificationcommandname %>" {
-  <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
-
   <%- if @template_to_import -%>
   import "<%= @template_to_import -%>"
   <%- end -%>
@@ -20,43 +18,20 @@ object NotificationCommand "<%= @object_notificationcommandname %>" {
 
   command = [ <% if @cmd_path -%><%= @cmd_path -%> + <% end -%><% @command.each_with_index do |cmd, i| %><%= cmd -%><%= ', ' if i < (@command.size - 1) %><% end %> ]
   <%- end -%>
-  <%#- Need to add support to argument value as hash (recursivity) -%>
-  <%- if @arguments.empty? != true -%>
+  <%- if @arguments.any? -%>
 
-  arguments = {
-  <%- @arguments.each_with_index do |(key,value), i| -%>
-    <%= key %> = <% if value.class == String %><%= value %>
-    <%- else -%>{
-      <%- value.sort_by {|k, v| k}.each do |k, v| -%>
-      <%= k %> = <%= v %>
-      <%- end -%>
-    }
-    <%- end -%>
+  arguments = <%= scope.function_icinga2_config_value([@arguments]) %>
   <%- end -%>
-  }
-  <%- end -%>
-  <%- if @vars.empty? != true -%>
+  <%- if @vars.any? -%>
 
-  <%- @vars.sort_by {|key, value| key}.each do |key, value| -%>
-  <%= key %> = <% if value.class == String %><%= value %>
-  <%- else -%>{
-    <%- value.sort_by {|k, v| k}.each do |k, v| -%>
-    <%= k %> = <%= v %>
-    <%- end -%>
-  }
-    <%- end -%>
-  <%- end -%>
+  vars += <%= scope.function_icinga2_config_value([@vars]) %>
   <%- end -%>
   <%- if @timeout -%>
 
   timeout = <%= @timeout %>
   <%- end -%>
-  <%- if @env.empty? != true -%>
+  <%- if @env.any? -%>
 
-  env = {
-  <%- @env.sort_by {|key, value| key}.each do |key, value| -%>
-    <%= key %> = <%= value %>
-  <%- end -%>
-  }
+  env += <%= scope.function_icinga2_config_value([@env]) %>
   <%- end -%>
 }

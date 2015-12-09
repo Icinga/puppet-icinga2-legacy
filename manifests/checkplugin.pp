@@ -5,7 +5,7 @@
 #
 define icinga2::checkplugin (
   $checkplugin_name                     = $name,
-  $checkplugin_libdir                   = $icinga2::params::checkplugin_libdir,
+  $checkplugin_libdir                   = $::icinga2::checkplugin_libdir,
   $checkplugin_target_file_owner        = 'root',
   $checkplugin_target_file_group        = 'root',
   $checkplugin_target_file_mode         = '0755',
@@ -15,7 +15,6 @@ define icinga2::checkplugin (
   $checkplugin_source_file              = undef,
   $checkplugin_source_inline            = undef,
 ) {
-
   #Do some validation of the class' parameters:
   validate_string($name)
   validate_string($checkplugin_libdir)
@@ -34,10 +33,10 @@ define icinga2::checkplugin (
   }
   elsif $checkplugin_file_distribution_method == 'source' {
     file { "${checkplugin_libdir}/${checkplugin_name}":
-      owner   => $checkplugin_target_file_owner,
-      group   => $checkplugin_target_file_group,
-      mode    => $checkplugin_target_file_mode,
-      source  => $checkplugin_source_file,
+      owner  => $checkplugin_target_file_owner,
+      group  => $checkplugin_target_file_group,
+      mode   => $checkplugin_target_file_mode,
+      source => $checkplugin_source_file,
     }
   }
   elsif $checkplugin_file_distribution_method == 'inline' {
@@ -53,5 +52,4 @@ define icinga2::checkplugin (
       message => 'The parameter checkplugin_file_distribution_method is missing or incorrect. Please set content or source',
     }
   }
-
 }

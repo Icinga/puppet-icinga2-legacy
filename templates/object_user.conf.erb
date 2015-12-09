@@ -27,6 +27,8 @@ object User "<%= @object_username %>" {
   <%- end -%>
   <%- if @enable_notifications -%>
   enable_notifications = <%= @enable_notifications %>
+  <%- else -%>
+  enable_notifications = false
   <%- end %>
   <%- if @vars.empty? != true  -%>
   <%- @vars.sort_by {|key, value| key}.each do |key, value| -%>

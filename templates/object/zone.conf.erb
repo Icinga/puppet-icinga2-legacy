@@ -1,0 +1,13 @@
+<%= ERB.new(File.read(File.expand_path('_header.erb',File.dirname(File.dirname(file))))).result(binding) -%>
+
+object Zone "<%= @name %>" {
+  <%- if @parent-%>
+  parent = <%= scope.function_icinga2_config_value([@parent]) %>
+  <%- end -%>
+  <%- if @global-%>
+  global = <%= @global%>
+  <%- end -%>
+  <%- if @_endpoints -%>
+  endpoints = <%= scope.function_icinga2_config_value([@_endpoints]) %>
+  <%- end -%>
+}

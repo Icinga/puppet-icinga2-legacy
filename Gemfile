@@ -1,14 +1,26 @@
 source ENV['GEM_SOURCE'] || "https://rubygems.org"
 
-#Install the gems but don't run `require gemname` when bundler runs
-#Source: http://stackoverflow.com/questions/4800721/bundler-what-does-require-false-in-a-gemfile-mean
-#Source of the list of gems: https://github.com/puppetlabs/puppetlabs-ntp/blob/master/Gemfile
-group :development, :unit_tests do
-  gem 'rake',                    :require => false
-  gem 'rspec-puppet',            :require => false
-  gem 'puppetlabs_spec_helper',  :require => false
-  gem 'puppet-lint',             :require => false
-  gem 'simplecov',               :require => false
-  gem 'puppet_facts',            :require => false
-  gem 'json',                    :require => false
+# special dependencies for Ruby 1.8
+# since there are still several OSes with it
+if RUBY_VERSION =~ /^1\.8\./
+  gem 'rspec-core', '~> 3.1.7'
+  gem 'nokogiri', '~> 1.5.0'
+end
+
+gem 'puppet', ENV.key?('PUPPET_VERSION') ? "~> #{ENV['PUPPET_VERSION']}.0" : '>= 2.7'
+gem 'rspec-puppet', '~> 2.0'
+gem 'puppetlabs_spec_helper', '>= 0.1.0'
+gem 'puppet-lint', '>= 1'
+gem 'facter', '>= 1.7.0'
+gem 'rspec-puppet-facts', :require => false
+gem 'metadata-json-lint'
+
+gem 'puppet-lint-strict_indent-check'
+
+group :system_tests do
+  gem 'fog-google', '< 0.1.0' if RUBY_VERSION < "2.0.0"
+  gem 'beaker',          :require => false
+  gem 'beaker-rspec',    :require => false
+  gem 'serverspec',      :require => false
+  gem 'vagrant-wrapper', :require => false
 end

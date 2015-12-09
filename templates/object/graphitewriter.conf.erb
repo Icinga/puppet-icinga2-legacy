@@ -1,0 +1,29 @@
+<%= scope.function_template(['icinga2/_header.erb']) -%>
+
+library "perfdata"
+
+object GraphiteWriter "<%= @name -%>" {
+  <%-#- If any of the @ parameters are undefined, don't print anything for them: -%>
+  <%- if @host -%>
+  <%-# Otherwise, include the parameter: -%>
+  host = "<%= @host -%>"
+  <%- end -%>
+  <%- if @port -%>
+  port = <%= @port %>
+  <%- end -%>
+  <%- if @host_name_template -%>
+  host_name_template = <%= @host_name_template %>
+  <%- end -%>
+  <%- if @service_name_template -%>
+  service_name_template = <%= @service_name_template %>
+  <%- end -%>
+  <%- if @enable_send_thresholds.is_a? TrueClass or @enable_send_thresholds.is_a? FalseClass -%>
+  enable_send_thresholds = <%= @enable_send_thresholds %>
+  <%- end -%>
+  <%- if @enable_send_metadata.is_a? TrueClass or @enable_send_metadata.is_a? FalseClass -%>
+  enable_send_metadata = <%= @enable_send_metadata %>
+  <%- end -%>
+  <%- if @enable_legacy_mode.is_a? TrueClass or @enable_legacy_mode.is_a? FalseClass -%>
+  enable_legacy_mode = <%= @enable_legacy_mode %>
+  <%- end -%>
+}
