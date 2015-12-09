@@ -37,7 +37,7 @@ module Puppet
 
       def self.config_array(array, indent=2)
         txt = "[\n"
-        array.each do |value|
+        array.sort.each do |value|
           txt += "%s%s,\n" % [ ' ' * indent, config_value(value, indent)]
         end
         txt += '%s]' % (' ' * (indent-2))
