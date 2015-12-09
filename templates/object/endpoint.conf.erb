@@ -1,0 +1,13 @@
+<%= ERB.new(File.read(File.expand_path('_header.erb',File.dirname(File.dirname(file))))).result(binding) -%>
+
+object Endpoint "<%= @name %>" {
+  <%- if @host -%>
+  host = <%= scope.function_icinga2_config_value([@host]) %>
+  <%- end -%>
+  <%- if @port -%>
+  port = <%= scope.function_icinga2_config_value([@port]) %>
+  <%- end -%>
+  <%- if @log_duration -%>
+  log_duration = <%= @log_duration -%>
+  <%- end -%>
+}

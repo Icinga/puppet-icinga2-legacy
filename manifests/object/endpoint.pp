@@ -10,37 +10,41 @@
 #
 
 define icinga2::object::endpoint (
-  $ensure                    = 'file',
-  $object_name               = $name,
-  $host                      = undef,
-  $port                      = undef,
-  $log_duration              = undef,
-  $target_dir                = '/etc/icinga2/objects/endpoints',
-  $target_file_name          = "${name}.conf",
-  $target_file_owner         = 'root',
-  $target_file_group         = 'root',
-  $target_file_mode          = '0644'
+  $host         = undef,
+  $port         = undef,
+  $log_duration = undef,
+  $target_dir   = '/etc/icinga2/objects/endpoints',
+  $file_name    = "${name}.conf",
 ) {
 
-  validate_string($host)
+  if ! defined(Class['icinga2']) {
+    fail('You must include the icinga2 base class before using any icinga2 defined resources')
+  }
+
+  ensure_resource('icinga2::config::objectdir', 'endpoints')
+
+  validate_absolute_path($target_dir)
+  if $host {
+    validate_string($host)
+  }
   if $port {
     validate_re($port, '^\d{1,5}$')
   }
   if $log_duration {
     validate_string($log_duration)
   }
-  validate_string($target_dir)
-  validate_string($target_file_name)
-  validate_string($target_file_owner)
-  validate_string($target_file_group)
-  validate_re($target_file_mode, '^\d{4}$')
 
-  file {"${target_dir}/${target_file_name}":
-    ensure  => $ensure,
-    owner   => $target_file_owner,
-    group   => $target_file_group,
-    mode    => $target_file_mode,
-    content => template('icinga2/object_endpoint.conf.erb'),
-    notify  => Class['::icinga2::service'],
+  file { "icinga2 object endpoint ${name}":
+    ensure  => file,
+    path    => "${target_dir}/${file_name}",
+    owner   => $::icinga2::config_owner,
+    group   => $::icinga2::config_group,
+    mode    => $::icinga2::config_mode,
+    content => template('icinga2/object/endpoint.conf.erb'),
   }
+
+  if $::icinga2::manage_service {
+    File["icinga2 object endpoint ${name}"] ~> Class['::icinga2::service']
+  }
+
 }

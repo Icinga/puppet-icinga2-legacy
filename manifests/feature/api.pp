@@ -15,6 +15,9 @@ class icinga2::feature::api (
   $bind_host       = undef,
   $bind_port       = undef,
   $ticket_salt     = false,
+  $hostname        = $::fqdn,
+  $manage_zone     = true,
+  $parent_zone     = undef,
 ) {
 
   validate_bool($accept_commands)
@@ -38,6 +41,17 @@ class icinga2::feature::api (
 
   ::icinga2::feature { 'api':
     content => template('icinga2/feature/api.conf.erb'),
+  }
+
+  if $manage_zone {
+    $endpoints = {
+      "${hostname}" => {},
+    }
+    ::icinga2::object::zone { $hostname:
+      parent    => $parent_zone,
+      endpoints => $endpoints,
+    }
+
   }
 
 }
