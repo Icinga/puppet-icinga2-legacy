@@ -18,6 +18,8 @@ module Puppet
               return value.to_i
             elsif value.match(/^\d+\.\d+$/)
               return value.to_f
+	    elsif value.match(/^%@@.*%@@$/)
+	      return value.gsub(/%@@/, '')
             else
               # remove quotes from oldstyle values "something"
               value = value.gsub(/(^"|"$)/, '')
