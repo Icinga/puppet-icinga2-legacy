@@ -70,8 +70,6 @@ class icinga2::config {
       '/etc/icinga2/objects/idopgsqlconnections',
       '/etc/icinga2/objects/livestatuslisteners',
       '/etc/icinga2/objects/statusdatawriters',
-      '/etc/icinga2/objects/endpoints',
-      '/etc/icinga2/objects/zones',
       '/etc/icinga2/objects/applys',
       '/etc/icinga2/objects/templates',
       '/etc/icinga2/objects/constants',
@@ -81,4 +79,10 @@ class icinga2::config {
       recurse => $::icinga2::purge_configs,
       force   => $::icinga2::purge_configs,
   }
+
+  file { '/etc/icinga2/zones.conf':
+    ensure  => file,
+    content => template('icinga2/zones.conf.erb'),
+  }
+
 }

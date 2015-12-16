@@ -1,0 +1,6 @@
+<%= scope.function_template(['icinga2/_header.erb']) -%>
+
+object FileLogger "debug-file" {
+  severity = "<%= @severity %>"
+  path = "<%= @path %>"
+}

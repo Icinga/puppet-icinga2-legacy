@@ -9,46 +9,53 @@
 # See the inline comments.
 #
 define icinga2::object::zone(
-  $endpoints               = undef,
-  $global                  = false,
-  $object_name             = $name,
-  $parent                  = undef,
-  $refresh_icinga2_service = true,
-  $target_dir              = '/etc/icinga2/objects/zones',
-  $target_file_ensure      = file,
-  $target_file_group       = 'root',
-  $target_file_mode        = '0644',
-  $target_file_name        = "${name}.conf",
-  $target_file_owner       = 'root',
+  $endpoints  = undef,
+  $global     = false,
+  $parent     = undef,
+  $target_dir = '/etc/icinga2/objects/zones',
+  $file_name  = "${name}.conf",
 ) {
-  validate_string($target_dir)
-  validate_string($target_file_name)
-  validate_string($target_file_owner)
-  validate_string($target_file_group)
-  validate_re($target_file_mode, '^\d{4}$')
-  validate_bool($refresh_icinga2_service)
 
-  #If the refresh_icinga2_service parameter is set to true...
-  if $refresh_icinga2_service == true {
-    file { "${target_dir}/${target_file_name}":
-      ensure  => $target_file_ensure,
-      owner   => $target_file_owner,
-      group   => $target_file_group,
-      mode    => $target_file_mode,
-      content => template('icinga2/object_zone.conf.erb'),
-      #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
-      notify  => Service[$::icinga2::icinga2_daemon_name],
-    }
+  if ! defined(Class['icinga2']) {
+    fail('You must include the icinga2 base class before using any icinga2 defined resources')
   }
-  #...otherwise, use the same file resource but without a notify => parameter:
+
+  ensure_resource('icinga2::config::objectdir', 'zones')
+
+  if $endpoints {
+    validate_hash($endpoints)
+    $_endpoints = keys($endpoints)
+
+    create_resources('icinga2::object::endpoint', $endpoints)
+  }
   else {
-    file { "${target_dir}/${target_file_name}":
-      ensure  => $target_file_ensure,
-      owner   => $target_file_owner,
-      group   => $target_file_group,
-      mode    => $target_file_mode,
-      content => template('icinga2/object_zone.conf.erb'),
+    $_endpoints = undef
+  }
+  if $parent {
+    validate_string($parent)
+  }
+  if $global {
+    validate_bool($global)
+    if $endpoints or $parent {
+      fail('global zones can\'t have endpoints or parents!')
     }
   }
+
+  validate_absolute_path($target_dir)
+  validate_string($file_name)
+
+  file { "icinga2 object zone ${name}":
+    ensure  => file,
+    path    => "${target_dir}/${file_name}",
+    owner   => $::icinga2::config_owner,
+    group   => $::icinga2::config_group,
+    mode    => $::icinga2::config_mode,
+    content => template('icinga2/object/zone.conf.erb'),
+  }
+
+  if $::icinga2::manage_service {
+    File["icinga2 object zone ${name}"] ~> Class['::icinga2::service']
+  }
+
 }
 

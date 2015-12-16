@@ -1,7 +1,7 @@
 # == Class: icinga2::objects
 #
 # This class will search for icinga2 objects inside hiera's database and will create them.
-# This class is called by icinga2::server
+# This class is called by icinga2
 #
 # === Parameters
 #
@@ -93,5 +93,9 @@ class icinga2::objects {
   $hash_user = hiera_hash('icinga2::object::user',undef)
   if $hash_user {
     create_resources(icinga2::object::user,$hash_user)
+  }
+  $hash_zone = hiera_hash('icinga2::object::zone',undef)
+  if $hash_zone {
+    create_resources(icinga2::object::zone,$hash_zone)
   }
 }

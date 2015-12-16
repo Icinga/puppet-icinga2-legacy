@@ -50,7 +50,7 @@ define icinga2::conf (
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,
-    notify  => Service['icinga2'],
+    notify  => Class['::icinga2::service'],
     source  => $manage_file_source,
     content => $manage_file_content,
   }

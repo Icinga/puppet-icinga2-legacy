@@ -47,7 +47,7 @@ define icinga2::feature (
   }
 
   if $::icinga2::manage_service {
-    File["icinga2 feature ${name} enabled"] ~> Class['icinga2::service']
+    File["icinga2 feature ${name} enabled"] ~> Class['::icinga2::service']
   }
 
 }

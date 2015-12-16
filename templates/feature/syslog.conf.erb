@@ -1,0 +1,9 @@
+<%= scope.function_template(['icinga2/_header.erb']) -%>
+
+/**
+ * The SyslogLogger type writes log information to syslog.
+ */
+
+object SyslogLogger "syslog" {
+    severity = "<%= @severity -%>"
+}

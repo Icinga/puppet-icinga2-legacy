@@ -1,0 +1,11 @@
+<%= scope.function_template(['icinga2/_header.erb']) -%>
+
+library "perfdata"
+
+object GelfWriter "<%= @name -%>" {
+  host = "<%= @host -%>"
+  port = <%= @port %>
+  <%- if @source -%>
+  source = "<%= @source -%>"
+  <%- end -%>
+}

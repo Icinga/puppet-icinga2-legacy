@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
+require 'metadata-json-lint/rake_task'
 
 if not ENV['SPEC_OPTS']
   ENV['SPEC_OPTS'] = '--format documentation'
@@ -18,4 +19,4 @@ PuppetLint::RakeTask.new :lint do |config|
   config.ignore_paths = PuppetLint.configuration.ignore_paths
 end
 
-task :all => [ :validate, :lint, :spec ]
+task :all => [ :validate, :metadata, :lint, :spec ]

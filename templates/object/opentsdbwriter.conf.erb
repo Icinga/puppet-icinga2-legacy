@@ -1,0 +1,13 @@
+<%= scope.function_template(['icinga2/_header.erb']) -%>
+
+/**
+ * The OpenTsdbWriter type writes check result metrics and
+ * performance data to a OpenTSDB tcp socket.
+ */
+
+library "perfdata"
+
+object OpenTsdbWriter "<%= @name -%>" {
+  host = "<%= @host -%>"
+  port = <%= @port %>
+}
