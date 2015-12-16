@@ -24,7 +24,7 @@ class icinga2::objects {
   }
   $hash_apply_service_to_host = hiera_hash('icinga2::object::apply_service_to_host',undef)
   if $hash_apply_service_to_host {
-    create_resources(icinga2::object::apply_service_to_host,$hash_apply_service_to_host)
+    create_resources(icinga2::object::apply_service,$hash_apply_service_to_host)
   }
   $hash_checkcommand = hiera_hash('icinga2::object::checkcommand',undef)
   if $hash_checkcommand {
