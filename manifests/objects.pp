@@ -10,6 +10,10 @@
 #
 
 class icinga2::objects {
+  $hash_apiuser = hiera_hash('icinga2::object::apiuser',undef)
+  if $hash_apiuser {
+    create_resources(icinga2::object::apiuser,$hash_apiuser)
+  }
   $hash_apply_dependency = hiera_hash('icinga2::object::apply_dependency',undef)
   if $hash_apply_dependency {
     create_resources(icinga2::object::apply_dependency,$hash_apply_dependency)
