@@ -406,7 +406,7 @@ class { 'icinga2::feature::mainlog':
 ####[Objects](id:objects)
 
 Object types:
-
+* [icinga2::object::apiuser](#icinga2objectapiuser)
 * [icinga2::object::apilistener](#icinga2objectapilistener)
 * [icinga2::object::applyservicetohost](#icinga2objectapplyservicetohost)
 * [icinga2::object::applynotificationtohost](#icinga2objectapplynotificationtohost)
@@ -438,6 +438,21 @@ Object types:
 * [icinga2::object::user](#icinga2objectuser)
 * [icinga2::object::usergroup](#icinga2objectusergroup)
 * [icinga2::object::zone](#icinga2objectzone)
+
+####[`icinga2::object::apiuser`](id:icinga2objectapiuser)
+
+The `apiuser` defined type can create `ApiUser` objects that creates users for Icinga 2's API.
+
+<pre>
+#Create an API user object:
+icinga2::object::apiuser { 'myapiuser':
+  password => 'mysecretpassword',
+}
+</pre>
+
+The permissions for a ApiUser are default unlimited, but it can limited with `permissions` parameter.
+
+See the Icinga 2 documention for more info: [http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-apiuser](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-apiuser)
 
 ####[`icinga2::object::apilistener`](id:icinga2objectapilistener)
 
@@ -1084,6 +1099,7 @@ json file
 </pre>
 
 Objects available:
+* `apiuser`
 * `apply_dependency`
 * `apply_notification_to_host`
 * `apply_notification_to_service`
