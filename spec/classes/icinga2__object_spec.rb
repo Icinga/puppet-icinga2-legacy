@@ -27,7 +27,7 @@ describe 'icinga2::object' do
     it { should contain_icinga2__object__eventcommand('test') }
     it { should contain_icinga2__object__graphitewriter('test') }
     it { should contain_icinga2__object__hostgroup('test') }
-    it { should contain_icinga2__object__host('testhost') }
+    it { should contain_icinga2__object__host('testhierahost') }
     it { should contain_icinga2__object__idomysqlconnection('test') }
     it { should contain_icinga2__object__idopgsqlconnection('test') }
     it { should contain_icinga2__object__notificationcommand('test') }
