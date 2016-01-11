@@ -231,6 +231,28 @@ class { 'icinga2':
 }
 ````
 
+**Switch from restart to reload Icinga2 service**
+
+The benefits to reload the service can be found in this [chapter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/migration#differences-1x-2-real-reload).
+
+Because the Puppet [Resource Service](https://docs.puppetlabs.com/references/latest/type.html#service) doesn't support a reload, you can override the restart command. Every time the service should be restart, we execute a reload.
+
+````
+class { 'icinga2':
+  ...
+  restart_cmd  => 'service icinga2 reload',
+  ...
+}
+````
+
+You can also use Hiera
+
+````
+icinga2::restart_cmd: 'service icinga2 reload'
+````
+
+You should validate the reload command for your operatingsystem.
+
 ### Check Plugins
 
 Agents installed on nodes that Icinga is performing active checks against often require additional or custom check plugins. In order to deploy these check pluings on a node you can call the checkplugin defined resource.

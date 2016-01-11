@@ -37,6 +37,7 @@ class icinga2 (
   $db_schema_mysql                        = $::icinga2::params::db_schema_mysql,
   $db_schema_pgsql                        = $::icinga2::params::db_schema_pgsql,
   $pid_file                               = $::icinga2::params::pid_file,
+  $restart_cmd                            = $::icinga2::params::restart_cmd,
 ) inherits ::icinga2::params {
   # TODO: temporary parameter until we provide some default templates
   validate_bool($purge_confd)

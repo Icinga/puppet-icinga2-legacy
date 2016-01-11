@@ -24,6 +24,7 @@ class icinga2::service {
     ensure     => running,
     enable     => true,
     hasrestart => true,
+    restart    => $::icinga2::restart_cmd,
   }
 }
 
