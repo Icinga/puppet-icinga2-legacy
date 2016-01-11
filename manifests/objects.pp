@@ -22,9 +22,15 @@ class icinga2::objects {
   if $hash_apply_notification_to_service {
     create_resources(icinga2::object::apply_notification_to_service,$hash_apply_notification_to_service)
   }
+  # DEPRECATED: remove old named variable
   $hash_apply_service_to_host = hiera_hash('icinga2::object::apply_service_to_host',undef)
   if $hash_apply_service_to_host {
-    create_resources(icinga2::object::apply_service_to_host,$hash_apply_service_to_host)
+    warning("Please use 'icinga2::object::apply_service' instead of 'apply_service_to_host")
+    create_resources(icinga2::object::apply_service,$hash_apply_service_to_host)
+  }
+  $hash_apply_service = hiera_hash('icinga2::object::apply_service',undef)
+  if $hash_apply_service {
+    create_resources(icinga2::object::apply_service,$hash_apply_service)
   }
   $hash_checkcommand = hiera_hash('icinga2::object::checkcommand',undef)
   if $hash_checkcommand {
