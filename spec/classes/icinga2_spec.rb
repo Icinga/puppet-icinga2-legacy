@@ -13,6 +13,7 @@ describe 'icinga2' do
       it { should compile }
       it { should contain_class('icinga2') }
       it { should contain_class('icinga2::params') }
+      it { should contain_class('icinga2::object') }
     end
 
   end

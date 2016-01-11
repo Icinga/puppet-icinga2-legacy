@@ -60,6 +60,9 @@ class icinga2 (
   class {'::icinga2::features': } ~>
   anchor {'icinga2::end':}
 
+  # load hiera objects
+  contain ::icinga2::object
+
   if $manage_service == true {
     Class['icinga2::config'] ~>
     class {'::icinga2::service':} ->
