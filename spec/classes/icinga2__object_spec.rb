@@ -16,6 +16,7 @@ describe 'icinga2::object' do
     it { should contain_class('icinga2::object') }
     it { should contain_class('icinga2') }
 
+    it { should contain_icinga2__object__apiuser('admin') }
     it { should contain_icinga2__object__apply_dependency('testdependency') }
     it { should contain_icinga2__object__apply_notification_to_host('hostnotification') }
     it { should contain_icinga2__object__apply_notification_to_service('servicenotification') }

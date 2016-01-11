@@ -1,5 +1,10 @@
 ---
 # These defintions doesn't really make sense, they are just for testing the hiera bindings
+icinga2::object::apiuser:
+  admin:
+    password: shiboleth
+    permissions:
+      - '*'
 icinga2::object::apply_dependency:
   testdependency:
     parent_host_name: testhost

@@ -4,6 +4,7 @@
 # All parameters used here should be hashes in hiera.
 #
 class icinga2::object(
+  $apiuser = {},
   $apply_dependency = {},
   $apply_notification_to_host = {},
   $apply_notification_to_service = {},
@@ -28,6 +29,7 @@ class icinga2::object(
   $user = {},
   $zone = {},
 ) {
+  create_resources(icinga2::object::apiuser, $apiuser)
   create_resources(icinga2::object::apply_dependency, $apply_dependency)
   create_resources(icinga2::object::apply_notification_to_host, $apply_notification_to_host)
   create_resources(icinga2::object::apply_notification_to_service, $apply_notification_to_service)
