@@ -1,0 +1,13 @@
+<%= scope.function_template(['icinga2/_header.erb']) -%>
+
+object ApiUser "<%= @name %>" {
+  <%- if @password -%>
+  password = <%= scope.function_icinga2_config_value([@password]) %>
+  <%- end -%>
+  <%- if @client_cn -%>
+  client_cn = <%= scope.function_icinga2_config_value([@client_cn]) %>
+  <%- end -%>
+  <%- if @permissions -%>
+  permissions = <%= scope.function_icinga2_config_value([@permissions]) %>
+  <%- end -%>
+}
