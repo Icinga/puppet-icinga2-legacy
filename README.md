@@ -431,8 +431,8 @@ Object types:
 
 * [icinga2::object::apilistener](#icinga2objectapilistener)
 * [icinga2::object::applyservicetohost](#icinga2objectapplyservicetohost)
-* [icinga2::object::applynotificationtohost](#icinga2objectapplynotificationtohost)
-* [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
+* [icinga2::object::apply_notification_to_host](#icinga2objectapply_notification_to_host)
+* [icinga2::object::apply_notification_to_service](#icinga2objectapply_notification_to_service)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::compatlogger](#icinga2objectcompatlogger)
 * [icinga2::object::checkresultreader](#icinga2objectcheckresultreader)
@@ -515,7 +515,7 @@ If you would like to use Puppet or Facter variables in an `assign_where` or `ign
 assign_where => "\"linux_servers\" in host.${facter_variable}"",
 </pre>
 
-####[`icinga2::object::applynotificationtohost`](id:object_apply_notification_to_host)
+####[`icinga2::object::apply_notification_to_host`](id:object_apply_notification_to_host)
 
 The `apply_notification_to_host` defined type can create `apply` objects to apply notifications to hosts:
 
@@ -533,7 +533,7 @@ icinga2::object::apply_notification_to_host { 'pagerduty-host':
 }
 ````
 
-####[`icinga2::object::applynotificationtoservice`](id:object_apply_notification_to_service)
+####[`icinga2::object::apply_notification_to_service`](id:object_apply_notification_to_service)
 
 The `apply_notification_to_service` defined type can create `apply` objects to apply notifications to service:
 
