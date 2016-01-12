@@ -39,7 +39,7 @@ icinga2::object::hostgroup:
   test:
     assign_where: 'host.name'
 icinga2::object::host:
-  testhiera host:
+  testhierahost:
     ipv4_address: '1.2.3.4'
 icinga2::object::idomysqlconnection:
   test:
