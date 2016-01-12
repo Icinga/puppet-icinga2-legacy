@@ -22,6 +22,7 @@ class icinga2 (
   $manage_database                        = false,
   $manage_repos                           = $::icinga2::params::manage_repos,
   $manage_service                         = $::icinga2::params::manage_service,
+  $use_hiera                              = true,
   $use_debmon_repo                        = $::icinga2::params::use_debmon_repo,
   $install_plugins                        = true,
   $install_mailutils                      = true,
@@ -49,6 +50,7 @@ class icinga2 (
   validate_bool($manage_service)
   validate_bool($manage_repos)
   validate_bool($use_debmon_repo)
+  validate_bool($use_hiera)
 
   if $manage_repos == true {
     include icinga2::repo
@@ -61,7 +63,11 @@ class icinga2 (
   anchor {'icinga2::end':}
 
   # load hiera objects
-  contain ::icinga2::object
+  if $use_hiera {
+    Class['::icinga2::config'] ->
+    class {'::icinga2::object':} ->
+    Anchor['icinga2::end']
+  }
 
   if $manage_service == true {
     Class['icinga2::config'] ~>
