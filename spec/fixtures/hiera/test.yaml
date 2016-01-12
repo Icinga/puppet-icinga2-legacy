@@ -1,0 +1,85 @@
+---
+# These defintions doesn't really make sense, they are just for testing the hiera bindings
+icinga2::object::apiuser:
+  admin:
+    password: shiboleth
+    permissions:
+      - '*'
+icinga2::object::apply_dependency:
+  testdependency:
+    parent_host_name: testhost
+    child_host_name: childhost
+icinga2::object::apply_notification_to_host:
+  hostnotification:
+    assign_where: 'host.name'
+icinga2::object::apply_notification_to_service:
+  servicenotification:
+    assign_where: 'service.name'
+# Deprecated
+icinga2::object::apply_service_to_host:
+  oldservice:
+    check_command: ping4
+icinga2::object::apply_service:
+  service:
+    check_command: ping4
+icinga2::object::checkcommand:
+  test:
+    command: ['test']
+icinga2::object::dependency:
+  testdependency2:
+    parent_host_name: testhost
+    child_host_name: childhost
+icinga2::object::eventcommand:
+  test:
+    command: ['test']
+icinga2::object::graphitewriter:
+  test:
+    host: '1.2.3.4'
+icinga2::object::hostgroup:
+  test:
+    assign_where: 'host.name'
+icinga2::object::host:
+  testhierahost:
+    ipv4_address: '1.2.3.4'
+icinga2::object::idomysqlconnection:
+  test:
+    instance_name: 'test'
+icinga2::object::idopgsqlconnection:
+  test:
+    instance_name: 'test'
+icinga2::object::notificationcommand:
+  test:
+    command: ['test']
+icinga2::object::notification:
+  test:
+    command: test
+icinga2::object::perfdatawriter:
+  test:
+    host_perfdata_path: /tmp
+icinga2::object::scheduleddowntime:
+  test:
+    host_name: test
+icinga2::object::servicegroup:
+  test:
+    display_name: Test
+icinga2::object::service:
+  test:
+    check_command: test
+icinga2::object::timeperiod:
+  test:
+    ranges:
+      monday: 08:00 - 17:00
+      tuesday: 08:00 - 17:00
+      friday: 08:00 - 17:00
+icinga2::object::usergroup:
+  test:
+    display_name: Test
+icinga2::object::user:
+  test:
+    groups:
+      - test
+icinga2::object::zone:
+  test:
+    endpoints:
+      test1:
+        host: 1.2.3.4
