@@ -16,6 +16,11 @@ apply Service "<%= @object_servicename %>" <%= @apply %> {
   <%#- Otherwise, include the parameter: -%>
   import "<%= @template_to_import -%>"
   <%- end -%>
+  <% if @custom_prepend && Array(@custom_prepend).size > 0 -%>
+    <%- Array(@custom_prepend).each do |line| -%>
+    <%= line %>
+    <%- end -%>
+  <% end -%>
   <%- if @display_name -%>
   display_name = "<%= @display_name -%>"
   <%- end -%>
@@ -96,4 +101,9 @@ apply Service "<%= @object_servicename %>" <%= @apply %> {
   <%- if @icon_image_alt -%>
   icon_image_alt = "<%= @icon_image_alt -%>"
   <%- end -%>
+  <% if @custom_append && Array(@custom_append).size > 0 -%>
+    <%- Array(@custom_append).each do |line| -%>
+    <%= line %>
+    <%- end -%>
+  <% end -%>
 }
