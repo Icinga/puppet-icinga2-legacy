@@ -36,6 +36,10 @@ class icinga2::objects {
   if $hash_apply_service {
     create_resources(icinga2::object::apply_service,$hash_apply_service)
   }
+  $hash_apply_scheduleddowntime = hiera_hash('icinga2::object::apply_scheduleddowntime',undef)
+  if $hash_apply_scheduleddowntime {
+    create_resources(icinga2::object::apply_scheduleddowntime,$hash_apply_scheduleddowntime)
+  }
   $hash_checkcommand = hiera_hash('icinga2::object::checkcommand',undef)
   if $hash_checkcommand {
     create_resources(icinga2::object::checkcommand,$hash_checkcommand)
