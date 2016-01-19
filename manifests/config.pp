@@ -71,6 +71,7 @@ class icinga2::config {
       '/etc/icinga2/objects/livestatuslisteners',
       '/etc/icinga2/objects/statusdatawriters',
       '/etc/icinga2/objects/applys',
+      '/etc/icinga2/objects/applys_scheduleddowntimes',
       '/etc/icinga2/objects/templates',
       '/etc/icinga2/objects/constants',
     ]:
