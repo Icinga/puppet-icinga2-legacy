@@ -21,7 +21,7 @@ describe 'icinga2::object::apply_service', :type => :define do
                                                      :content => /apply Service "check_http"/,
                                                  }) }
       it { should contain_file(object_file).with_content(/^\s*import "generic-service"$/) }
-      it { should_not contain_file(object_file).with_content(/^\s*check_command = "check_http"/) }
+      it { should contain_file(object_file).with_content(/^\s*display_name = "check_http"$/) }
 
     end
     context "on #{name} with custom_prepend parameter" do
@@ -47,7 +47,7 @@ describe 'icinga2::object::apply_service', :type => :define do
                                                      :content => /apply Service "check_http"/,
                                                  }) }
       it { should contain_file(object_file).with_content(/^\s*import "generic-service"$/) }
-      it { should contain_file(object_file).with_content(/^\s*check_command = "check_http"/) }
+      it { should contain_file(object_file).with_content(/^\s*display_name = "check_http"$/) }
       it { should contain_file(object_file).with_content(/^\s*vars \+= config/) }
     end
     context "on #{name} with custom_append parameter" do
@@ -77,7 +77,7 @@ describe 'icinga2::object::apply_service', :type => :define do
                                                      :content => /apply Service "check_http"/,
                                                  }) }
       it { should contain_file(object_file).with_content(/^\s*import "generic-service"$/) }
-      it { should contain_file(object_file).with_content(/^\s*check_command = "check_http"$/) }
+      it { should contain_file(object_file).with_content(/^\s*display_name = "check_http"$/) }
       it { should contain_file(object_file).with_content(/^\s*vars \+= config$/) }
       it { should contain_file(object_file).with_content(/^\s*if \(host.vars.notification_type == "sms"\) \{\n\s+command = "sms-host-notification"\n\s+\} else \{\n\s+command = "mail-host-notification"\n\s+\}$/) }
     end
@@ -93,6 +93,8 @@ describe 'icinga2::object::apply_service', :type => :define do
       let :pre_condition do
         "include 'icinga2'"
       end
+
+      let(:title) { 'check_http' }
 
       it { should raise_error(Puppet::Error, /is not an Array.\s+It looks to be a String/) }
     end
