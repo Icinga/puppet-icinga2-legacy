@@ -231,6 +231,28 @@ class { 'icinga2':
 }
 ````
 
+**Switch from restart to reload Icinga2 service**
+
+The benefits to reload the service can be found in this [chapter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/migration#differences-1x-2-real-reload).
+
+Because the Puppet [Resource Service](https://docs.puppetlabs.com/references/latest/type.html#service) doesn't support a reload, you can override the restart command. Every time the service should be restart, we execute a reload.
+
+````
+class { 'icinga2':
+  ...
+  restart_cmd  => 'service icinga2 reload',
+  ...
+}
+````
+
+You can also use Hiera
+
+````
+icinga2::restart_cmd: 'service icinga2 reload'
+````
+
+You should validate the reload command for your operatingsystem.
+
 ### Check Plugins
 
 Agents installed on nodes that Icinga is performing active checks against often require additional or custom check plugins. In order to deploy these check pluings on a node you can call the checkplugin defined resource.
@@ -406,11 +428,11 @@ class { 'icinga2::feature::mainlog':
 ####[Objects](id:objects)
 
 Object types:
-
+* [icinga2::object::apiuser](#icinga2objectapiuser)
 * [icinga2::object::apilistener](#icinga2objectapilistener)
 * [icinga2::object::applyservicetohost](#icinga2objectapplyservicetohost)
-* [icinga2::object::applynotificationtohost](#icinga2objectapplynotificationtohost)
-* [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
+* [icinga2::object::apply_notification_to_host](#icinga2objectapply_notification_to_host)
+* [icinga2::object::apply_notification_to_service](#icinga2objectapply_notification_to_service)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::compatlogger](#icinga2objectcompatlogger)
 * [icinga2::object::checkresultreader](#icinga2objectcheckresultreader)
@@ -439,6 +461,21 @@ Object types:
 * [icinga2::object::usergroup](#icinga2objectusergroup)
 * [icinga2::object::zone](#icinga2objectzone)
 
+####[`icinga2::object::apiuser`](id:icinga2objectapiuser)
+
+The `apiuser` defined type can create `ApiUser` objects that creates users for Icinga 2's API.
+
+<pre>
+#Create an API user object:
+icinga2::object::apiuser { 'myapiuser':
+  password => 'mysecretpassword',
+}
+</pre>
+
+The permissions for a ApiUser are default unlimited, but it can limited with `permissions` parameter.
+
+See the Icinga 2 documention for more info: [http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-apiuser](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-apiuser)
+
 ####[`icinga2::object::apilistener`](id:icinga2objectapilistener)
 
 The `apilistener` defined type can create `ApiLister` objects that set the bind address and port for Icinga 2's API listener, as well as the locations of the machine's Icinga 2 cert, key and Icinga 2 CA key:
@@ -453,7 +490,7 @@ icinga2::object::apilistener { 'master-api':
 
 The `accept_config` and `accept_commands` parameters default to **false**.
 
-See the Icinga 2 documention for more info: [http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-apilistener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-apilistener)
+See the Icinga 2 documention for more info: [http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-apilistener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-apilistener)
 
 ####[`icinga2::object::apply_service`](id:object_apply_service)
 
@@ -493,7 +530,7 @@ If you would like to use Puppet or Facter variables in an `assign_where` or `ign
 assign_where => "\"linux_servers\" in host.${facter_variable}"",
 </pre>
 
-####[`icinga2::object::applynotificationtohost`](id:object_apply_notification_to_host)
+####[`icinga2::object::apply_notification_to_host`](id:object_apply_notification_to_host)
 
 The `apply_notification_to_host` defined type can create `apply` objects to apply notifications to hosts:
 
@@ -511,7 +548,7 @@ icinga2::object::apply_notification_to_host { 'pagerduty-host':
 }
 ````
 
-####[`icinga2::object::applynotificationtoservice`](id:object_apply_notification_to_service)
+####[`icinga2::object::apply_notification_to_service`](id:object_apply_notification_to_service)
 
 The `apply_notification_to_service` defined type can create `apply` objects to apply notifications to service:
 
@@ -596,7 +633,7 @@ icinga2::object::compatlogger { 'daily-log':
 </pre>
 
 Both patameters as optionals. The parameter `rotation_method` can one of `HOURLY`, `DAILY`, `WEEKLY` or `MONTHY`.
-See [CompatLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-compatlogger) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+See [CompatLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-compatlogger) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::checkresultreader`](id:object_checkresultreader)
 
@@ -610,7 +647,7 @@ icinga2::object::checkresultreader {'reader':
 }
 </pre>
 
-See [CheckResultReader](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-checkresultreader) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+See [CheckResultReader](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-checkresultreader) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::endpoint`](id:object_endpoint)
 
@@ -623,7 +660,7 @@ icinga2::object::endpoint { 'icinga2b':
 }
 </pre>
 
-See [EndPoint](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-endpoint) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+See [EndPoint](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-endpoint) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####`icinga2::object::eventcommand`
 
@@ -649,7 +686,7 @@ icinga2::object::externalcommandlistener { 'external':
 }
 </pre>
 
-See [ExternalCommandListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-externalcommandlistener) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+See [ExternalCommandListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-externalcommandlistener) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::gelfwriter`](id:object_gelfwriter)
 
@@ -739,7 +776,7 @@ icinga2::object::icingastatuswriter { 'status':
 }
 </pre>
 
-See [IcingaStatusWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-icingastatuswriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about the object.
+See [IcingaStatusWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-icingastatuswriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about the object.
 
 ####[`icinga2::object::idomysqlconnection`](id:object_idomysqlconnection)
 
@@ -764,13 +801,13 @@ icinga2::object::idomysqlconnection { 'mysql_connection':
 Some parameters require specific data types to be given:
 
 * `port`: needs to be a [number](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#numbers), not a quoted string
-* `cleanup`: If changed from the default value, needs to be given as a [hash](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#hashes) with the keys being the cleanup item names and the maximum age as a number (not a quoted string); default values are set to the default values shown in the [Cleanup Items section of the IdomysqlConnection object documentation](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idomysqlconnection)
+* `cleanup`: If changed from the default value, needs to be given as a [hash](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#hashes) with the keys being the cleanup item names and the maximum age as a number (not a quoted string); default values are set to the default values shown in the [Cleanup Items section of the IdomysqlConnection object documentation](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-idomysqlconnection)
 
 All other parameters are given as [single-quoted strings](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#single-quoted-strings).
 
 This defined type supports all of the parameters that **IdoMySqlConnection** objects have available.
 
-See [IdoMySqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idomysqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+See [IdoMySqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-idomysqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::idopgsqlconnection`](id:object_idopgsqlconnection)
 
@@ -795,13 +832,13 @@ icinga2::object::idopgsqlconnection { 'postgres_connection':
 Some parameters require specific data types to be given:
 
 * `port`: needs to be a [number](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#numbers), not a quoted string
-* `cleanup`: If changed from the default value, needs to be given as a [hash](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#hashes) with the keys being the cleanup item names and the maximum age as a number (not a quoted string); default values are set to the default values shown in the [Cleanup Items section of the IdopgsqlConnection object documentation](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idopgsqlconnection)
+* `cleanup`: If changed from the default value, needs to be given as a [hash](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#hashes) with the keys being the cleanup item names and the maximum age as a number (not a quoted string); default values are set to the default values shown in the [Cleanup Items section of the IdopgsqlConnection object documentation](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-idopgsqlconnection)
 
 All other parameters are given as [single-quoted strings](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#single-quoted-strings).
 
 This defined type supports all of the parameters that **IdoMySqlConnection** objects have available.
 
-See [IdoPgSqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idopgsqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+See [IdoPgSqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-idopgsqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::livestatuslistener`](id:object_livestatuslistener)
 
@@ -816,7 +853,7 @@ icinga2::object::livestatuslistener { 'livestatus-unix':
 }
 </pre>
 
-See [LivestatusListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-livestatuslistener) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+See [LivestatusListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-livestatuslistener) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####`icinga2::object::notification`
 
@@ -853,7 +890,7 @@ Available parameters are:
 Notes on specific parameters:
 
 * `vars`: needs to be a hash
-* `users`,`user_groups`,`types`,`states`: should be an array, see [Notification](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-notification) for list of valid state and type filters
+* `users`,`user_groups`,`types`,`states`: should be an array, see [Notification](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-notification) for list of valid state and type filters
 * `times`: needs to be a hash with `begin` and `end` attributes
 * `interval`: needs to be a [number](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#numbers), not a quoted string
 
@@ -918,7 +955,7 @@ icinga2::object::perfdatawriter { 'pnp':
 }
 </pre>
 
-See [PerfdataWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-perfdatawriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+See [PerfdataWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-perfdatawriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::scheduleddowntime`](id:object_scheduleddowntime)
 
@@ -953,7 +990,7 @@ icinga2::object::servicegroup { 'web_services':
 }
 </pre>
 
-See [ServiceGroup](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+See [ServiceGroup](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::statusdatawriter`](id:object_statusdatawriter)
 
@@ -969,7 +1006,7 @@ icinga2::object::statusdatawriter { 'status':
 }
 </pre>
 
-See [StatusDataWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-statusdatawriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-sysloglogger) for more info.
+See [StatusDataWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-statusdatawriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-sysloglogger) for more info.
 
 ####[`icinga2::object::sysloglogger`](id:object_syslogger)
 
@@ -986,7 +1023,7 @@ icinga2::object::sysloglogger { 'syslog-warning':
 }
 </pre>
 
-See [SyslogLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-sysloglogger) for more info.
+See [SyslogLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-sysloglogger) for more info.
 
 ####[`icinga2::object::user`](id:object_user)
 
@@ -1023,7 +1060,7 @@ icinga2::object::timeperiod { 'bra-office-hrs':
 }
 ````
 
-See [TimePeriod](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-timeperiod) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-timeperiod) for more info.
+See [TimePeriod](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-timeperiod) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-timeperiod) for more info.
 
 ####[`icinga2::object::zone`](id:object_zone)
 
@@ -1046,7 +1083,7 @@ icinga2::object::zone { 'satellite':
 }
 ````
 
-See [Zone](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-zone) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-zone) for more info.
+See [Zone](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-zone) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-zone) for more info.
 
 [`Hiera`](id:hiera)
 ---------
@@ -1084,6 +1121,7 @@ json file
 </pre>
 
 Objects available:
+* `apiuser`
 * `apply_dependency`
 * `apply_notification_to_host`
 * `apply_notification_to_service`

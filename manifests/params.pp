@@ -39,6 +39,8 @@ class icinga2::params {
 
   $pid_file = '/run/icinga2/icinga2.pid'
 
+  $restart_cmd = undef
+
   ##################
   # Icinga 2 parameters by OS/release
   case $::operatingsystem {
