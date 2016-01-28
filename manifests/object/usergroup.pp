@@ -12,7 +12,7 @@
 define icinga2::object::usergroup (
   $object_usergroup_name = $name,
   $display_name = $name,
-  $template_to_import = undef,
+  $templates = [],
   $groups = [],
   $target_dir = '/etc/icinga2/objects/usergroups',
   $target_file_name = "${name}.conf",
@@ -25,9 +25,9 @@ define icinga2::object::usergroup (
   $refresh_icinga2_service = true
 ) {
 
-  #Do some validation of the class' parameters:
   validate_string($object_usergroup_name)
   validate_string($display_name)
+  validate_array($templates)
   validate_array($groups)
   validate_string($target_dir)
   validate_string($target_file_name)
@@ -44,7 +44,7 @@ define icinga2::object::usergroup (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_usergroup.conf.erb'),
+      content => template('icinga2/object/usergroup.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
       notify  => Class['::icinga2::service'],
     }
@@ -58,7 +58,7 @@ define icinga2::object::usergroup (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_usergroup.conf.erb'),
+      content => template('icinga2/object/usergroup.conf.erb'),
     }
 
   }
