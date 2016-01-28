@@ -11,6 +11,7 @@
 
 define icinga2::object::service (
   $object_servicename = $name,
+  $is_template = false,
   $template_to_import = 'generic-service',
   $display_name = $name,
   $host_name = $fqdn,
@@ -48,6 +49,7 @@ define icinga2::object::service (
 
   #Do some validation of the class' parameters:
   validate_string($object_servicename)
+  validate_bool($is_template)
   validate_string($template_to_import)
   validate_string($display_name)
   validate_string($host_name)
