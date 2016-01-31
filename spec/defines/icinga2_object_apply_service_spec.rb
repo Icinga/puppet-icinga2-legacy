@@ -81,22 +81,5 @@ describe 'icinga2::object::apply_service', :type => :define do
       it { should contain_file(object_file).with_content(/^\s*vars \+= config$/) }
       it { should contain_file(object_file).with_content(/^\s*if \(host.vars.notification_type == "sms"\) \{\n\s+command = "sms-host-notification"\n\s+\} else \{\n\s+command = "mail-host-notification"\n\s+\}$/) }
     end
-    context "on #{name} with invalid custom_append parameter" do
-      let :facts do
-        facts
-      end
-      let :params do
-        {
-            :custom_prepend =>  'invalid'
-        }
-      end
-      let :pre_condition do
-        "include 'icinga2'"
-      end
-
-      let(:title) { 'check_http' }
-
-      it { should raise_error(Puppet::Error, /is not an Array.\s+It looks to be a String/) }
-    end
   end
 end
