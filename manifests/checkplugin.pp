@@ -7,7 +7,7 @@ define icinga2::checkplugin (
   $checkplugin_name                     = $name,
   $checkplugin_libdir                   = $::icinga2::checkplugin_libdir,
   $checkplugin_target_file_owner        = 'root',
-  $checkplugin_target_file_group        = 'root',
+  $checkplugin_target_file_group        = '0',
   $checkplugin_target_file_mode         = '0755',
   $checkplugin_file_distribution_method = 'content',
   $checkplugin_template_module          = 'icinga2',
