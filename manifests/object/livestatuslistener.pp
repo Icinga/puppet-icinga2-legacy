@@ -20,7 +20,7 @@ define icinga2::object::livestatuslistener (
   $target_file_name               = "${name}.conf",
   $target_file_ensure             = file,
   $target_file_owner              = 'root',
-  $target_file_group              = 'root',
+  $target_file_group              = '0',
   $target_file_mode               = '0644',
   $refresh_icinga2_service = true
 ) {
