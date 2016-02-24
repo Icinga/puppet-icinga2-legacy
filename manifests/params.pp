@@ -100,6 +100,21 @@ class icinga2::params {
       # Icinga2 client settings
       $checkplugin_libdir   = '/usr/lib/nagios/plugins'
     }
+    'OpenBSD': {
+
+      $plugin_packages = [
+        'monitoring-plugins',
+      ]
+      $mail_package = undef
+
+      #Settings for /etc/icinga2/:
+      $config_owner = 'root'
+      $config_group = '_icinga'
+      $config_mode  = '0640'
+
+      # Icinga2 client settings
+      $checkplugin_libdir   = '/usr/local/libexec/nagios'
+    }
     #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
   }
