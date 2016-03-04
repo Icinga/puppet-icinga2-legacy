@@ -11,8 +11,8 @@
 */
 
 object NotificationCommand "<%= @object_notificationcommandname %>" {
-  <%- if @template_to_import -%>
-  import "<%= @template_to_import -%>"
+  <%- @templates.each do |t| -%>
+  import "<%= t -%>"
   <%- end -%>
   <%- if @command -%>
 

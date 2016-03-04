@@ -11,8 +11,8 @@
  */
 
 object Host "<%= @object_hostname %>" {
-  <%- if @template_to_import -%>
-  import "<%= @template_to_import -%>"
+  <%- @templates.each do |t| -%>
+  import "<%= t -%>"
   <%- end -%>
   <%- if @display_name -%>
   display_name = "<%= @display_name -%>"

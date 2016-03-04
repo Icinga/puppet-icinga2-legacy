@@ -11,7 +11,7 @@
 
 define icinga2::object::notificationcommand (
   $object_notificationcommandname = $name,
-  $template_to_import = 'plugin-notification-command',
+  $templates          = ['plugin-notification-command'],
   #$methods           = undef, Need to get more details about this attribute
   $command            = undef,
   $cmd_path           = 'PluginDir',
@@ -28,9 +28,8 @@ define icinga2::object::notificationcommand (
   $refresh_icinga2_service = true
 ) {
 
-  #Do some validation of the class' parameters:
   validate_string($object_notificationcommandname)
-  validate_string($template_to_import)
+  validate_array($templates)
   validate_array($command)
   validate_string($cmd_path)
   validate_hash($arguments)

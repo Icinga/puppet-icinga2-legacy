@@ -12,7 +12,7 @@
 define icinga2::object::notification (
   $object_notificationname = $name,
   $is_template             = false,
-  $template_to_import      = undef,
+  $templates               = [],
   $command                 = undef,
   $host_name               = undef,
   $service_name            = undef,

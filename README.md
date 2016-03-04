@@ -608,7 +608,6 @@ icinga2::object::checkcommand { 'check_http':
 
 Available parameters are:
 
-* `template_to_import`
 * `command`
 * `cmd_path`
 * `arguments`

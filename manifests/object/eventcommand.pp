@@ -11,7 +11,7 @@
 
 define icinga2::object::eventcommand (
   $object_eventcommandname = $name,
-  $template_to_import = 'plugin-event-command',
+  $templates          = ['plugin-event-command'],
   #$methods           = undef Need to get more details about this attribute
   $command            = undef,
   $cmd_path           = 'PluginDir',
@@ -30,7 +30,7 @@ define icinga2::object::eventcommand (
 
   #Do some validation of the class' parameters:
   validate_string($object_eventcommandname)
-  validate_string($template_to_import)
+  validate_array($templates)
   validate_array($command)
   validate_string($cmd_path)
   validate_hash($arguments)

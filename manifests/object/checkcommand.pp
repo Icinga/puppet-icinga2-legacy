@@ -11,7 +11,7 @@
 
 define icinga2::object::checkcommand (
   $object_checkcommandname = $name,
-  $template_to_import                    = 'plugin-check-command',
+  $templates                             = ['plugin-check-command'],
   #$methods                             = undef, Need to get more details about this attribute
   $command                               = undef,
   $cmd_path                              = 'PluginDir',
@@ -35,7 +35,7 @@ define icinga2::object::checkcommand (
   #Do some validation of the class' parameters:
   validate_string($object_checkcommandname)
   if $checkcommand_template == 'object_checkcommand.conf.erb' {
-    validate_string($template_to_import)
+    validate_array($templates)
     validate_array($command)
     validate_string($cmd_path)
     
