@@ -57,7 +57,6 @@ class icinga2 (
   anchor {'icinga2::start':} ->
   class {'::icinga2::install':} ~>
   class {'::icinga2::config':} ~>
-  class {'::icinga2::features': } ~>
   anchor {'icinga2::end':}
 
   if $manage_service == true {
@@ -67,7 +66,6 @@ class icinga2 (
   }
 
   if $manage_database == true {
-    Class['icinga2::features'] ->
     class {'::icinga2::database':
     } -> Anchor['icinga2::end']
 

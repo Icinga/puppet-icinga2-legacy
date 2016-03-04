@@ -11,7 +11,7 @@ describe 'icinga2::feature' do
     end
     let :pre_condition do
       "class { 'icinga2':
-        default_features => [],
+        default_features => false,
       }"
     end
 
@@ -41,7 +41,7 @@ describe 'icinga2::feature' do
     end
     let :pre_condition do
       "class { 'icinga2':
-        default_features => [],
+        default_features => false,
       }"
     end
 
