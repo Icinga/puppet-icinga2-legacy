@@ -21,7 +21,7 @@ define icinga2::object::checkcommand (
   $timeout                               = undef,
   $target_dir                            = '/etc/icinga2/objects/checkcommands',
   $checkcommand_template_module          = 'icinga2',
-  $checkcommand_template                 = 'object_checkcommand.conf.erb',
+  $checkcommand_template                 = 'object/checkcommand.conf.erb',
   $checkcommand_source_file              = undef,
   $checkcommand_file_distribution_method = 'content',
   $target_file_name                      = "${name}.conf",
