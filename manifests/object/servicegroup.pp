@@ -44,7 +44,7 @@ define icinga2::object::servicegroup (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_servicegroup.conf.erb'),
+      content => template('icinga2/object/servicegroup.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
       notify  => Class['::icinga2::service'],
     }
@@ -58,7 +58,7 @@ define icinga2::object::servicegroup (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_servicegroup.conf.erb'),
+      content => template('icinga2/object/servicegroup.conf.erb'),
     }
 
   }
