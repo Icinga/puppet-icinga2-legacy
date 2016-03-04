@@ -10,10 +10,10 @@
 #
 
 define icinga2::object::checkcommand (
+  $command,
   $object_checkcommandname = $name,
   $templates                             = ['plugin-check-command'],
   #$methods                             = undef, Need to get more details about this attribute
-  $command                               = undef,
   $cmd_path                              = 'PluginDir',
   $arguments                             = {},
   $env                                   = {},
@@ -36,7 +36,9 @@ define icinga2::object::checkcommand (
   validate_string($object_checkcommandname)
   if $checkcommand_template == 'object_checkcommand.conf.erb' {
     validate_array($templates)
-    validate_array($command)
+    if ! is_string($command) {
+      validate_array($command)
+    }
     validate_string($cmd_path)
     
     validate_hash($env)

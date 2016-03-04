@@ -10,10 +10,10 @@
 #
 
 define icinga2::object::eventcommand (
+  $command,
   $object_eventcommandname = $name,
   $templates          = ['plugin-event-command'],
   #$methods           = undef Need to get more details about this attribute
-  $command            = undef,
   $cmd_path           = 'PluginDir',
   $arguments          = {},
   $env                = {},
@@ -31,7 +31,9 @@ define icinga2::object::eventcommand (
   #Do some validation of the class' parameters:
   validate_string($object_eventcommandname)
   validate_array($templates)
-  validate_array($command)
+  if ! is_string($command) {
+    validate_array($command)
+  }
   validate_string($cmd_path)
   validate_hash($arguments)
   validate_hash($env)

@@ -10,10 +10,10 @@
 #
 
 define icinga2::object::notificationcommand (
+  $command,
   $object_notificationcommandname = $name,
   $templates          = ['plugin-notification-command'],
   #$methods           = undef, Need to get more details about this attribute
-  $command            = undef,
   $cmd_path           = 'PluginDir',
   $arguments          = {},
   $env                = {},
@@ -30,7 +30,9 @@ define icinga2::object::notificationcommand (
 
   validate_string($object_notificationcommandname)
   validate_array($templates)
-  validate_array($command)
+  if ! is_string($command) {
+    validate_array($command)
+  }
   validate_string($cmd_path)
   validate_hash($arguments)
   validate_hash($env)
