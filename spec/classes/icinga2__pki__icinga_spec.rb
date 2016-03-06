@@ -35,7 +35,6 @@ describe 'icinga2::pki::icinga' do
           with_command(/--ticket '64b3519cd69134b9bb11c0dbc349fb0c666dee99'/)
       }
       it { should contain_file('/etc/icinga2/pki/ca.crt') }
-      it { should contain_class('icinga2::feature::api') }
 
     end
   end
