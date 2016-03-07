@@ -66,6 +66,7 @@ class icinga2 (
   }
 
   if $manage_database == true {
+    Anchor['icinga2::start'] ->
     class {'::icinga2::database':
     } -> Anchor['icinga2::end']
 
