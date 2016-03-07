@@ -9,58 +9,44 @@
 #
 # See the inline comments.
 #
-
 define icinga2::object::apply_scheduleddowntime (
-  $object_downtimename = $name,
-  $apply              = 'to Service',
-  $template_to_import = undef,
-  $assign_where       = undef,
-  $ignore_where       = undef,
-  $author             = undef,
-  $comment            = undef,
-  $fixed              = true,
-  $duration           = undef,
-  $ranges             = {},
-  $target_dir         = '/etc/icinga2/objects/applys_scheduleddowntimes',
-  $target_file_name   = "${name}.conf",
-  $target_file_ensure = file,
-  $target_file_owner  = 'root',
-  $target_file_group  = 'root',
-  $target_file_mode   = '0644',
-  $refresh_icinga2_service = true
+  $author,
+  $comment,
+  $assign_where,
+  $ranges,
+  $apply        = 'Service',
+  $templates    = [],
+  $ignore_where = undef,
+  $fixed        = undef,
+  $duration     = undef,
+  $target_dir   = '/etc/icinga2/objects/apply_scheduleddowntimes',
+  $file_name    = "${name}.conf",
 ) {
 
-  #Do some validation of the class' parameters:
-  validate_string($object_downtimename)
-  validate_string($template_to_import)
+  validate_re($apply, '^(Host|Service)$', 'ScheduledDowntime must either apply to a Host or Service!')
+  validate_array($templates)
   validate_string($author)
   validate_string($comment)
-  validate_bool($fixed)
+  if $fixed != undef {
+    validate_bool($fixed)
+  }
   validate_string($duration)
   validate_hash($ranges)
-  validate_string($target_dir)
-  validate_string($target_file_name)
-  validate_string($target_file_owner)
-  validate_string($target_file_group)
-  validate_string($target_file_mode)
-  validate_bool($refresh_icinga2_service)
 
-  #If the refresh_icinga2_service parameter is set to true...
-  if $refresh_icinga2_service == true {
-    $_notify = Class['::icinga2::service']
-  }
-  #...otherwise, use the same file resource but without a notify => parameter:
-  else {
-    $_notify = undef
+  validate_absolute_path($target_dir)
+  validate_string($file_name)
+
+  file { "icinga2 apply scheduleddowntime ${name}":
+    ensure  => file,
+    path    => "${target_dir}/${file_name}",
+    owner   => $::icinga2::config_owner,
+    group   => $::icinga2::config_group,
+    mode    => $::icinga2::config_mode,
+    content => template('icinga2/object/apply_scheduleddowntime.conf.erb'),
   }
 
-  file { "${target_dir}/${target_file_name}":
-    ensure  => $target_file_ensure,
-    owner   => $target_file_owner,
-    group   => $target_file_group,
-    mode    => $target_file_mode,
-    content => template('icinga2/object_apply_scheduleddowntime.conf.erb'),
-    #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
-    notify  => $_notify,
+  if $::icinga2::manage_service {
+    File["icinga2 apply scheduleddowntime ${name}"] ~> Class['::icinga2::service']
   }
+
 }

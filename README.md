@@ -571,16 +571,18 @@ icinga2::object::apply_notification_to_service { 'pagerduty-service':
 The `apply_scheduleddowntime` defined type can create `apply` objects to apply downtimes to hosts or services:
 
 <pre>
-icinga2::object::apply_scheduleddowntime {'apply-downtime-name':
-  apply              => 'to Service',
-  template_to_import => 'generic-downtime-template',
-  assign_where       => 'service.vars.anoying_check == true',
-  ignore_where       => 'host.vars.critical_machine == true',
-  author             => 'icingaadmin',
-  comment            => 'Some comment',
-  fixed              => false,
-  duration           => '30m',
-  ranges             => { 'sunday' => '02:00-03:00' }
+icinga2::object::apply_scheduleddowntime { 'apply-downtime-name':
+  apply        => 'Service',
+  templates    => [
+    'generic-downtime-template'
+  ],
+  assign_where => 'service.vars.anoying_check == true',
+  ignore_where => 'host.vars.critical_machine == true',
+  author       => 'icingaadmin',
+  comment      => 'Some comment',
+  fixed        => false,
+  duration     => '30m',
+  ranges       => { 'sunday' => '02:00-03:00' }
 }
 </pre>
 

@@ -1,0 +1,25 @@
+<%= scope.function_template(['icinga2/_header.erb']) -%>
+
+apply ScheduledDowntime "<%= @name %>" to <%= @apply %> {
+  <%- @templates.each do |t| -%>
+  import "<%= t -%>"
+  <%- end -%>
+
+  author = "<%= @author %>"
+  comment = "<%= @comment %>"
+
+  <%- if @assign_where -%>
+  assign where <%= @assign_where %>
+  <%- end -%>
+  <%- if @ignore_where -%>
+  ignore where <%= @ignore_where %>
+  <%- end -%>
+
+  <%- if @fixed -%>
+  fixed = <%= @fixed %>
+  <%- end -%>
+  <%- if @duration -%>
+  duration = <%= @duration %>
+  <%- end -%>
+  ranges = <%= scope.function_icinga2_config_value([@ranges]) %>
+}
