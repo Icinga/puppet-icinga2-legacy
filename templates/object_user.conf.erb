@@ -10,9 +10,9 @@
  *
  */
 
-object User "<%= @object_username %>" {
+<%- if @is_template -%>template<%- else -%>object<%- end -%> User "<%= @object_username %>" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
-  <%- if @template_to_import -%>
+  <%- if @template_to_import && @template_to_import != @object_username -%>
   <%#- Otherwise, include the parameter: -%>
   import "<%= @template_to_import -%>"
   <%- end -%>

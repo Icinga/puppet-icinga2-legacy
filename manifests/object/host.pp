@@ -14,6 +14,7 @@ define icinga2::object::host (
   $display_name = $fqdn,
   $ipv4_address = $ipaddress,
   $ipv6_address = undef,
+  $is_template = false,
   $template_to_import = 'generic-host',
   $groups = [],
   $vars = {},
@@ -50,6 +51,7 @@ define icinga2::object::host (
 
   #Do some validation of the class' parameters:
   validate_string($object_hostname)
+  validate_bool($is_template)
   validate_string($template_to_import)
   validate_string($display_name)
   validate_string($ipv4_address)
