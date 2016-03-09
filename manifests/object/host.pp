@@ -15,7 +15,7 @@ define icinga2::object::host (
   $ipv4_address = $ipaddress,
   $ipv6_address = undef,
   $is_template = false,
-  $template_to_import = 'generic-host',
+  $templates = ['generic-host'],
   $groups = [],
   $vars = {},
   $check_command = undef,
@@ -49,10 +49,9 @@ define icinga2::object::host (
   $command_endpoint = undef,
 ) {
 
-  #Do some validation of the class' parameters:
   validate_string($object_hostname)
   validate_bool($is_template)
-  validate_string($template_to_import)
+  validate_array($templates)
   validate_string($display_name)
   validate_string($ipv4_address)
   validate_array($groups)
@@ -74,7 +73,7 @@ define icinga2::object::host (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_host.conf.erb'),
+      content => template('icinga2/object/host.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
       notify  => Class['::icinga2::service'],
     }
@@ -88,7 +87,7 @@ define icinga2::object::host (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_host.conf.erb'),
+      content => template('icinga2/object/host.conf.erb'),
     }
 
   }

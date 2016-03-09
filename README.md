@@ -433,6 +433,7 @@ Object types:
 * [icinga2::object::applyservicetohost](#icinga2objectapplyservicetohost)
 * [icinga2::object::apply_notification_to_host](#icinga2objectapply_notification_to_host)
 * [icinga2::object::apply_notification_to_service](#icinga2objectapply_notification_to_service)
+* [icinga2::object::apply_scheduleddowntime](#icinga2objectapply_scheduleddowntime)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::compatlogger](#icinga2objectcompatlogger)
 * [icinga2::object::checkresultreader](#icinga2objectcheckresultreader)
@@ -565,6 +566,26 @@ icinga2::object::apply_notification_to_service { 'pagerduty-service':
 }
 ````
 
+####[`icinga2::object::apply_scheduleddowntime`](id:object_apply_scheduleddowntime)
+
+The `apply_scheduleddowntime` defined type can create `apply` objects to apply downtimes to hosts or services:
+
+<pre>
+icinga2::object::apply_scheduleddowntime { 'apply-downtime-name':
+  apply        => 'Service',
+  templates    => [
+    'generic-downtime-template'
+  ],
+  assign_where => 'service.vars.anoying_check == true',
+  ignore_where => 'host.vars.critical_machine == true',
+  author       => 'icingaadmin',
+  comment      => 'Some comment',
+  fixed        => false,
+  duration     => '30m',
+  ranges       => { 'sunday' => '02:00-03:00' }
+}
+</pre>
+
 ####[`icinga2::object::checkcommand`](id:object_checkcommand)
 
 The `checkcommand` defined type can create `checkcommand` objects.
@@ -608,7 +629,6 @@ icinga2::object::checkcommand { 'check_http':
 
 Available parameters are:
 
-* `template_to_import`
 * `command`
 * `cmd_path`
 * `arguments`
@@ -1126,6 +1146,7 @@ Objects available:
 * `apply_notification_to_host`
 * `apply_notification_to_service`
 * `apply_service`
+* `apply_scheduleddowntime`
 * `checkcommand`
 * `dependency`
 * `eventcommand`

@@ -12,7 +12,7 @@
 define icinga2::object::service (
   $object_servicename = $name,
   $is_template = false,
-  $template_to_import = 'generic-service',
+  $templates = ['generic-service'],
   $display_name = $name,
   $host_name = $fqdn,
   $groups = [],
@@ -47,10 +47,9 @@ define icinga2::object::service (
   $zone = undef,
 ) {
 
-  #Do some validation of the class' parameters:
   validate_string($object_servicename)
   validate_bool($is_template)
-  validate_string($template_to_import)
+  validate_array($templates)
   validate_string($display_name)
   validate_string($host_name)
   validate_string($zone)
@@ -71,7 +70,7 @@ define icinga2::object::service (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_service.conf.erb'),
+      content => template('icinga2/object/service.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
       notify  => Class['::icinga2::service'],
     }
@@ -85,7 +84,7 @@ define icinga2::object::service (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_service.conf.erb'),
+      content => template('icinga2/object/service.conf.erb'),
     }
 
   }

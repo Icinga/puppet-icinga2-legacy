@@ -10,11 +10,12 @@
  *
  */
 
-apply Notification "<%= @object_notificationname %>" to Host {
-  <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
-  <%- if @notification_to_import -%>
-  <%#- Otherwise, include the parameter: -%>
-  import "<%= @notification_to_import %>"
+apply Notification "<%= @object_notificationname %>" to Service {
+  <%- @templates.each do |t| -%>
+  import "<%= t -%>"
+  <%- end -%>
+  <%- if @host_name -%>
+  host_name = "<%= @host_name %>"
   <%- end -%>
   <%- if @assign_where -%>
   assign where <%= @assign_where %>

@@ -12,7 +12,7 @@
 define icinga2::object::hostgroup (
   $object_hostgroup_name = $name,
   $display_name = $name,
-  $template_to_import = undef,
+  $templates = [],
   $groups = [],
   $target_dir = '/etc/icinga2/objects/hostgroups',
   $target_file_name = "${name}.conf",
@@ -27,7 +27,7 @@ define icinga2::object::hostgroup (
 
   #Do some validation of the class' parameters:
   validate_string($object_hostgroup_name)
-  validate_string($template_to_import)
+  validate_array($templates)
   validate_string($display_name)
   validate_array($groups)
   validate_string($target_dir)
@@ -45,7 +45,7 @@ define icinga2::object::hostgroup (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_hostgroup.conf.erb'),
+      content => template('icinga2/object/hostgroup.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
       notify  => Class['::icinga2::service'],
     }
@@ -59,7 +59,7 @@ define icinga2::object::hostgroup (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_hostgroup.conf.erb'),
+      content => template('icinga2/object/hostgroup.conf.erb'),
     }
 
   }
