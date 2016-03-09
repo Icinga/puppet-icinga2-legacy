@@ -20,6 +20,9 @@ object Service "<%= @object_servicename %>" {
   <%- if @host_name -%>
   host_name = "<%= @host_name -%>"
   <%- end -%>
+  <%- if @command_endpoint -%>
+  command_endpoint = "<%= @command_endpoint -%>"
+  <%- end -%>
   <%- if @groups.length != 0 -%>
   groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
   <%- end -%>
