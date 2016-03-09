@@ -11,6 +11,7 @@
  */
 
 <%- if @is_template -%>template<%- else -%>object<%- end -%> User "<%= @object_username %>" {
+  <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- @templates.each do |t| -%>
   <%- if t != @object_username -%>
   import "<%= t -%>"
