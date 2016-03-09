@@ -11,8 +11,6 @@
  */
 
 <%- if @is_template -%>template<%- else -%>object<%- end -%> Host "<%= @object_hostname %>" {
-  <%- if @template_to_import && @template_to_import != @object_hostname -%>
-  import "<%= @template_to_import -%>"
   <%- @templates.each do |t| -%>
   <%- if t != @object_hostname -%>
   import "<%= t -%>"
