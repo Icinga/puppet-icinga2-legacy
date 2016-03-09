@@ -85,7 +85,6 @@ describe 'icinga2::object::host' do
           :ensure => 'file',
           :path => '/etc/icinga2/objects/hosts/testhost.conf',
           :content => /object Host "testhost"/,
-          :content => /command_endpoint = "testcmdhost"/,
         }) }
     it { should contain_file(object_file).with_content(/^\s*vars \+= \{$/) }
     it { should contain_file(object_file).with_content(/^\s*"array" = \[\n\s+"array1",\n/) }
@@ -94,6 +93,7 @@ describe 'icinga2::object::host' do
     it { should contain_file(object_file).with_content(/^\s*"integer.*1234/) }
     it { should contain_file(object_file).with_content(/^\s*"string" = "teststring"$/) }
     it { should contain_file(object_file).with_content(/^\s*"oldstyle" = "damn string"$/) }
+    it { should contain_file(object_file).with_content(/^\s*command_endpoint = "testcmdhost"$/) }
 
   end
 
