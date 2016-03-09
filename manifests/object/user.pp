@@ -11,6 +11,7 @@
 
 define icinga2::object::user (
   $object_username = $name,
+  $is_template = false,
   $templates = [],
   $display_name = $name,
   $email = undef,
@@ -32,6 +33,7 @@ define icinga2::object::user (
 
   #Do some validation of the class' parameters:
   validate_string($object_username)
+  validate_bool($is_template)
   validate_array($templates)
   validate_string($display_name)
   validate_array($groups)

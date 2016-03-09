@@ -10,9 +10,11 @@
  *
  */
 
-object Host "<%= @object_hostname %>" {
+<%- if @is_template -%>template<%- else -%>object<%- end -%> Host "<%= @object_hostname %>" {
   <%- @templates.each do |t| -%>
+  <%- if t != @object_hostname -%>
   import "<%= t -%>"
+  <%- end -%>
   <%- end -%>
   <%- if @display_name -%>
   display_name = "<%= @display_name -%>"
