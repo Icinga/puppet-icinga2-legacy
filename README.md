@@ -787,14 +787,14 @@ This defined type creates hostgroup objects.
 Example:
 
 <pre>
-@@icinga2::object::hostgroup { 'mysql-server:
-  display_name => 'mysql servers',
-  groups       => ['linux-servers', 'database-severs'],
-  target_dir => '/etc/icinga2/objects/hostgroups',
-  target_file_name => "${name}.conf",
+@@icinga2::object::hostgroup { 'mysql-server':
+  display_name      => 'mysql servers',
+  groups            => ['linux-servers', 'database-severs'],
+  target_dir        => '/etc/icinga2/objects/hostgroups',
+  target_file_name  => "${name}.conf",
   target_file_owner => 'root',
   target_file_group => 'root',
-  target_file_mode => '0644',
+  target_file_mode  => '0644',
 }
 </pre>
 
