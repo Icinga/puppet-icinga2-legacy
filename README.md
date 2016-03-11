@@ -782,7 +782,27 @@ If you would like to use an IPv6 address, make sure to set the `ipv6_address` pa
 
 ####[`icinga2::object::hostgroup`](id:object_hostgroup)
 
-Coming soon...
+This defined type creates hostgroup objects.
+
+Example:
+
+<pre>
+@@icinga2::object::hostgroup { 'mysql-server:
+  display_name => 'mysql servers',
+  groups       => ['linux-servers', 'database-severs'],
+  target_dir => '/etc/icinga2/objects/hostgroups',
+  target_file_name => "${name}.conf",
+  target_file_owner => 'root',
+  target_file_group => 'root',
+  target_file_mode => '0644',
+}
+</pre>
+
+Notes on specific parameters:
+
+* `groups`: must be specified as a [Puppet array](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#arrays), even if there's only one element
+
+**Note**: Make sure to avoid duplicate hostgroup definitions.
 
 ####[`icinga2::object::icingastatuswriter`](id:object_icingastatuswriter)
 
