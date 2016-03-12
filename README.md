@@ -215,20 +215,25 @@ If you would like to install packages to make a `mail` command binary available 
 
 **Enabling and disabling Icinga 2 features**
 
-To manage the features that are enabled or disabled on an Icinga 2 server, you can specify them with the `server_enabled_features` and `server_disabled_features` parameters.
-
-The parameters should be given as arrays of single-quoted strings.
-
-**Note:** Even if you're only specifying one feature, you will still need to specify it as an array.
-
-**Note:** If a feature is listed in both the `server_enabled_features` and `server_disabled_features` arrays, the feature will be **disabled**.
+To manage the features that are enabled or disabled on an Icinga 2 server, you can specify `default_features` to `true` or `false` to enable or disable the features `checker`, `mainlog` and `notification`.
 
 ````
 class { 'icinga2':
   ...
-  server_enabled_features  => ['checker','notification'],
-  server_disabled_features => ['graphite','livestatus'],
+  default_features  => true,
 }
+````
+
+To enable features selectively you need to configure them seperately.
+
+````
+class { 'icinga2::feature::command':
+  command_path => '/var/run/icinga2/cmd/icinga2.cmd',
+}
+````
+
+````
+class { 'icinga2::feature::notification': }
 ````
 
 **Switch from restart to reload Icinga2 service**
