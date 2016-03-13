@@ -44,7 +44,7 @@ class icinga2::params {
   ##################
   # Icinga 2 parameters by OS/release
   case $::operatingsystem {
-    'CentOS', 'RedHat', 'Scientific': {
+    'CentOS', 'RedHat', 'Scientific', 'OracleLinux': {
 
       #Packages for Nagios plugins:
       $plugin_packages = [

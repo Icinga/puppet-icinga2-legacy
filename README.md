@@ -47,7 +47,7 @@ This module requires the [Puppet Labs stdlib module](https://github.com/puppetla
 
 For Ubuntu systems, this module requires the [Puppet Labs apt module](https://github.com/puppetlabs/puppetlabs-apt).
 
-On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required.
+On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required. OracleLinux and similar might also need addons and optional (EPEL-7) enabled too. Consider using a module to manage all yum repos on hosts to manage the repos locally.
 
 ####Note for RedHat
 
