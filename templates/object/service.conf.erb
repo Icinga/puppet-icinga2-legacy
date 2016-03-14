@@ -10,14 +10,16 @@
  *
  */
 
-object Service "<%= @object_servicename %>" {
+<%- if @is_template -%>template<%- else -%>object<%- end -%> Service "<%= @object_servicename %>" {
   <%- @templates.each do |t| -%>
+  <%- if t != @object_servicename -%>
   import "<%= t -%>"
+  <%- end -%>
   <%- end -%>
   <%- if @display_name -%>
   display_name = "<%= @display_name -%>"
   <%- end -%>
-  <%- if @host_name -%>
+  <%- if ! @is_template &&  @host_name -%>
   host_name = "<%= @host_name -%>"
   <%- end -%>
   <%- if @groups.length != 0 -%>

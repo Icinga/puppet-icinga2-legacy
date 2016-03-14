@@ -26,4 +26,38 @@ describe 'icinga2::object::checkcommand' do
     pending
   end
 
+  context "with parameter command = array with one item" do
+
+    let(:title) { 'testcheckcommand' }
+
+    let(:params) do
+      {
+        :object_checkcommandname => 'testcheckcommand',
+        :command => [ 'testcommand1']
+      }
+    end
+
+    object_file = '/etc/icinga2/objects/checkcommands/testcheckcommand.conf'
+    it { should contain_icinga2__object__checkcommand('testcheckcommand') }
+    it { should contain_file(object_file).with_content(/^\s*command = \[ PluginDir \+ "testcommand1" \]$/) }
+
+  end
+
+  context "with parameter command = array with more than one item" do
+
+    let(:title) { 'testcheckcommand' }
+
+    let(:params) do
+      {
+        :object_checkcommandname => 'testcheckcommand',
+        :command => [ 'testcommand1' , 'testcommand2']
+      }
+    end
+
+    object_file = '/etc/icinga2/objects/checkcommands/testcheckcommand.conf'
+    it { should contain_icinga2__object__checkcommand('testcheckcommand') }
+    it { should contain_file(object_file).with_content(/^\s*command = \[ PluginDir \+ "testcommand1", PluginDir \+ "testcommand2" \]$/) }
+
+  end
+
 end
