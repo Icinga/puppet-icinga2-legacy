@@ -26,7 +26,7 @@ describe 'icinga2::object::apply_scheduleddowntime' do
     end
 
     object = 'icinga2 apply scheduleddowntime testdowntime'
-    object_file = '/etc/icinga2/objects/apply_scheduleddowntimes/testdowntime.conf'
+    object_file = '/etc/icinga2/objects/applys/testdowntime.conf'
 
     it { should contain_icinga2__object__apply_scheduleddowntime('testdowntime') }
     it { should contain_file(object).with({
@@ -62,7 +62,7 @@ describe 'icinga2::object::apply_scheduleddowntime' do
     end
 
     object = 'icinga2 apply scheduleddowntime testdowntime2'
-    object_file = '/etc/icinga2/objects/apply_scheduleddowntimes/testdowntime2.conf'
+    object_file = '/etc/icinga2/objects/applys/testdowntime2.conf'
 
     it { should contain_icinga2__object__apply_scheduleddowntime('testdowntime2') }
     it { should contain_file(object).with({
