@@ -10,9 +10,11 @@
  *
  */
 
-object User "<%= @object_username %>" {
+<%- if @is_template -%>template<%- else -%>object<%- end -%> User "<%= @object_username %>" {
   <%- @templates.each do |t| -%>
+  <%- if t != @object_username -%>
   import "<%= t -%>"
+  <%- end -%>
   <%- end -%>
   <%- if @display_name -%>
   display_name = "<%= @display_name -%>"
