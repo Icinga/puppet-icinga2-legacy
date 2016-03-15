@@ -469,7 +469,7 @@ Object types:
 
 ####[`icinga2::object::apiuser`](id:icinga2objectapiuser)
 
-The `apiuser` defined type can create `ApiUser` objects that creates users for Icinga 2's API.
+This defined type creates **ApiUser** objects that creates users for Icinga 2's API.
 
 <pre>
 #Create an API user object:
@@ -484,7 +484,7 @@ See the Icinga 2 documention for more info: [http://docs.icinga.org/icinga2/late
 
 ####[`icinga2::object::apilistener`](id:icinga2objectapilistener)
 
-The `apilistener` defined type can create `ApiLister` objects that set the bind address and port for Icinga 2's API listener, as well as the locations of the machine's Icinga 2 cert, key and Icinga 2 CA key:
+This defined type creates **ApiLister** objects that set the bind address and port for Icinga 2's API listener, as well as the locations of the machine's Icinga 2 cert, key and Icinga 2 CA key:
 
 <pre>
 #Create an API listener object:
@@ -500,7 +500,7 @@ See the Icinga 2 documention for more info: [http://docs.icinga.org/icinga2/late
 
 ####[`icinga2::object::apply_service`](id:object_apply_service)
 
-The `apply_service` defined type can create `apply` objects to apply services to hosts:
+This defined type creates **Apply** objects to apply services to hosts:
 
 <pre>
 #Create an apply that checks the number of zombie processes:
@@ -538,7 +538,7 @@ assign_where => "\"linux_servers\" in host.${facter_variable}"",
 
 ####[`icinga2::object::apply_notification_to_host`](id:object_apply_notification_to_host)
 
-The `apply_notification_to_host` defined type can create `apply` objects to apply notifications to hosts:
+This defined type creates **Apply** objects to apply notifications to hosts:
 
 This defined type has the same available attributes that the `icinga2::object::notification` defined type does. With the addition of assign_where and ignore_where
 
@@ -556,7 +556,7 @@ icinga2::object::apply_notification_to_host { 'pagerduty-host':
 
 ####[`icinga2::object::apply_notification_to_service`](id:object_apply_notification_to_service)
 
-The `apply_notification_to_service` defined type can create `apply` objects to apply notifications to service:
+This defined type creates **Apply** objects to apply notifications to services:
 
 This defined type has the same available attributes that the `icinga2::object::notification` defined type does. With the addition of assign_where and ignore_where
 
@@ -593,9 +593,9 @@ icinga2::object::apply_scheduleddowntime { 'apply-downtime-name':
 
 ####[`icinga2::object::checkcommand`](id:object_checkcommand)
 
-The `checkcommand` defined type can create `checkcommand` objects.
+This defined type creates **CheckCommand** objects.
 
-Example:
+Example usage:
 
 <pre>
 #Create an HTTP check command:
@@ -650,7 +650,7 @@ Available parameters are:
 
 ####`icinga2::object::compatlogger`
 
-The `compatlogger` defined type can create `compatlogger` objects.
+This defined type creates **CompatLogger** objects.
 
 <pre>
 icinga2::object::compatlogger { 'daily-log':
@@ -664,9 +664,9 @@ See [CompatLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chap
 
 ####[`icinga2::object::checkresultreader`](id:object_checkresultreader)
 
-The `checkresultreader` defined type can create `checkresultreader` objects.
+This defined type creates **CheckResultReader** objects.
 
-Example:
+Example usage:
 
 <pre>
 icinga2::object::checkresultreader {'reader':
@@ -678,7 +678,7 @@ See [CheckResultReader](http://docs.icinga.org/icinga2/latest/doc/module/icinga2
 
 ####[`icinga2::object::endpoint`](id:object_endpoint)
 
-The `endpoint` defined type can create `endpoint` objects.
+This defined type creates **Endpoint** objects.
 
 <pre>
 icinga2::object::endpoint { 'icinga2b':
@@ -691,7 +691,7 @@ See [EndPoint](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/
 
 ####`icinga2::object::eventcommand`
 
-The `eventcommand` defined type can create `eventcommand` objects.
+This defined type creates **EventCommand** objects.
 
 <pre>
 #Create the http restart command:
@@ -705,7 +705,7 @@ This object use the same parameter defined to `checkcommand`.
 
 ####[`icinga2::object::externalcommandlistener`](id:object_externalcommandlistener)
 
-The `externalcommandlistener` defined type can create `ExternalCommandListener` objects.
+This defined type creates **ExternalCommandListener** objects.
 
 <pre>
 icinga2::object::externalcommandlistener { 'external':
@@ -717,11 +717,11 @@ See [ExternalCommandListener](http://docs.icinga.org/icinga2/latest/doc/module/i
 
 ####[`icinga2::object::gelfwriter`](id:object_gelfwriter)
 
-This defined type creates an **GelfWriter** object
+This defined type creates an **GelfWriter** objects.
 
 Though you can create the file anywhere and with any name via the target_dir and file_name parameters, you should set the target_dir parameter to /etc/icinga2/features-enabled, as that's where Icinga 2 will look for gelfwriter connection objects by default.
 
-Example Usage:
+Example usage:
 
 ````
 icinga2::object::gelfwriter { 'gelf_server':
@@ -734,11 +734,11 @@ icinga2::object::gelfwriter { 'gelf_server':
 
 ####[`icinga2::object::graphitewriter`](id:object_graphitewriter)
 
-This defined type creates an **GraphiteWriter** object
+This defined type creates **GraphiteWriter** objects.
 
 Though you can create the file anywhere and with any name via the target_dir and target_file_name parameters, you should set the target_dir parameter to /etc/icinga2/features-enabled, as that's where Icinga 2 will look for graphitewriter connection objects by default.
 
-Example Usage:
+Example usage:
 
 ````
 icinga2::object::graphitewriter { 'graphite_relay':
@@ -751,9 +751,9 @@ icinga2::object::graphitewriter { 'graphite_relay':
 
 ####[`icinga2::object::host`](id:object_host)
 
-This defined type creates host objects.
+This defined type creates **Host** objects.
 
-Example:
+Example usage:
 
 <pre>
 @@icinga2::object::host { $::fqdn:
@@ -789,9 +789,9 @@ If you would like to use an IPv6 address, make sure to set the `ipv6_address` pa
 
 ####[`icinga2::object::hostgroup`](id:object_hostgroup)
 
-This defined type creates hostgroup objects.
+This defined type creates **Hostgroup** objects.
 
-Example:
+Example usage:
 
 <pre>
 @@icinga2::object::hostgroup { 'mysql-server':
@@ -813,9 +813,10 @@ Notes on specific parameters:
 
 ####[`icinga2::object::icingastatuswriter`](id:object_icingastatuswriter)
 
-This defined type creates an **IcingaStatusWriter** objects.
+This defined type creates **IcingaStatusWriter** objects.
 
 Example usage:
+
 <pre>
 icinga2::object::icingastatuswriter { 'status':
    status_path       => '/cache/icinga2/status.json',
@@ -827,7 +828,7 @@ See [IcingaStatusWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga
 
 ####[`icinga2::object::idomysqlconnection`](id:object_idomysqlconnection)
 
-This defined type creates an **IdoMySqlConnection** objects.
+This defined type creates **IdoMySqlConnection** objects.
 
 Though you can create the file anywhere and with any name via the `target_dir` and `target_file_name` parameters, you should set the `target_dir` parameter to `/etc/icinga2/features-enabled`, as that's where Icinga 2 will look for DB connection objects by default.
 
@@ -858,7 +859,7 @@ See [IdoMySqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga
 
 ####[`icinga2::object::idopgsqlconnection`](id:object_idopgsqlconnection)
 
-This defined type creates an **IdoPgSqlConnection** objects.
+This defined type creates **IdoPgSqlConnection** objects.
 
 Though you can create the file anywhere and with any name via the `target_dir` and `target_file_name` parameters, you should set the `target_dir` parameter to `/etc/icinga2/features-enabled`, as that's where Icinga 2 will look for DB connection objects by default.
 
@@ -904,7 +905,7 @@ See [LivestatusListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga
 
 ####`icinga2::object::notification`
 
-The `notification` defined type can create `notification` objects.
+This defined type creates **Notification** objects.
 
 <pre>
 #Defining Create the mail notification command:
@@ -944,7 +945,7 @@ Notes on specific parameters:
 
 ####`icinga2::object::notificationcommand`
 
-The `notificationcommand` defined type can create `notificationcommand` objects.
+This defined type creates **NotificationCommand** objects.
 
 <pre>
 #Create the mail notification command:
@@ -972,11 +973,11 @@ This object use the same parameter defined to `checkcommand`.
 
 ####[`icinga2::object::opentsdbwriter`](id:object_opentsdbwriter)
 
-This defined type creates an **OpenTsdbWriter** object
+This defined type creates **OpenTsdbWriter** objects.
 
 Though you can create the file anywhere and with any name via the target_dir and file_name parameters, you should set the target_dir parameter to /etc/icinga2/features-enabled, as that's where Icinga 2 will look for opentsdbwriter connection objects by default.
 
-Example Usage:
+Example usage:
 
 ````
 icinga2::object::opentsdbwriter { 'opentsdb_server':
@@ -989,7 +990,8 @@ icinga2::object::opentsdbwriter { 'opentsdb_server':
 
 ####[`icinga2::object::perfdatawriter`](id:object_perfdatawriter)
 
-This defined type creates a **PerfdataWriter** object
+This defined type creates **PerfdataWriter** objects.
+
 Example usage:
 
 <pre>
@@ -1006,7 +1008,9 @@ See [PerfdataWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/ch
 
 ####[`icinga2::object::scheduleddowntime`](id:object_scheduleddowntime)
 
-This defined type creates **ScheduledDowntime** objects
+This defined type creates **ScheduledDowntime** objects.
+
+Example usage:
 
 <pre>
 icinga2::object::scheduleddowntime {'some-downtime':
@@ -1022,11 +1026,43 @@ icinga2::object::scheduleddowntime {'some-downtime':
 
 ####[`icinga2::object::service`](id:object_service)
 
-Coming soon...
+This defined type creates **Service** objects.
+
+Example usage:
+
+<pre>
+icinga2::object::service { 'example_service':
+$template_to_import = 'generic-service',
+$display_name = 'Example Service',
+$host_name = $::fqdn,
+$groups = ['example-servers', 'linux-servers'],
+$vars = {
+  var1 = 'somevalue',
+  var2 = 'someothervalue',
+},
+$check_command = example-check,
+$max_check_attempts = 5,
+$check_interval = '10m',
+$retry_interval = '1m',
+$enable_notifications = true,
+$enable_active_checks = true,
+$enable_flapping = true,
+$enable_perfdata = true,
+$flapping_threshold = '50%',
+$target_dir         = '/etc/icinga2/objects/services',
+$target_file_name   = "${name}.conf",
+$target_file_ensure = file,
+$target_file_owner  = 'root',
+$target_file_group  = 'root',
+$target_file_mode   = '0644',
+$refresh_icinga2_service = true,
+}
+
+See [Service](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-service) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::servicegroup`](id:object_servicegroup)
 
-This defined type creates an **ServiceGroup** objects.
+This defined type creates **ServiceGroup** objects.
 
 Example usage:
 
@@ -1078,7 +1114,9 @@ Coming soon...
 
 ####[`icinga2::object::usergroup`](id:object_usergroup)
 
-You can use this defined type to create user groups. Example:
+This defined type creates **UserGroup** objects.
+
+Example usage:
 
 <pre>
 #Create an admins user group:
@@ -1090,7 +1128,7 @@ icinga2::object::hostgroup { 'admins':
 
 ####[`icinga2::object::timeperiod`](id:object_timeperiod)
 
-This defined type creates **TimePeriod** objects
+This defined type creates **TimePeriod** objects.
 
 Example usage:
 
@@ -1111,9 +1149,9 @@ See [TimePeriod](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapte
 
 ####[`icinga2::object::zone`](id:object_zone)
 
-This defined type creates a **Zone** object
+This defined type creates **Zone** objects.
 
-Example Usage to create an HA master zone:
+Example usage to create an HA master zone:
 
 ````
 icinga2::object::zone { 'master':
@@ -1121,7 +1159,7 @@ icinga2::object::zone { 'master':
 }
 ````
 
-Example Usage to create a satellite zone and specify a parent:
+Example usage to create a satellite zone and specify a parent:
 
 ````
 icinga2::object::zone { 'satellite':
@@ -1144,7 +1182,7 @@ See [Zone](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/obje
 
 You can use hiera to create icinga 2 objects in your server.
 
-Example Usage:
+Example usage:
 json file
 <pre>
 {
