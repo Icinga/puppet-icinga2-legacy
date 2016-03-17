@@ -4,47 +4,38 @@
  */
 
 /**
- * A object definition that applys services to hosts. You can create your
- * own configuration files in the conf.d directory (e.g. one per host).
- * By default all *.conf files in this directory are included.
+ * A service definition. You can create your own configuration files
+ * in the conf.d directory (e.g. one per host). By default all *.conf
+ * files in this directory are included.
  *
  */
 
-apply Service "<%= @object_servicename %>" <%= @apply %> {
-  <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
-  <%- if @template_to_import -%>
-  <%#- Otherwise, include the parameter: -%>
-  import "<%= @template_to_import -%>"
+<%- if @is_template -%>template<%- else -%>object<%- end -%> Service "<%= @object_servicename %>" {
+  <%- @templates.each do |t| -%>
+  <%- if t != @object_servicename -%>
+  import "<%= t -%>"
+  <%- end -%>
   <%- end -%>
   <%- if @display_name -%>
   display_name = "<%= @display_name -%>"
   <%- end -%>
-  <%- if @host_name -%>
+  <%- if ! @is_template &&  @host_name -%>
   host_name = "<%= @host_name -%>"
-  <%- end -%>
-  <%- if @assign_where -%>
-  assign where <%= @assign_where -%> 
-  <%- end -%>
-  <%- if @ignore_where -%>
-  ignore where <%= @ignore_where -%> 
-  <%- end -%>
-  <%- if @command_endpoint -%>
-  command_endpoint = <%= @command_endpoint -%> 
   <%- end -%>
   <%- if @groups.length != 0 -%>
   groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
   <%- end -%>
-  <%- if @check_command -%>
-  check_command = "<%= @check_command -%>"
-  <%- end -%>
   <%- if @vars.any? -%>
   vars += <%= scope.function_icinga2_config_value([@vars]) %>
+  <%- end -%>
+  <%- if @check_command -%>
+  check_command = "<%= @check_command -%>"
   <%- end -%>
   <%- if @max_check_attempts -%>
   max_check_attempts = <%= @max_check_attempts %>
   <%- end -%>
   <%- if @check_period -%>
-  check_period = "<%= @check_period %>"
+  check_period = <%= @check_period %>
   <%- end -%>
   <%- if @check_interval -%>
   check_interval = <%= @check_interval %>
@@ -95,5 +86,8 @@ apply Service "<%= @object_servicename %>" <%= @apply %> {
   <%- end -%>
   <%- if @icon_image_alt -%>
   icon_image_alt = "<%= @icon_image_alt -%>"
+  <%- end -%>
+  <%- if @zone -%>
+  zone = "<%= @zone -%>"
   <%- end -%>
 }

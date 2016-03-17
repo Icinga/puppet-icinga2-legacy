@@ -11,7 +11,7 @@
 
 define icinga2::object::timeperiod (
   $object_name                   = $name,
-  $timeperiod_template_to_import = 'legacy-timeperiod',
+  $templates                     = ['legacy-timeperiod'],
   $timeperiod_display_name       = undef,
   $methods                       = undef,
   $ranges                        = {},
@@ -19,14 +19,13 @@ define icinga2::object::timeperiod (
   $target_file_name              = "${name}.conf",
   $target_file_ensure            = file,
   $target_file_owner             = 'root',
-  $target_file_group             = 'root',
+  $target_file_group             = '0',
   $target_file_mode              = '0644',
   $refresh_icinga2_service = true
 ) {
 
-  # Do some validation of the class' parameters:
   validate_string($object_name)
-  validate_string($timeperiod_template_to_import)
+  validate_array($templates)
   validate_string($timeperiod_display_name)
   if $methods {
     validate_string($methods)
@@ -47,7 +46,7 @@ define icinga2::object::timeperiod (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_timeperiod.conf.erb'),
+      content => template('icinga2/object/timeperiod.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
       notify  => Class['::icinga2::service'],
     }
@@ -61,7 +60,7 @@ define icinga2::object::timeperiod (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_timeperiod.conf.erb'),
+      content => template('icinga2/object/timeperiod.conf.erb'),
     }
 
   }

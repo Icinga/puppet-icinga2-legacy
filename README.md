@@ -47,7 +47,7 @@ This module requires the [Puppet Labs stdlib module](https://github.com/puppetla
 
 For Ubuntu systems, this module requires the [Puppet Labs apt module](https://github.com/puppetlabs/puppetlabs-apt).
 
-On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required.
+On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required. OracleLinux and similar might also need addons and optional (EPEL-7) enabled too. Consider using a module to manage all yum repos on hosts to manage the repos locally.
 
 ####Note for RedHat
 
@@ -215,20 +215,25 @@ If you would like to install packages to make a `mail` command binary available 
 
 **Enabling and disabling Icinga 2 features**
 
-To manage the features that are enabled or disabled on an Icinga 2 server, you can specify them with the `server_enabled_features` and `server_disabled_features` parameters.
-
-The parameters should be given as arrays of single-quoted strings.
-
-**Note:** Even if you're only specifying one feature, you will still need to specify it as an array.
-
-**Note:** If a feature is listed in both the `server_enabled_features` and `server_disabled_features` arrays, the feature will be **disabled**.
+To manage the features that are enabled or disabled on an Icinga 2 server, you can specify `default_features` to `true` or `false` to enable or disable the features `checker`, `mainlog` and `notification`.
 
 ````
 class { 'icinga2':
   ...
-  server_enabled_features  => ['checker','notification'],
-  server_disabled_features => ['graphite','livestatus'],
+  default_features  => true,
 }
+````
+
+To enable features selectively you need to configure them seperately.
+
+````
+class { 'icinga2::feature::command':
+  command_path => '/var/run/icinga2/cmd/icinga2.cmd',
+}
+````
+
+````
+class { 'icinga2::feature::notification': }
 ````
 
 **Switch from restart to reload Icinga2 service**
@@ -433,6 +438,7 @@ Object types:
 * [icinga2::object::applyservicetohost](#icinga2objectapplyservicetohost)
 * [icinga2::object::apply_notification_to_host](#icinga2objectapply_notification_to_host)
 * [icinga2::object::apply_notification_to_service](#icinga2objectapply_notification_to_service)
+* [icinga2::object::apply_scheduleddowntime](#icinga2objectapply_scheduleddowntime)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::compatlogger](#icinga2objectcompatlogger)
 * [icinga2::object::checkresultreader](#icinga2objectcheckresultreader)
@@ -565,6 +571,26 @@ icinga2::object::apply_notification_to_service { 'pagerduty-service':
 }
 ````
 
+####[`icinga2::object::apply_scheduleddowntime`](id:object_apply_scheduleddowntime)
+
+The `apply_scheduleddowntime` defined type can create `apply` objects to apply downtimes to hosts or services:
+
+<pre>
+icinga2::object::apply_scheduleddowntime { 'apply-downtime-name':
+  apply        => 'Service',
+  templates    => [
+    'generic-downtime-template'
+  ],
+  assign_where => 'service.vars.anoying_check == true',
+  ignore_where => 'host.vars.critical_machine == true',
+  author       => 'icingaadmin',
+  comment      => 'Some comment',
+  fixed        => false,
+  duration     => '30m',
+  ranges       => { 'sunday' => '02:00-03:00' }
+}
+</pre>
+
 ####[`icinga2::object::checkcommand`](id:object_checkcommand)
 
 This defined type creates **CheckCommand** objects.
@@ -608,7 +634,6 @@ icinga2::object::checkcommand { 'check_http':
 
 Available parameters are:
 
-* `template_to_import`
 * `command`
 * `cmd_path`
 * `arguments`
@@ -767,14 +792,14 @@ This defined type creates **Hostgroup** objects.
 Example usage:
 
 <pre>
-@@icinga2::object::hostgroup { 'mysql-server:
-  display_name => 'mysql servers',
-  groups       => ['linux-servers', 'database-severs'],
-  target_dir => '/etc/icinga2/objects/hostgroups',
-  target_file_name => "${name}.conf",
+@@icinga2::object::hostgroup { 'mysql-server':
+  display_name      => 'mysql servers',
+  groups            => ['linux-servers', 'database-severs'],
+  target_dir        => '/etc/icinga2/objects/hostgroups',
+  target_file_name  => "${name}.conf",
   target_file_owner => 'root',
   target_file_group => 'root',
-  target_file_mode => '0644',
+  target_file_mode  => '0644',
 }
 </pre>
 
@@ -1184,6 +1209,7 @@ Objects available:
 * `apply_notification_to_host`
 * `apply_notification_to_service`
 * `apply_service`
+* `apply_scheduleddowntime`
 * `checkcommand`
 * `dependency`
 * `eventcommand`

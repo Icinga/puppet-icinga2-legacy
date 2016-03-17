@@ -18,7 +18,7 @@ define icinga2::feature (
     mode  => $::icinga2::config_mode,
   }
 
-  if $manage_file == true {
+  if $manage_file {
 
     if $content {
       $content_rel = $content
@@ -47,6 +47,9 @@ define icinga2::feature (
   }
 
   if $::icinga2::manage_service {
+    if $manage_file {
+      File["icinga2 feature ${name}"] ~> Class['::icinga2::service']
+    }
     File["icinga2 feature ${name} enabled"] ~> Class['::icinga2::service']
   }
 

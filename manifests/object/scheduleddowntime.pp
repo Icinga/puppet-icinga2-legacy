@@ -22,7 +22,7 @@ define icinga2::object::scheduleddowntime (
   $target_file_name             = "${name}.conf",
   $target_file_ensure           = file,
   $target_file_owner            = 'root',
-  $target_file_group            = 'root',
+  $target_file_group            = '0',
   $target_file_mode             = '0644',
   $refresh_icinga2_service = true
 ) {
@@ -53,7 +53,7 @@ define icinga2::object::scheduleddowntime (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_scheduleddowntime.conf.erb'),
+      content => template('icinga2/object/scheduleddowntime.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
       notify  => Class['::icinga2::service'],
     }
@@ -67,7 +67,7 @@ define icinga2::object::scheduleddowntime (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_scheduleddowntime.conf.erb'),
+      content => template('icinga2/object/scheduleddowntime.conf.erb'),
     }
 
   }

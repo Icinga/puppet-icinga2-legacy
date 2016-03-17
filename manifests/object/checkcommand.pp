@@ -10,10 +10,10 @@
 #
 
 define icinga2::object::checkcommand (
+  $command,
   $object_checkcommandname = $name,
-  $template_to_import                    = 'plugin-check-command',
+  $templates                             = ['plugin-check-command'],
   #$methods                             = undef, Need to get more details about this attribute
-  $command                               = undef,
   $cmd_path                              = 'PluginDir',
   $arguments                             = {},
   $env                                   = {},
@@ -21,13 +21,13 @@ define icinga2::object::checkcommand (
   $timeout                               = undef,
   $target_dir                            = '/etc/icinga2/objects/checkcommands',
   $checkcommand_template_module          = 'icinga2',
-  $checkcommand_template                 = 'object_checkcommand.conf.erb',
+  $checkcommand_template                 = 'object/checkcommand.conf.erb',
   $checkcommand_source_file              = undef,
   $checkcommand_file_distribution_method = 'content',
   $target_file_name                      = "${name}.conf",
   $target_file_ensure                    = file,
   $target_file_owner                     = 'root',
-  $target_file_group                     = 'root',
+  $target_file_group                     = '0',
   $target_file_mode                      = '0644',
   $refresh_icinga2_service = true
 ) {
@@ -35,8 +35,10 @@ define icinga2::object::checkcommand (
   #Do some validation of the class' parameters:
   validate_string($object_checkcommandname)
   if $checkcommand_template == 'object_checkcommand.conf.erb' {
-    validate_string($template_to_import)
-    validate_array($command)
+    validate_array($templates)
+    if ! is_string($command) {
+      validate_array($command)
+    }
     validate_string($cmd_path)
     
     validate_hash($env)

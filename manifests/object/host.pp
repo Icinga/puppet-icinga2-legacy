@@ -14,7 +14,8 @@ define icinga2::object::host (
   $display_name = $fqdn,
   $ipv4_address = $ipaddress,
   $ipv6_address = undef,
-  $template_to_import = 'generic-host',
+  $is_template = false,
+  $templates = ['generic-host'],
   $groups = [],
   $vars = {},
   $check_command = undef,
@@ -38,19 +39,19 @@ define icinga2::object::host (
   $icon_image = undef,
   $icon_image_alt = undef,
   $target_dir = '/etc/icinga2/objects/hosts',
-  $target_file_name = "${fqdn}.conf",
+  $target_file_name = "${name}.conf",
   $target_file_ensure = file,
   $target_file_owner = 'root',
-  $target_file_group = 'root',
+  $target_file_group = '0',
   $target_file_mode = '0644',
   $refresh_icinga2_service = true,
   $zone = undef,
   $command_endpoint = undef,
 ) {
 
-  #Do some validation of the class' parameters:
   validate_string($object_hostname)
-  validate_string($template_to_import)
+  validate_bool($is_template)
+  validate_array($templates)
   validate_string($display_name)
   validate_string($ipv4_address)
   validate_array($groups)
@@ -72,7 +73,7 @@ define icinga2::object::host (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_host.conf.erb'),
+      content => template('icinga2/object/host.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
       notify  => Class['::icinga2::service'],
     }
@@ -86,7 +87,7 @@ define icinga2::object::host (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_host.conf.erb'),
+      content => template('icinga2/object/host.conf.erb'),
     }
 
   }
