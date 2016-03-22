@@ -14,7 +14,7 @@ define icinga2::object::apply_service (
   $object_servicename = $name,
   $apply = 'to Host',
   $templates = ['generic-service'],
-  $display_name = $name,
+  $display_name = 'name',
   $assign_where = undef,
   $ignore_where = undef,
   $command_endpoint = undef,
