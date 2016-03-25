@@ -8,9 +8,9 @@ class icinga2::install {
     ensure   => $::icinga2::package_ensure,
   }
 
-  validate_bool($::icinga2::notify_service)
-  if $::icinga2::notify_service == true {
-    Package['icinga2'] ~> Service['icinga2']
+  validate_bool($::icinga2::manage_service)
+  if $::icinga2::manage_service == true {
+    Package['icinga2'] ~> Class['::icinga2::service']
   }
 
   validate_bool($::icinga2::install_plugins)
