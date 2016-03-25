@@ -26,7 +26,6 @@ class icinga2 (
   $install_plugins                        = true,
   $install_mailutils                      = true,
   $package_ensure                         = installed,
-  $notify_service                         = false,
   $purge_configs                          = true,
   $purge_confd                            = false,
   $plugin_packages                        = $::icinga2::params::plugin_packages,
