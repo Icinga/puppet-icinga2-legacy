@@ -25,9 +25,9 @@ define icinga2::conf (
   $ensure            = present,
   $target_dir        = '/etc/icinga2/conf.d',
   $target_file_name  = "${name}.conf",
-  $target_file_owner = 'root',
-  $target_file_group = '0',
-  $target_file_mode  = '0644',
+  $target_file_owner = $::icinga2::config_owner,
+  $target_file_group = $::icinga2::config_group,
+  $target_file_mode  = $::icinga2::config_mode,
 ) {
 
   validate_string($target_dir)
