@@ -19,7 +19,11 @@ class icinga2::params {
   $use_debmon_repo = false
 
   #Whether to install the plugin packages when the icinga2 class is applied:
-  $install_nagios_plugins = true
+  if $::osfamily != 'windows' {
+    $install_nagios_plugins = true
+  } else {
+    $install_nagios_plugins = false
+  }
 
   #whether to install packages that provide the 'mail' binary
   $install_mail_utils_package = false
@@ -114,6 +118,22 @@ class icinga2::params {
 
       # Icinga2 client settings
       $checkplugin_libdir   = '/usr/local/libexec/nagios'
+    }
+    'windows': {
+
+      # Is there a fact for the Icinga2 Install directory?
+      if $::i2_dirprefix {
+        $i2dirprefix = $::i2_dirprefix
+      } else {
+        # Dirty workaround, assuming there is no 64bit package for icinga2, which is in the pipeline...
+        if $::architecture == 'x64' {
+          $i2dirprefix = 'C:/Program Files (x86)/ICINGA2'
+        } else {
+          $i2dirprefix = 'C:/Program Files/ICINGA2'
+        }
+      }
+
+      $checkplugin_libdir = "${i2dirprefix}/sbin"
     }
     #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }

@@ -13,7 +13,7 @@ define icinga2::object::endpoint (
   $host         = undef,
   $port         = undef,
   $log_duration = undef,
-  $target_dir   = '/etc/icinga2/objects/endpoints',
+  $target_dir   = "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/endpoints",
   $file_name    = "${name}.conf",
 ) {
 

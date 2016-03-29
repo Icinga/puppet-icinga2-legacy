@@ -13,7 +13,7 @@ define icinga2::object::checkresultreader (
   $ensure                       = 'file',
   $object_checkresultreadername = $name,
   $spool_dir                    = undef,
-  $target_dir                   = '/etc/icinga2/objects/checkresultreaders',
+  $target_dir                   = "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/checkresultreaders",
   $target_file_name             = "${name}.conf",
   $target_file_ensure           = file,
   $target_file_owner            = $::icinga2::config_owner,
@@ -33,7 +33,9 @@ define icinga2::object::checkresultreader (
   validate_string($target_file_name)
   validate_string($target_file_owner)
   validate_string($target_file_group)
-  validate_re($target_file_mode, '^\d{4}$')
+  if $::kernel != 'windows' {
+    validate_re($target_file_mode, '^\d{4}$')
+  }
   validate_bool($refresh_icinga2_service)
 
   #If the refresh_icinga2_service parameter is set to true...

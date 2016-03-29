@@ -27,7 +27,7 @@ class icinga2::database {
       user    => 'root',
       path    => $::path,
       command => "mysql -h '${::icinga2::db_host}' -u '${::icinga2::db_user}' -p'${::icinga2::db_pass}' '${::icinga2::db_name}' < '${db_schema}' && touch /etc/icinga2/mysql_schema_loaded.txt",
-      creates => '/etc/icinga2/mysql_schema_loaded.txt',
+      creates => "${::icinga2::params::i2dirprefix}/etc/icinga2/mysql_schema_loaded.txt",
     }
   }
   elsif $::icinga2::db_type == 'pgsql' {
@@ -48,7 +48,7 @@ class icinga2::database {
         "PGPASSWORD=${::icinga2::db_pass}",
       ],
       command     => "psql -U '${::icinga2::db_user}' -h '${::icinga2::db_host}' ${port} -d '${::icinga2::db_name}' < '${db_schema}' && touch /etc/icinga2/postgres_schema_loaded.txt",
-      creates     => '/etc/icinga2/postgres_schema_loaded.txt',
+      creates     => "${::icinga2::params::i2dirprefix}/etc/icinga2/postgres_schema_loaded.txt",
     }
   }
 

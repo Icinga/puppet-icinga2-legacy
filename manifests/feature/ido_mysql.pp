@@ -51,7 +51,7 @@ class icinga2::feature::ido_mysql (
     cleanup              => $cleanup,
     categories           => $categories,
     target_file_name     => 'ido-mysql.conf',
-    target_dir           => '/etc/icinga2/features-available',
+    target_dir           => "${::icinga2::params::i2dirprefix}/etc/icinga2/features-available",
   } ->
 
   ::icinga2::feature { 'ido-mysql':

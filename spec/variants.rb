@@ -31,6 +31,12 @@ class IcingaPuppet
         :path                      => '/dummy',
         :nrpe_daemon_name          => 'nrpe',
       },
+      'Windows Server 2012 R2' => {
+        :osfamily                  => 'windows',
+        :operatingsystem           => 'windows',
+        :operatingsystemrelease    => '2012 R2',
+        :operatingsystemmajrelease => '2012 R2',
+      },
     }
   end
 end

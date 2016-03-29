@@ -15,7 +15,7 @@ define icinga2::object::gelfwriter (
   $source     = undef,
   # Put the object files this defined type generates in features-available
   # since the Gelf writer feature is one that has to be explicitly enabled.
-  $target_dir = '/etc/icinga2/features-available',
+  $target_dir = "${::icinga2::params::i2dirprefix}/etc/icinga2/features-available",
   $file_name  = "${name}.conf",
 ) {
   # Do some validation

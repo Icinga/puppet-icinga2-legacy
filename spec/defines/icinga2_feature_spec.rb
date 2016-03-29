@@ -26,7 +26,7 @@ describe 'icinga2::feature' do
     it { should contain_file('icinga2 feature checker enabled').with({
       :ensure => 'link',
       :path   => '/etc/icinga2/features-enabled/checker.conf',
-      :target => '../features-available/checker.conf',
+      :target => '/etc/icinga2/features-available/checker.conf',
     })}
     it { is_expected.to contain_file("icinga2 feature checker").that_notifies('Class[icinga2::service]') }
   end

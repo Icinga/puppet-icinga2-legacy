@@ -19,7 +19,7 @@ define icinga2::object::checkcommand (
   $env                                   = {},
   $vars                                  = {},
   $timeout                               = undef,
-  $target_dir                            = '/etc/icinga2/objects/checkcommands',
+  $target_dir                            = "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/checkcommands",
   $checkcommand_template_module          = 'icinga2',
   $checkcommand_template                 = 'object/checkcommand.conf.erb',
   $checkcommand_source_file              = undef,
@@ -52,7 +52,9 @@ define icinga2::object::checkcommand (
   validate_string($target_file_name)
   validate_string($target_file_owner)
   validate_string($target_file_group)
-  validate_re($target_file_mode, '^\d{4}$')
+  if $::kernel != 'windows' {
+    validate_re($target_file_mode, '^\d{4}$')
+  }
   validate_bool($refresh_icinga2_service)
 
 

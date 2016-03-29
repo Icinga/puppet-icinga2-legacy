@@ -22,7 +22,7 @@ class icinga2::pki::icinga (
 
   $ticket_id = icinga2_ticket_id($::fqdn, $ticket_salt)
 
-  $pki_dir = '/etc/icinga2/pki'
+  $pki_dir = "${::icinga2::params::i2dirprefix}/etc/icinga2/pki"
   $ca = "${pki_dir}/ca.crt"
   $key = "${pki_dir}/${hostname}.key"
   $cert = "${pki_dir}/${hostname}.crt"

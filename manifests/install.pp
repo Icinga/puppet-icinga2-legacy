@@ -4,8 +4,15 @@
 #
 class icinga2::install {
 
-  package { 'icinga2':
-    ensure   => $::icinga2::package_ensure,
+  if ($::operatingsystem == 'windows') and ($::icinga2::manage_repos) {
+    package { 'icinga2':
+      ensure   => $::icinga2::package_ensure,
+      provider => 'chocolatey',
+    }
+  } else {
+    package { 'icinga2':
+      ensure   => $::icinga2::package_ensure,
+    }
   }
 
   validate_bool($::icinga2::notify_service)
@@ -22,9 +29,11 @@ class icinga2::install {
     ensure_packages($::icinga2::plugin_packages_extra)
   }
 
-  validate_bool($::icinga2::install_mailutils)
-  if $::icinga2::install_mailutils == true {
-    ensure_packages($::icinga2::params::mail_package)
+  if $::osfamily != 'windows' {
+    validate_bool($::icinga2::install_mailutils)
+    if $::icinga2::install_mailutils == true {
+      ensure_packages($::icinga2::params::mail_package)
+    }
   }
 
 }

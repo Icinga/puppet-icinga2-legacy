@@ -13,11 +13,10 @@ define icinga2::config::objectdir {
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 defined resources')
   }
-
   Class['icinga2::config'] ->
   file { "icinga2 objectdir ${name}":
     ensure  => directory,
-    path    => "/etc/icinga2/objects/${name}",
+    path    => "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/${name}",
     owner   => $::icinga2::config_owner,
     group   => $::icinga2::config_group,
     mode    => $::icinga2::config_mode,
