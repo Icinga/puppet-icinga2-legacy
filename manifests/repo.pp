@@ -9,7 +9,7 @@ class icinga2::repo {
   case $::osfamily {
     'Debian': {
       include icinga2::repo::apt
-      Class['icinga2::repo::apt'] -> Class['icinga2::install']
+      Class['icinga2::repo::apt'] -> Anchor['icinga2::end']
     }
     'RedHat': {
       include icinga2::repo::yum
