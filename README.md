@@ -947,7 +947,7 @@ The `notificationcommand` defined type can create `notificationcommand` objects.
 <pre>
 #Create the mail notification command:
 icinga2::object::notificationcommand { 'mail-service-notification':
-  command   => ['"/icinga2/scripts/mail-notification.sh"'],
+  command   => ['/icinga2/scripts/mail-notification.sh'],
   cmd_path  => 'SysconfDir',
   env       => {
     'NOTIFICATIONTYPE'  => '"$notification.type$"',
