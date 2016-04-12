@@ -15,6 +15,10 @@ class icinga2::repo {
       include icinga2::repo::yum
       Class['icinga2::repo::yum'] -> Class['icinga2::install']
     }
+    'windows': {
+      include icinga2::repo::chocolatey
+      Class['icinga2::repo::chocolatey'] -> Class['icinga2::install']
+    }
     default: {
       notify { "Class[icinga2::repo] does not support ${::osfamily}": }
     }

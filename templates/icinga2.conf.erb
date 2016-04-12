@@ -41,6 +41,13 @@ include "zones.conf"
 include <itl>
 include <plugins>
 
+<% if @kernel == "windows" -%>
+/**
+ * This includes the Icinga 2 Windows plugins.
+ */
+include <windows-plugins>
+
+<% end -%>
 /**
  * The features-available directory contains a number of configuration
  * files for features which can be enabled and disabled using the

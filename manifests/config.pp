@@ -14,10 +14,10 @@ class icinga2::config {
   # maintained directories
   file {
     [
-      '/etc/icinga2',
-      '/etc/icinga2/pki',
-      '/etc/icinga2/scripts',
-      '/etc/icinga2/features-available',
+      "${::icinga2::params::i2dirprefix}/etc/icinga2",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/pki",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/scripts",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/features-available",
     ]:
       ensure => directory,
   }
@@ -25,7 +25,7 @@ class icinga2::config {
   # TODO: temporary until we provide some default templates
   file {
     [
-      '/etc/icinga2/conf.d',
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/conf.d",
     ]:
       ensure  => directory,
       purge   => $::icinga2::purge_confd,
@@ -35,9 +35,9 @@ class icinga2::config {
 
   file {
     [
-      '/etc/icinga2/features-enabled',
-      '/etc/icinga2/objects',
-      '/etc/icinga2/zones.d',
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/features-enabled",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/zones.d",
     ]:
       ensure  => directory,
       purge   => $::icinga2::purge_configs,
@@ -45,7 +45,7 @@ class icinga2::config {
       force   => $::icinga2::purge_configs,
   }
 
-  file { '/etc/icinga2/icinga2.conf':
+  file { "${::icinga2::params::i2dirprefix}/etc/icinga2/icinga2.conf":
     ensure  => file,
     content => template($::icinga2::config_template),
   }
@@ -53,28 +53,29 @@ class icinga2::config {
   # maintained object directories
   file {
     [
-      '/etc/icinga2/objects/hosts',
-      '/etc/icinga2/objects/hostgroups',
-      '/etc/icinga2/objects/services',
-      '/etc/icinga2/objects/servicegroups',
-      '/etc/icinga2/objects/users',
-      '/etc/icinga2/objects/usergroups',
-      '/etc/icinga2/objects/checkcommands',
-      '/etc/icinga2/objects/notificationcommands',
-      '/etc/icinga2/objects/eventcommands',
-      '/etc/icinga2/objects/notifications',
-      '/etc/icinga2/objects/timeperiods',
-      '/etc/icinga2/objects/scheduleddowntimes',
-      '/etc/icinga2/objects/dependencies',
-      '/etc/icinga2/objects/perfdatawriters',
-      '/etc/icinga2/objects/graphitewriters',
-      '/etc/icinga2/objects/idomysqlconnections',
-      '/etc/icinga2/objects/idopgsqlconnections',
-      '/etc/icinga2/objects/livestatuslisteners',
-      '/etc/icinga2/objects/statusdatawriters',
-      '/etc/icinga2/objects/applys',
-      '/etc/icinga2/objects/templates',
-      '/etc/icinga2/objects/constants',
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/hosts",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/hostgroups",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/services",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/servicegroups",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/users",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/usergroups",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/checkcommands",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/notificationcommands",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/eventcommands",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/notifications",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/timeperiods",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/scheduleddowntimes",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/dependencies",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/perfdatawriters",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/graphitewriters",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/idomysqlconnections",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/idopgsqlconnections",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/livestatuslisteners",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/statusdatawriters",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/applys",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/applys_scheduleddowntimes",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/templates",
+      "${::icinga2::params::i2dirprefix}/etc/icinga2/objects/constants",
     ]:
       ensure  => directory,
       purge   => $::icinga2::purge_configs,
@@ -82,7 +83,7 @@ class icinga2::config {
       force   => $::icinga2::purge_configs,
   }
 
-  file { '/etc/icinga2/zones.conf':
+  file { "${::icinga2::params::i2dirprefix}/etc/icinga2/zones.conf":
     ensure  => file,
     content => template('icinga2/zones.conf.erb'),
   }

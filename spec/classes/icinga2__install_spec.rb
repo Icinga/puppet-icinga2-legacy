@@ -32,4 +32,16 @@ describe 'icinga2::install' do
     it { should contain_package('nagios-plugins-all') }
     it { should contain_package('mailx') }
   end
+  context "on windows" do
+    let :facts do
+     IcingaPuppet.variants['Windows Server 2012 R2']
+    end
+
+    let :pre_condition do
+      "class { 'icinga2': }"
+    end
+
+   it { should contain_class('icinga2::install') }
+   it { should contain_package('icinga2') }
+  end
 end

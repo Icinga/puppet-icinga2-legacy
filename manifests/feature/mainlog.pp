@@ -4,7 +4,7 @@
 #
 class icinga2::feature::mainlog (
   $severity = 'information',
-  $path     = '/var/log/icinga2/icinga2.log'
+  $path     = "${::icinga2::params::i2dirprefix}/var/log/icinga2/icinga2.log"
 ) {
 
   validate_string($severity)
