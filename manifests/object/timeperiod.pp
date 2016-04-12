@@ -18,10 +18,10 @@ define icinga2::object::timeperiod (
   $target_dir                    = '/etc/icinga2/objects/timeperiods',
   $target_file_name              = "${name}.conf",
   $target_file_ensure            = file,
-  $target_file_owner             = 'root',
-  $target_file_group             = '0',
-  $target_file_mode              = '0644',
-  $refresh_icinga2_service = true
+  $target_file_owner             = $::icinga2::config_owner,
+  $target_file_group             = $::icinga2::config_group,
+  $target_file_mode              = $::icinga2::config_mode,
+  $refresh_icinga2_service       = true
 ) {
 
   validate_string($object_name)
