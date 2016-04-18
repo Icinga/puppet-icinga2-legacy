@@ -30,7 +30,7 @@ define icinga2::object::checkcommand (
   $target_file_owner                     = $::icinga2::config_owner,
   $target_file_group                     = $::icinga2::config_group,
   $target_file_mode                      = $::icinga2::config_mode,
-  $refresh_icinga2_service = true
+  $refresh_icinga2_service               = true,
 ) {
 
   #Do some validation of the class parameters:
