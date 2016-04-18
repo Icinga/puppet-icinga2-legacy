@@ -50,13 +50,13 @@ describe 'icinga2::object::checkcommand' do
     let(:params) do
       {
         :object_checkcommandname => 'testcheckcommand',
-        :command => [ 'testcommand1' , 'testcommand2']
+        :command => [ 'testcommand1' , 'argument1', 'argument2' ]
       }
     end
 
     object_file = '/etc/icinga2/objects/checkcommands/testcheckcommand.conf'
     it { should contain_icinga2__object__checkcommand('testcheckcommand') }
-    it { should contain_file(object_file).with_content(/^\s*command = \[ PluginDir \+ "testcommand1", PluginDir \+ "testcommand2" \]$/) }
+    it { should contain_file(object_file).with_content(/^\s*command = \[ PluginDir \+ "testcommand1", "argument1", "argument2" \]$/) }
 
   end
 

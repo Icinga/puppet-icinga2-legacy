@@ -15,7 +15,8 @@ object CheckCommand "<%= @object_checkcommandname %>" {
   import "<%= t -%>"
   <%- end -%>
   <%- if @command -%>
-  command = [ <% @command.each_with_index do |cmd, i| %><% if @cmd_path -%><%= @cmd_path -%> + <% end -%>"<%= cmd -%>"<%= ', ' if i < (@command.size - 1) %><% end %> ]
+  <%- a_command = [@command].flatten.compact -%>
+  command = [ <% a_command.each_with_index do |cmd, i| %><% if @cmd_path and i == 0 -%><%= @cmd_path -%> + <% end -%>"<%= cmd -%>"<%= ', ' if i < (a_command.size - 1) %><% end %> ]
   <%- end -%>
   <%- if @arguments.any? -%>
 
