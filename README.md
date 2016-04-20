@@ -1115,7 +1115,7 @@ Example Usage to create an HA master zone:
 
 ````
 icinga2::object::zone { 'master':
-    endpoints => ['icinga-master1', 'icinga-master2'],
+    endpoints => { 'icinga-master1' => {}, 'icinga-master2' => {} },
 }
 ````
 
@@ -1123,10 +1123,17 @@ Example Usage to create a satellite zone and specify a parent:
 
 ````
 icinga2::object::zone { 'satellite':
-    endpoints => ['icinga-satellite1', 'icinga-satellite2'],
+    endpoints => { 'icinga-satellite1' => {}, 'icinga-satellite2' => {} },
     parent    => 'master'
 }
 ````
+
+Example Usage to create a global zone:
+```
+icinga2::object::zone { 'global_zone':
+  global => true,
+}
+```
 
 See [Zone](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-zone) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-zone) for more info.
 
