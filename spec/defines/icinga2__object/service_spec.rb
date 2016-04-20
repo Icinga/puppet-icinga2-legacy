@@ -74,4 +74,24 @@ describe 'icinga2::object::service' do
 
   end
 
+  context "with parameter command_endpoint" do
+
+    let(:title) { 'testservice' }
+
+    let(:params) do
+      {
+        :object_servicename => 'testservice',
+        :display_name => 'testservice',
+        :target_file_name => 'testservice.conf',
+        :command_endpoint => 'testservice.example.com'
+      }
+    end
+
+    object_file = '/etc/icinga2/objects/services/testservice.conf'
+    it { should contain_icinga2__object__service('testservice') }
+    it { should contain_file(object_file).with_content(/^\s*import "generic-service"$/) }
+    it { should contain_file(object_file).with_content(/^\s*command_endpoint = "testservice.example.com"$/) }
+
+  end
+
 end

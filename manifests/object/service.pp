@@ -15,6 +15,7 @@ define icinga2::object::service (
   $templates = ['generic-service'],
   $display_name = $name,
   $host_name = $fqdn,
+  $command_endpoint = undef,
   $groups = [],
   $vars = {},
   $check_command = undef,
@@ -52,6 +53,7 @@ define icinga2::object::service (
   validate_array($templates)
   validate_string($display_name)
   validate_string($host_name)
+  validate_string($command_endpoint)
   validate_string($zone)
   validate_array($groups)
   validate_hash($vars)
