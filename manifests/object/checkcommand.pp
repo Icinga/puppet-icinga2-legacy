@@ -11,7 +11,7 @@
 
 define icinga2::object::checkcommand (
   $command,
-  $object_checkcommandname = $name,
+  $object_checkcommandname               = $name,
   $arguments                             = {},
   $checkcommand_file_distribution_method = 'content',
   $checkcommand_source_file              = undef,
@@ -20,6 +20,8 @@ define icinga2::object::checkcommand (
   $cmd_path                              = 'PluginDir',
   $env                                   = {},
   $refresh_icinga2_service               = true,
+  $sudo                                  = false,
+  $sudo_cmd                              = '/usr/bin/sudo',
   $target_dir                            = '/etc/icinga2/objects/checkcommands',
   $target_file_ensure                    = file,
   $target_file_group                     = $::icinga2::config_group,
