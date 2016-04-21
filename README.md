@@ -638,6 +638,8 @@ Available parameters are:
 * `cmd_path`
 * `arguments`
 * `env`
+* `sudo`
+* `sudo_cmd`
 * `vars`
 * `timeout`
 * `target_dir`

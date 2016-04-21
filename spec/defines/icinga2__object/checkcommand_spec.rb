@@ -60,4 +60,22 @@ describe 'icinga2::object::checkcommand' do
 
   end
 
+  context "with sudo = true and sudo_cmd = /usr/bin/sudo" do
+
+    let(:title) { 'testcheckcommand' }
+
+    let(:params) do
+      {
+        :object_checkcommandname => 'testcheckcommand',
+        :command => [ 'testcommand1', 'testcommand2'],
+        :sudo => 'true',
+      }
+    end
+
+    object_file = '/etc/icinga2/objects/checkcommands/testcheckcommand.conf'
+    it { should contain_icinga2__object__checkcommand('testcheckcommand') }
+    it { should contain_file(object_file).with_content(/^\s*command = \[ "\/usr\/bin\/sudo", PluginDir \+ "testcommand1", "testcommand2" \]$/) }
+
+  end
+
 end
