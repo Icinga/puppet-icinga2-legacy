@@ -12,25 +12,24 @@
 define icinga2::object::checkcommand (
   $command,
   $object_checkcommandname = $name,
-  $templates                             = ['plugin-check-command'],
-  #$methods                               = undef, Need to get more details about this attribute
-  $cmd_path                              = 'PluginDir',
   $arguments                             = {},
-  $env                                   = {},
-  $vars                                  = {},
-  $timeout                               = undef,
-  $target_dir                            = '/etc/icinga2/objects/checkcommands',
-  $checkcommand_template_module          = 'icinga2',
-  $checkcommand_template                 = 'object/checkcommand.conf.erb',
-  $checkcommand_source_file              = undef,
   $checkcommand_file_distribution_method = 'content',
-  $target_file_name                      = "${name}.conf",
-  $target_file_ensure                    = file,
+  $checkcommand_source_file              = undef,
+  $checkcommand_template                 = 'object/checkcommand.conf.erb',
+  $checkcommand_template_module          = 'icinga2',
+  $cmd_path                              = 'PluginDir',
+  $env                                   = {},
   $refresh_icinga2_service               = true,
-  $target_file_owner                     = $::icinga2::config_owner,
+  $target_dir                            = '/etc/icinga2/objects/checkcommands',
+  $target_file_ensure                    = file,
   $target_file_group                     = $::icinga2::config_group,
   $target_file_mode                      = $::icinga2::config_mode,
-  $refresh_icinga2_service               = true,
+  $target_file_name                      = "${name}.conf",
+  $target_file_owner                     = $::icinga2::config_owner,
+  $templates                             = ['plugin-check-command'],
+  $timeout                               = undef,
+  $vars                                  = {},
+  #$methods                               = undef, Need to get more details about this attribute
 ) {
 
   #Do some validation of the class parameters:
