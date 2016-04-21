@@ -8,13 +8,13 @@
 #
 # See the inline comments.
 #
-
 define icinga2::object::service (
   $object_servicename      = $name,
   $is_template             = false,
   $templates               = ['generic-service'],
   $display_name            = $name,
   $host_name               = $fqdn,
+  $command_endpoint        = undef,
   $groups                  = [],
   $vars                    = {},
   $check_command           = undef,
