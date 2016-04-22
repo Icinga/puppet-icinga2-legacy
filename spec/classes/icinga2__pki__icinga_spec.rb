@@ -14,8 +14,9 @@ describe 'icinga2::pki::icinga' do
 
       let(:params) do
         {
-          :ticket_salt    => '1234567890',
           :icinga_ca_host => 'myicinga.example.com',
+          :icinga_ca_port => '1337',
+          :ticket_salt    => '1234567890'
         }
       end
 
@@ -26,13 +27,15 @@ describe 'icinga2::pki::icinga' do
       it { should contain_file('/etc/icinga2/pki/foo.example.com.crt') }
       it { should contain_exec('icinga2 pki get trusted-cert').
         with_command(/myicinga\.example\.com/).
-        with_command(/foo\.example\.com/)
+        with_command(/foo\.example\.com/).
+        with_command(/port '1337'/)
       }
       it { should contain_file('/etc/icinga2/pki/trusted-cert.crt') }
       it { should contain_exec('icinga2 pki request').
           with_command(/myicinga\.example\.com/).
           with_command(/foo\.example\.com/).
-          with_command(/--ticket '64b3519cd69134b9bb11c0dbc349fb0c666dee99'/)
+          with_command(/--ticket '64b3519cd69134b9bb11c0dbc349fb0c666dee99'/).
+          with_command(/port '1337'/)
       }
       it { should contain_file('/etc/icinga2/pki/ca.crt') }
 
