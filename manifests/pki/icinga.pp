@@ -50,14 +50,14 @@ class icinga2::pki::icinga (
   } ->
 
   exec { 'icinga2 pki get trusted-cert':
-    command => "icinga2 pki save-cert --host '${icinga_ca_host}'${icinga_ca_port} --key '${key}' --cert '${cert}' --trustedcert '${trusted_cert}'",
+    command => "icinga2 pki save-cert --host '${icinga_ca_host}'${_icinga_ca_port} --key '${key}' --cert '${cert}' --trustedcert '${trusted_cert}'",
     creates => $trusted_cert,
   } ->
   file { $trusted_cert:
   } ->
 
   exec { 'icinga2 pki request':
-    command => "icinga2 pki request --host '${icinga_ca_host}'${icinga_ca_port} --ca '${ca}' --key '${key}' --cert '${cert}' --trustedcert '${trusted_cert}' --ticket '${ticket_id}'",
+    command => "icinga2 pki request --host '${icinga_ca_host}'${_icinga_ca_port} --ca '${ca}' --key '${key}' --cert '${cert}' --trustedcert '${trusted_cert}' --ticket '${ticket_id}'",
     creates => $ca,
   } ->
   file { $ca:
