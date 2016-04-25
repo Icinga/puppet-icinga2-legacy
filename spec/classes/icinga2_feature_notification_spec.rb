@@ -24,7 +24,7 @@ describe 'icinga2::feature::notification' do
   context "on #{default} with changed parameters" do
     let :pre_condition do
       "class { 'icinga2':
-        default_features => [],
+        default_features => false,
       }
       class { 'icinga2::feature::notification':
         enable_ha => false,

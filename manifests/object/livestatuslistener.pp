@@ -19,10 +19,10 @@ define icinga2::object::livestatuslistener (
   $target_dir                     = '/etc/icinga2/objects/livestatuslisteners',
   $target_file_name               = "${name}.conf",
   $target_file_ensure             = file,
-  $target_file_owner              = 'root',
-  $target_file_group              = 'root',
-  $target_file_mode               = '0644',
-  $refresh_icinga2_service = true
+  $target_file_owner              = $::icinga2::config_owner,
+  $target_file_group              = $::icinga2::config_group,
+  $target_file_mode               = $::icinga2::config_mode,
+  $refresh_icinga2_service        = true
 ) {
 
   #Do some validation of the class' parameters:
@@ -59,7 +59,7 @@ define icinga2::object::livestatuslistener (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_livestatuslistener.conf.erb'),
+      content => template('icinga2/object/livestatuslistener.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
       notify  => Class['::icinga2::service'],
     }
@@ -73,7 +73,7 @@ define icinga2::object::livestatuslistener (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_livestatuslistener.conf.erb'),
+      content => template('icinga2/object/livestatuslistener.conf.erb'),
     }
 
   }

@@ -11,7 +11,7 @@ describe 'icinga2::feature' do
     end
     let :pre_condition do
       "class { 'icinga2':
-        default_features => [],
+        default_features => false,
       }"
     end
 
@@ -28,6 +28,7 @@ describe 'icinga2::feature' do
       :path   => '/etc/icinga2/features-enabled/checker.conf',
       :target => '../features-available/checker.conf',
     })}
+    it { is_expected.to contain_file("icinga2 feature checker").that_notifies('Class[icinga2::service]') }
   end
 
   context "on default #{default} with file not managed" do
@@ -41,7 +42,7 @@ describe 'icinga2::feature' do
     end
     let :pre_condition do
       "class { 'icinga2':
-        default_features => [],
+        default_features => false,
       }"
     end
 
@@ -53,6 +54,7 @@ describe 'icinga2::feature' do
       :ensure => 'link',
       :path => '/etc/icinga2/features-enabled/checker.conf',
     })}
+    it { is_expected.not_to contain_file("icinga2 feature checker").that_notifies('Class[icinga2::service]') }
   end
 
 

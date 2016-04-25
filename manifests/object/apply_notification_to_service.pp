@@ -13,7 +13,7 @@
 define icinga2::object::apply_notification_to_service (
   $object_notificationname = $name,
   $host_name               = undef,
-  $notification_to_import  = undef,
+  $templates               = [],
   $assign_where            = undef,
   $ignore_where            = undef,
   $command                 = undef,
@@ -28,16 +28,16 @@ define icinga2::object::apply_notification_to_service (
   $target_dir              = '/etc/icinga2/objects/applys',
   $target_file_name        = "${name}.conf",
   $target_file_ensure      = file,
-  $target_file_owner       = 'root',
-  $target_file_group       = 'root',
-  $target_file_mode        = '0644',
+  $target_file_owner       = $::icinga2::config_owner,
+  $target_file_group       = $::icinga2::config_group,
+  $target_file_mode        = $::icinga2::config_mode,
   $refresh_icinga2_service = true
 ) {
 
   #Do some validation of the class' parameters:
   validate_string($object_notificationname)
   validate_string($host_name)
-  validate_string($notification_to_import)
+  validate_array($templates)
   validate_string($command)
   validate_hash($vars)
   validate_array($users)
@@ -66,7 +66,7 @@ define icinga2::object::apply_notification_to_service (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_apply_notification_to_service.conf.erb'),
+      content => template('icinga2/object/apply_notification_to_service.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
       notify  => Class['::icinga2::service'],
     }
@@ -80,7 +80,7 @@ define icinga2::object::apply_notification_to_service (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_apply_notification_to_service.conf.erb'),
+      content => template('icinga2/object/apply_notification_to_service.conf.erb'),
     }
 
   }

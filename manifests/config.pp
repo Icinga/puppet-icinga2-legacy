@@ -3,6 +3,8 @@
 # Manages the config environment of Icinga 2.
 #
 class icinga2::config {
+  validate_bool($::icinga2::default_features)
+
   File {
     owner => $::icinga2::config_owner,
     group => $::icinga2::config_group,
@@ -83,6 +85,12 @@ class icinga2::config {
   file { '/etc/icinga2/zones.conf':
     ensure  => file,
     content => template('icinga2/zones.conf.erb'),
+  }
+
+  if $::icinga2::default_features {
+    include ::icinga2::feature::checker
+    include ::icinga2::feature::notification
+    include ::icinga2::feature::mainlog
   }
 
 }

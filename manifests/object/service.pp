@@ -8,49 +8,51 @@
 #
 # See the inline comments.
 #
-
 define icinga2::object::service (
-  $object_servicename = $name,
-  $template_to_import = 'generic-service',
-  $display_name = $name,
-  $host_name = $fqdn,
-  $groups = [],
-  $vars = {},
-  $check_command = undef,
-  $max_check_attempts = undef,
-  $check_period = undef,
-  $check_interval = undef,
-  $retry_interval = undef,
-  $enable_notifications = true,
-  $enable_active_checks = undef,
-  $enable_passive_checks = undef,
-  $enable_event_handler = undef,
-  $enable_flapping = undef,
-  $enable_perfdata = undef,
-  $event_command = undef,
+  $object_servicename      = $name,
+  $is_template             = false,
+  $templates               = ['generic-service'],
+  $display_name            = $name,
+  $host_name               = $fqdn,
+  $command_endpoint        = undef,
+  $groups                  = [],
+  $vars                    = {},
+  $check_command           = undef,
+  $max_check_attempts      = undef,
+  $check_period            = undef,
+  $check_interval          = undef,
+  $retry_interval          = undef,
+  $enable_notifications    = true,
+  $enable_active_checks    = undef,
+  $enable_passive_checks   = undef,
+  $enable_event_handler    = undef,
+  $enable_flapping         = undef,
+  $enable_perfdata         = undef,
+  $event_command           = undef,
   #flapping_threshold is defined as a percentage, eg. 10%, 50%, etc.
-  $flapping_threshold = undef,
-  $volatile = undef,
-  $notes = undef,
-  $notes_url = undef,
-  $action_url = undef,
-  $icon_image = undef,
-  $icon_image_alt = undef,
-  $target_dir         = '/etc/icinga2/objects/services',
-  $target_file_name   = "${name}.conf",
-  $target_file_ensure = file,
-  $target_file_owner  = 'root',
-  $target_file_group  = 'root',
-  $target_file_mode   = '0644',
+  $flapping_threshold      = undef,
+  $volatile                = undef,
+  $notes                   = undef,
+  $notes_url               = undef,
+  $action_url              = undef,
+  $icon_image              = undef,
+  $icon_image_alt          = undef,
+  $target_dir              = '/etc/icinga2/objects/services',
+  $target_file_name        = "${name}.conf",
+  $target_file_ensure      = file,
+  $target_file_owner       = $::icinga2::config_owner,
+  $target_file_group       = $::icinga2::config_group,
+  $target_file_mode        = $::icinga2::config_mode,
   $refresh_icinga2_service = true,
-  $zone = undef,
+  $zone                    = undef,
 ) {
 
-  #Do some validation of the class' parameters:
   validate_string($object_servicename)
-  validate_string($template_to_import)
+  validate_bool($is_template)
+  validate_array($templates)
   validate_string($display_name)
   validate_string($host_name)
+  validate_string($command_endpoint)
   validate_string($zone)
   validate_array($groups)
   validate_hash($vars)
@@ -69,7 +71,7 @@ define icinga2::object::service (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_service.conf.erb'),
+      content => template('icinga2/object/service.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
       notify  => Class['::icinga2::service'],
     }
@@ -83,7 +85,7 @@ define icinga2::object::service (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_service.conf.erb'),
+      content => template('icinga2/object/service.conf.erb'),
     }
 
   }

@@ -47,8 +47,6 @@ class icinga2::pki::puppet(
     }
   }
 
-  include ::icinga2::feature::api
-
   # ordering of this class
   Class['::icinga2::config'] -> Class['::icinga2::pki::puppet']
   if $::icinga2::manage_service {

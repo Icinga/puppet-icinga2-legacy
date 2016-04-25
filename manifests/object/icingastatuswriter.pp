@@ -16,9 +16,9 @@ define icinga2::object::icingastatuswriter (
   $update_interval           = undef,
   $target_dir                = '/etc/icinga2/objects/icingastatuswriters',
   $target_file_name          = "${name}.conf",
-  $target_file_owner         = 'root',
-  $target_file_group         = 'root',
-  $target_file_mode          = '0644'
+  $target_file_owner         = $::icinga2::config_owner,
+  $target_file_group         = $::icinga2::config_group,
+  $target_file_mode          = $::icinga2::config_mode,
 ) {
 
   if $status_path {
@@ -38,7 +38,7 @@ define icinga2::object::icingastatuswriter (
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,
-    content => template('icinga2/object_icingastatuswriter.conf.erb'),
+    content => template('icinga2/object/icingastatuswriter.conf.erb'),
     notify  => Class['::icinga2::service'],
   }
 }
