@@ -101,7 +101,7 @@ apply Service "<%= @object_servicename %>" <%= @apply %> {
   <%- end -%>
   <%- if @custom_append && Array(@custom_append).size > 0 -%>
     <%- Array(@custom_append).each do |line| -%>
-    <%= line %>
+  <%= line %>
     <%- end -%>
   <%- end -%>
 }
