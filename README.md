@@ -258,6 +258,21 @@ icinga2::restart_cmd: 'service icinga2 reload'
 
 You should validate the reload command for your operatingsystem.
 
+### PKI
+
+To use the external CA of puppet add `::icinga2::pki::puppet` to your setup.
+
+Example usage:
+
+```
+class { '::icinga2':
+  ...
+}
+
+contain ::icinga2::pki::puppet
+```
+
+
 ### Check Plugins
 
 Agents installed on nodes that Icinga is performing active checks against often require additional or custom check plugins. In order to deploy these check pluings on a node you can call the checkplugin defined resource.
@@ -1057,6 +1072,7 @@ icinga2::object::service { 'example_service':
   $target_file_mode        => '0644',
   $refresh_icinga2_service => true,
 }
+</pre>
 
 See [Service](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types#objecttype-service) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
