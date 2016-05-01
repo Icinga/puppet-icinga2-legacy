@@ -640,9 +640,9 @@ icinga2::object::checkcommand { 'check_http':
     '"-e"' => '"$http_expect$"'
   },
   vars => {
-    'vars.http_address' => '"$address$"',
-    'vars.http_ssl'     => 'false',
-    'vars.http_sni'     => 'false'
+    http_address => '"$address$"',
+    http_ssl     => false,
+    http_sni     => false
   }
 }
 </pre>
