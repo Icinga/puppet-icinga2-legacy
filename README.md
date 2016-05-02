@@ -379,7 +379,7 @@ Unlike the built-in Nagios types, the file `ensure` status, owner, group and mod
   },
   target_dir         => '/etc/icinga2/objects/hosts',
   target_file_name   => "${fqdn}.conf"
-  target_file_ensure =>
+  target_file_ensure => 'file',
   target_file_owner  => 'root',
   target_file_group  => 'root',
   target_file_mode   => '0644'
@@ -414,7 +414,7 @@ icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
 TODO: describe init.pp params
 TODO: checker
 
-* [icinga2::feature::mainlog](#feature_mainlog)
+* [icinga2::feature::mainlog](#icinga2featuremainlog)
 * [icinga2::feature::notification](#icinga2featurenotification)
 
 Please see the [Icinga 2 Documentation](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/object-types) for details on the
@@ -450,7 +450,7 @@ class { 'icinga2::feature::mainlog':
 Object types:
 * [icinga2::object::apiuser](#icinga2objectapiuser)
 * [icinga2::object::apilistener](#icinga2objectapilistener)
-* [icinga2::object::applyservicetohost](#icinga2objectapplyservicetohost)
+* [icinga2::object::apply_service](#icinga2objectapply_service)
 * [icinga2::object::apply_notification_to_host](#icinga2objectapply_notification_to_host)
 * [icinga2::object::apply_notification_to_service](#icinga2objectapply_notification_to_service)
 * [icinga2::object::apply_scheduleddowntime](#icinga2objectapply_scheduleddowntime)
