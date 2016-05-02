@@ -1197,6 +1197,8 @@ See [Zone](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/obje
 ---------
 
 You can use hiera to create icinga 2 objects in your server.
+To use this feature one has to include or contain the class `::icinga2::objects`.
+This class will autoload every found hash from hiera.
 
 Example usage:
 json file
@@ -1226,6 +1228,18 @@ json file
   }
   ...
 }
+</pre>
+
+yaml file
+
+<pre>
+icinga2::object::hostgroup:
+  office-a:
+    display_name: 'Office A'
+    assign_where: 'host.vars.location == "office-a"'
+  datacenter-b:
+    display_name: 'Datacenter B'
+    assign_where: 'host.vars.location == "datacenter-b"'
 </pre>
 
 Objects available:
