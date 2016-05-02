@@ -450,7 +450,7 @@ class { 'icinga2::feature::mainlog':
 Object types:
 * [icinga2::object::apiuser](#icinga2objectapiuser)
 * [icinga2::object::apilistener](#icinga2objectapilistener)
-* [icinga2::object::apply_service](#icinga2objectapplyservice)
+* [icinga2::object::apply_service](#icinga2objectapply_service)
 * [icinga2::object::apply_notification_to_host](#icinga2objectapply_notification_to_host)
 * [icinga2::object::apply_notification_to_service](#icinga2objectapply_notification_to_service)
 * [icinga2::object::apply_scheduleddowntime](#icinga2objectapply_scheduleddowntime)
