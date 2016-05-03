@@ -132,45 +132,45 @@ icinga2::conf { 'baseservices':
 
 ###Server usage
 
-To install Icinga 2, first set up a MySQL or Postgres database.
+To begin, Icinga 2 requires that a database is available for use.  Either Mysql
+or PostgreSQL will work for this purpose.  This database creation is not
+handled in this module.
 
-Once the database is set up, use the `icinga2` class with the `db_` database connection parameters:
+Once the database is available, use the `icinga2` class with the `db_` database
+connection parameters to specify the database information for Icinga 2 to use.
 
-<pre>
-#Install Icinga 2:
+####Install Icinga 2:
+```puppet
 class { 'icinga2':
-  db_type => 'pgsql',
-  db_host => 'localhost',
-  db_port => '5432',
-  db_name => 'icinga2_data',
-  db_user => 'icinga2',
-  db_pass => 'password',
+  db_type         => 'pgsql',
+  db_host         => 'localhost',
+  db_port         => '5432',
+  db_name         => 'icinga2_data',
+  db_user         => 'icinga2',
+  db_pass         => $password_goes_here,
+  manage_database => true,
 }
-</pre>
+```
 
-When the `db_type` parameter is set, the right IDO database connection packages are automatically installed and the database schema is loaded.
+When the `db_type` parameter is set and `manage_database` is enabled, the
+required IDO database connection packages are automatically installed and the
+database schema is loaded.
 
-**Note:** For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text:
+**Note:** You may wish to consider [Hiera
+eYAML](https://github.com/TomPoulton/hiera-eyaml) to encrypt the password value
+for YAML storage.
 
-<pre>
-#Install Icinga 2:
-class { 'icinga2':
-  db_type => 'pgsql',
-  db_host => 'localhost',
-  db_port => '5432',
-  db_name => 'icinga2_data',
-  db_user => 'icinga2',
-  db_pass => hiera('icinga_db_password_key_here'),
-}
-</pre>
+#####Manual Database Connection Object
 
-You'll also need to add an IDO connection object that has the same database settings and credentials as what you entered for your `icinga2` class.
-
-You can do this by applying either the `icinga2::object::idomysqlconnection` or `icinga2::object::idopgsqlconnection` class to your Icinga 2 server, depending on which database you're using.
+In some circumstances, it may be desirable to set `manage_database => false`
+and handle the database connection yourself.  In such a case, you can either
+apply the `icinga2::object::idomysqlconnection` or
+`icinga2::object::idopgsqlconnection` class to your Icinga 2 server, depending
+on the chosen database.
 
 An example `icinga2::object::idopgsqlconnection` class is below:
 
-<pre>
+```puppet
 icinga2::object::idopgsqlconnection { 'postgres_connection':
    target_dir => '/etc/icinga2/features-enabled',
    target_file_name => 'ido-pgsql.conf',
@@ -180,11 +180,9 @@ icinga2::object::idopgsqlconnection { 'postgres_connection':
    password         => 'password',
    database         => 'icinga2_data',
 }
-</pre>
+```
 
-In a future version, the module will automatically create the IDO connection objects.
-
-**Using the Debmon repository on Debian systems**
+#####Using the Debmon Repository on Debian Systems
 
 If you would like to use the [Debmon repository](http://debmon.org/packages) for Debian 7 systems, set `use_debmon_repo` to true when you call the `icinga2` class:
 
