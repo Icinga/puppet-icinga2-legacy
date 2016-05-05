@@ -203,12 +203,12 @@ class { 'icinga2':
 
 **`mail` binaries**
 
-If you would like to install packages to make a `mail` command binary available so that Icinga 2 can send out email notifications, set the `install_mail_utils_package` parameter to **true**:
+Packages that are needed so that Icinga 2 can send out email notifications, are automatically installed. If you would like to prevent this, set the `install_mailutils` parameter to **false**:
 
 <pre>
   class { 'icinga2':
     ...
-    install_mail_utils_package => true,
+    install_mailutils => false,
     ...
   }
 </pre>
