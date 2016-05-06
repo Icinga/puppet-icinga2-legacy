@@ -3,7 +3,7 @@
 # Manage and enable syslog of Icinga2
 #
 class icinga2::feature::syslog (
-  $severity = 'warning',
+  $severity = $::icinga2::syslog_severity,
 ) {
 
   validate_re($severity, '^(debug|notice|information|warning|critical)$')
