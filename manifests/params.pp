@@ -40,7 +40,7 @@ class icinga2::params {
   #Log parameters
   $mainlog_severity = 'information'
   $mainlog_path     = '/var/log/icinga2/icinga2.log'
-  $syslog_severity = 'warning'
+  $syslog_severity  = 'warning'
 
   $pid_file = '/run/icinga2/icinga2.pid'
 
