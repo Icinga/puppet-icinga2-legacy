@@ -411,7 +411,6 @@ icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
 
 ####[Features](id:features)
 
-TODO: describe init.pp params
 TODO: checker
 
 * [icinga2::feature::mainlog](#icinga2featuremainlog)
@@ -427,9 +426,9 @@ This feature is enabled by default and defines where to write the main log file 
 You can change the location and severity.
 
 ``` puppet
-class { 'icinga2::feature::mainlog':
-  severity => 'debug',
-  path     => '/data/icinga2/icinga2.log',
+class { '::icinga2':
+  mainlog_severity => 'debug',
+  mainlog_path     => '/data/icinga2/icinga2.log',
 }
 ```
 
