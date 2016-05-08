@@ -132,6 +132,14 @@ class icinga2::params {
     $var_dir = '/var'
   }
 
+  # Use the fact for the local agents ssldir, if it is not found it will use the masters.
+  if $::icinga2_puppet_ssldir {
+    $puppet_ssldir = $::icinga2_puppet_ssldir
+  }
+  else {
+    $puppet_ssldir = $::settings::ssldir
+  }
+
   # the schema is now using a set parameter for the os or the default.
   $db_schema_mysql = "${share_dir}/icinga2-ido-mysql/schema/mysql.sql"
   $db_schema_pgsql = "${share_dir}/icinga2-ido-pgsql/schema/pgsql.sql"

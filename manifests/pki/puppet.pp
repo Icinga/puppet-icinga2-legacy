@@ -4,13 +4,13 @@
 #
 class icinga2::pki::puppet(
   $ca_path     = "${::icinga2::config_dir}/pki/ca.crt",
-  $ca_source   = "${::settings::ssldir}/certs/ca.pem",
+  $ca_source   = "${::icinga2::puppet_ssldir}/certs/ca.pem",
   $cert_path   = "${::icinga2::config_dir}/pki/${::fqdn}.crt",
-  $cert_source = "${::settings::ssldir}/certs/${::fqdn}.pem",
+  $cert_source = "${::icinga2::puppet_ssldir}/certs/${::fqdn}.pem",
   $key_path    = "${::icinga2::config_dir}/pki/${::fqdn}.key",
-  $key_source  = "${::settings::ssldir}/private_keys/${::fqdn}.pem",
+  $key_source  = "${::icinga2::puppet_ssldir}/private_keys/${::fqdn}.pem",
   $crl_path    = "${::icinga2::config_dir}/pki/crl.pem",
-  $crl_source  = "${::settings::ssldir}/crl.pem",
+  $crl_source  = "${::icinga2::puppet_ssldir}/crl.pem",
 ) {
 
   File {

@@ -42,6 +42,7 @@ class icinga2 (
   $sbin_dir                               = $::icinga2::params::sbin_dir,
   $share_dir                              = $::icinga2::params::share_dir,
   $var_dir                                = $::icinga2::params::var_dir,
+  $puppet_ssldir                          = $::icinga2::params::puppet_ssldir,
 ) inherits ::icinga2::params {
   # TODO: temporary parameter until we provide some default templates
   validate_bool($purge_confd)
