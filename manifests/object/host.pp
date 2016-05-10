@@ -47,6 +47,8 @@ define icinga2::object::host (
   $refresh_icinga2_service = true,
   $zone                    = undef,
   $command_endpoint        = undef,
+  $custom_prepend          = [],
+  $custom_append           = [],
 ) {
 
   validate_string($object_hostname)
@@ -64,6 +66,8 @@ define icinga2::object::host (
   validate_bool($refresh_icinga2_service)
   validate_string($zone)
   validate_string($command_endpoint)
+  validate_array($custom_prepend)
+  validate_array($custom_append)
 
   #If the refresh_icinga2_service parameter is set to true...
   if $refresh_icinga2_service == true {

@@ -165,4 +165,67 @@ describe 'icinga2::object::host' do
 
   end
 
+    context "on #{default} with custom_prepend parameter" do
+      let :facts do
+        IcingaPuppet.variants[default]
+      end
+      let :params do
+        {
+            :display_name => 'testhost',
+            :custom_prepend => [
+                'vars += { disks["disk"] = {} }',
+                '# this is just a comment',
+              ]
+        }
+      end
+      let :pre_condition do
+        "include 'icinga2'"
+      end
+
+      let(:title) { 'testhost' }
+
+      object_file = '/etc/icinga2/objects/hosts/testhost.conf'
+      it { should contain_icinga2__object__host('testhost') }
+      it { should contain_file(object_file).with({
+            :ensure => 'file',
+            :path => '/etc/icinga2/objects/hosts/testhost.conf',
+            :content => /object Host "testhost"/,
+          }) }
+      it { should contain_file(object_file).with_content(/^\s*import "generic-host"$/) }
+      it { should contain_file(object_file).with_content(/^\s*display_name = "testhost"$/) }
+      it { should contain_file(object_file).with_content(/^\s*vars \+= { disks\["disk"\] = {} }/) }
+      it { should contain_file(object_file).with_content(/^\s*# this is just a comment/) }
+    end
+    context "on #{default} with custom_append parameter" do
+      let :facts do
+        IcingaPuppet.variants[default]
+      end
+      let :params do
+        {
+            :display_name => 'testhost',
+            :custom_append => [
+                'vars += { disks["disk"] = {} }',
+                '# this is just a comment',
+              ]
+        }
+      end
+      let :pre_condition do
+        "include 'icinga2'"
+      end
+
+      let(:title) { 'testhost' }
+
+      object_file = '/etc/icinga2/objects/hosts/testhost.conf'
+      it { should contain_icinga2__object__host('testhost') }
+      it { should contain_file(object_file).with({
+            :ensure => 'file',
+            :path => '/etc/icinga2/objects/hosts/testhost.conf',
+            :content => /object Host "testhost"/,
+          }) }
+      it { should contain_file(object_file).with_content(/^\s*import "generic-host"$/) }
+      it { should contain_file(object_file).with_content(/^\s*display_name = "testhost"$/) }
+      it { should contain_file(object_file).with_content(/^\s*vars \+= { disks\["disk"\] = {} }/) }
+      it { should contain_file(object_file).with_content(/^\s*# this is just a comment/) }
+    end
+
 end
