@@ -16,6 +16,11 @@
   import "<%= t -%>"
   <%- end -%>
   <%- end -%>
+  <%- if @custom_prepend && Array(@custom_prepend).size > 0 -%>
+    <%- Array(@custom_prepend).each do |line| -%>
+    <%= line %>
+    <%- end -%>
+  <%- end -%>
   <%- if @display_name -%>
   display_name = "<%= @display_name -%>"
   <%- end -%>
@@ -95,5 +100,10 @@
   <%- end -%>
   <%- if @command_endpoint -%>
   command_endpoint = "<%= @command_endpoint -%>"
+  <%- end -%>
+  <%- if @custom_append && Array(@custom_append).size > 0 -%>
+    <%- Array(@custom_append).each do |line| -%>
+  <%= line %>
+    <%- end -%>
   <%- end -%>
 }
