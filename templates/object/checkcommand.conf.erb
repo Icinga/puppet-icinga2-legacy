@@ -22,18 +22,18 @@ object CheckCommand "<%= @object_checkcommandname %>" {
 
   arguments = <%= scope.function_icinga2_config_value([@arguments]) %>
   <%- end -%>
-  <%- if @vars.any? -%>
 
+  <%- if @vars.any? -%>
   <%- @vars.each do |key, val| -%>
   vars.<%= key -%> = <%= val %>
   <%- end -%>
   <%- end -%>
-  <%- if @timeout -%>
 
+  <%- if @timeout -%>
   timeout = <%= @timeout %>
   <%- end -%>
-  <%- if @env.any? -%>
 
+  <%- if @env.any? -%>
   env += <%= scope.function_icinga2_config_value([@env]) %>
   <%- end -%>
 }
