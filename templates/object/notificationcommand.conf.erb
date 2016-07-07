@@ -16,7 +16,8 @@ object NotificationCommand "<%= @object_notificationcommandname %>" {
   <%- end -%>
   <%- if @command -%>
 
-  command = [ <% @command.each_with_index do |cmd, i| %><% if @cmd_path -%><%= @cmd_path -%> + <% end -%>"<%= cmd -%>"<%= ', ' if i < (@command.size - 1) %><% end %> ]
+  <%- a_command = [@command].flatten.compact -%>
+  command = [ <% a_command.each_with_index do |cmd, i| %><% if @cmd_path -%><%= @cmd_path -%> + <% end -%>"<%= cmd -%>"<%= ', ' if i < (a_command.size - 1) %><% end %> ]
   <%- end -%>
   <%- if @arguments.any? -%>
 
@@ -24,7 +25,7 @@ object NotificationCommand "<%= @object_notificationcommandname %>" {
   <%- end -%>
   <%- if @vars.any? -%>
 
-  vars += <%= scope.function_icinga2_config_value([@vars]) %>
+  vars = <%= scope.function_icinga2_config_value([@vars]) %>
   <%- end -%>
   <%- if @timeout -%>
 
@@ -32,6 +33,6 @@ object NotificationCommand "<%= @object_notificationcommandname %>" {
   <%- end -%>
   <%- if @env.any? -%>
 
-  env += <%= scope.function_icinga2_config_value([@env]) %>
+  env = <%= scope.function_icinga2_config_value([@env]) %>
   <%- end -%>
 }
