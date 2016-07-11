@@ -12,7 +12,13 @@ class icinga2::repo {
       Class['icinga2::repo::apt'] -> Class['icinga2::install']
     }
     'RedHat': {
-      include icinga2::repo::yum
+      if $::operatingsystem == 'Amazon' {
+        class { 'icinga2::repo::yum':
+          baseurl => 'http://packages.icinga.org/epel/6/release/',
+        }
+      } else {
+        include icinga2::repo::yum
+      }
       Class['icinga2::repo::yum'] -> Class['icinga2::install']
     }
     default: {
