@@ -38,8 +38,13 @@ include "zones.conf"
  * and command definitions.
  * Common monitoring plugin command definitions are included separately.
  */
-include <itl>
-include <plugins>
+<%- if @include -%>
+<%- @include.each do |file| -%>
+<%- if file.match(/^<.*>$/) -%>
+include <%= file %>
+<%- else -%>
+include "<%= file %>"
+<%- end end end -%>
 
 /**
  * The features-available directory contains a number of configuration

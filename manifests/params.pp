@@ -27,6 +27,10 @@ class icinga2::params {
   $config_template = 'icinga2/icinga2.conf.erb'
   $manage_service = true
 
+  # default Icinga 2 includes
+  $include_recursive = [ 'objects' , 'conf.d' , 'repository.d' ]
+  $include = [ '<itl>' , '<plugins>' ]
+
   #Database paramters
   $db_type = 'pgsql'
   $db_name = 'icinga2_data'
