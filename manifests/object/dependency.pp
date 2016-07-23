@@ -20,7 +20,7 @@ define icinga2::object::dependency (
   $disable_notifications   = undef,
   $period                  = undef,
   $states                  = [],
-  $target_dir              = '/etc/icinga2/objects/dependencies',
+  $target_dir              = "${::icinga2::config_dir}/objects/dependencies",
   $target_file_name        = "${name}.conf",
   $target_file_ensure      = file,
   $target_file_owner       = $::icinga2::config_owner,

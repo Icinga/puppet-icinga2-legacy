@@ -22,7 +22,7 @@ define icinga2::object::checkcommand (
   $refresh_icinga2_service               = true,
   $sudo                                  = false,
   $sudo_cmd                              = '/usr/bin/sudo',
-  $target_dir                            = '/etc/icinga2/objects/checkcommands',
+  $target_dir                            = "${::icinga2::config_dir}/objects/checkcommands",
   $target_file_ensure                    = file,
   $target_file_group                     = $::icinga2::config_group,
   $target_file_mode                      = $::icinga2::config_mode,

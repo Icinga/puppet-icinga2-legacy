@@ -40,7 +40,7 @@ define icinga2::object::apply_service (
   $action_url              = undef,
   $icon_image              = undef,
   $icon_image_alt          = undef,
-  $target_dir              = '/etc/icinga2/objects/applys',
+  $target_dir              = "${::icinga2::config_dir}/objects/applys",
   $target_file_name        = "${name}.conf",
   $target_file_ensure      = file,
   $target_file_owner       = $::icinga2::config_owner,

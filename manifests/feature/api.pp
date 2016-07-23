@@ -8,9 +8,9 @@
 class icinga2::feature::api (
   $accept_commands = false,
   $accept_config   = false,
-  $ca_path         = '/etc/icinga2/pki/ca.crt',
-  $cert_path       = "/etc/icinga2/pki/${::fqdn}.crt",
-  $key_path        = "/etc/icinga2/pki/${::fqdn}.key",
+  $ca_path         = "${::icinga2::config_dir}/pki/ca.crt",
+  $cert_path       = "${::icinga2::config_dir}/pki/${::fqdn}.crt",
+  $key_path        = "${::icinga2::config_dir}/pki/${::fqdn}.key",
   $crl_path        = undef,
   $bind_host       = undef,
   $bind_port       = undef,

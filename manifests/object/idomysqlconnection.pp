@@ -32,7 +32,7 @@ define icinga2::object::idomysqlconnection (
   },
   $categories      = [],
   $target_file_name     = "${name}.conf",
-  $target_dir           = '/etc/icinga2/objects/idomysqlconnections',
+  $target_dir           = "${::icinga2::config_dir}/objects/idomysqlconnections",
   $refresh_service      = $::icinga2::manage_service,
 ) {
 

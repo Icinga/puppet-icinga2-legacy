@@ -37,7 +37,7 @@ define icinga2::object::service (
   $action_url              = undef,
   $icon_image              = undef,
   $icon_image_alt          = undef,
-  $target_dir              = '/etc/icinga2/objects/services',
+  $target_dir              = "${::icinga2::config_dir}/objects/services",
   $target_file_name        = "${name}.conf",
   $target_file_ensure      = file,
   $target_file_owner       = $::icinga2::config_owner,

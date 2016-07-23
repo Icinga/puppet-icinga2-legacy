@@ -21,7 +21,7 @@ class icinga2::feature::graphite (
     enable_send_thresholds => $enable_send_thresholds,
     enable_send_metadata   => $enable_send_metadata,
     enable_legacy_mode     => $enable_legacy_mode,
-    target_dir             => '/etc/icinga2/features-available',
+    target_dir             => "${::icinga2::config_dir}/features-available",
   }
 
   ::icinga2::feature { 'graphite':

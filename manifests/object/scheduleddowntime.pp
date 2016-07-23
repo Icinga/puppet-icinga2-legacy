@@ -18,7 +18,7 @@ define icinga2::object::scheduleddowntime (
   $fixed                        = true,
   $duration                     = undef,
   $ranges                       = {},
-  $target_dir                   = '/etc/icinga2/objects/scheduleddowntimes',
+  $target_dir                   = "${::icinga2::config_dir}/objects/scheduleddowntimes",
   $target_file_name             = "${name}.conf",
   $target_file_ensure           = file,
   $target_file_owner            = $::icinga2::config_owner,

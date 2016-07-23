@@ -19,7 +19,7 @@ define icinga2::object::notificationcommand (
   $env                            = {},
   $vars                           = {},
   $timeout                        = undef,
-  $target_dir                     = '/etc/icinga2/objects/notificationcommands',
+  $target_dir                     = "${::icinga2::config_dir}/objects/notificationcommands",
   $target_file_name               = "${name}.conf",
   $target_file_ensure             = file,
   $target_file_owner              = $::icinga2::config_owner,

@@ -4,7 +4,7 @@
 #
 class icinga2::feature::debuglog (
   $severity = 'debug',
-  $path     = '/var/log/icinga2/debug.log'
+  $path     = "${::icinga2::var_dir}/log/icinga2/debug.log"
 ) {
 
   validate_string($severity)

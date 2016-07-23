@@ -33,7 +33,7 @@ define icinga2::feature (
     Class['icinga2::config'] ->
     file { "icinga2 feature ${name}":
       ensure  => file,
-      path    => "/etc/icinga2/features-available/${name}.conf",
+      path    => "${::icinga2::config_dir}/features-available/${name}.conf",
       content => $content_rel,
     } ->
     File["icinga2 feature ${name} enabled"]
@@ -42,8 +42,8 @@ define icinga2::feature (
 
   file { "icinga2 feature ${name} enabled":
     ensure => link,
-    path   => "/etc/icinga2/features-enabled/${name}.conf",
-    target => "../features-available/${name}.conf",
+    path   => "${::icinga2::config_dir}/features-enabled/${name}.conf",
+    target => "${::icinga2::config_dir}/features-available/${name}.conf",
   }
 
   if $::icinga2::manage_service {
