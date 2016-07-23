@@ -68,6 +68,7 @@ class icinga2::config {
       '/etc/icinga2/objects/dependencies',
       '/etc/icinga2/objects/perfdatawriters',
       '/etc/icinga2/objects/graphitewriters',
+      '/etc/icinga2/objects/influxdbwriters',
       '/etc/icinga2/objects/idomysqlconnections',
       '/etc/icinga2/objects/idopgsqlconnections',
       '/etc/icinga2/objects/livestatuslisteners',
