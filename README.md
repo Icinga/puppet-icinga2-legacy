@@ -1016,18 +1016,18 @@ icinga2::object::influxdbwriter {'influxdb':
 }
 ````
 
-Advanced example:
+Advanced example, using the default host and service template:
 ````
 $host_template = "{
   measurement = \"\$host.check_command\$\"
    tags = {
-   host = \"\$host.name\$\"
+   hostname = \"\$host.name\$\"
  }
 }"
 $service_template = "{
   measurement = \"\$service.check_command\$\"
   tags = {
-    host = \"\$host.name\$\"
+    hostmae = \"\$host.name\$\"
     service = \"\$service.name\$\"
   }
 }"
