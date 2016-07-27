@@ -18,7 +18,6 @@ define icinga2::object::host (
   $templates               = ['generic-host'],
   $groups                  = [],
   $vars                    = {},
-  $custom_vars             = {},
   $check_command           = undef,
   $max_check_attempts      = undef,
   $check_period            = undef,

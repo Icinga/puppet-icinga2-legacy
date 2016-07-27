@@ -31,10 +31,6 @@
   <%- if @vars.any? -%>
   vars += <%= scope.function_icinga2_config_value([@vars]) %>
   <%- end -%>
-  <%- if @custom_vars.length != 0 -%>
-  <%- @custom_vars.sort.each do |key,value| -%>
-  vars.<%= key %> = "<%= value %>"
-  <%- end end -%>
   <%- if @check_command -%>
   check_command = "<%= @check_command -%>"
   <%- end -%>
