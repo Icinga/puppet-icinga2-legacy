@@ -1196,7 +1196,7 @@ See [Zone](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/obje
 
 You can use hiera to create icinga 2 objects in your server.
 To use this feature one has to include or contain the class `::icinga2::objects`.
-This class will autoload every found hash from hiera.
+This class will autoload every hash found in Hiera.
 
 Example usage:
 json file
