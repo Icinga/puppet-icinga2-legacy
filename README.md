@@ -1124,7 +1124,16 @@ See [SyslogLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chap
 
 ####[`icinga2::object::user`](id:object_user)
 
-Coming soon...
+This defined type creates **User** objects.
+
+<pre>
+icinga2::object::user { 'some_user':
+  display_name => 'Some User',
+  email        => 'some.user@example.org',
+  groups       => ['icingaadmins'],
+  target_dir   => '/etc/icinga2/zones.d/global_zone',
+}
+</pre>
 
 ####[`icinga2::object::usergroup`](id:object_usergroup)
 
