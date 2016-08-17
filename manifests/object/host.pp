@@ -52,7 +52,7 @@ define icinga2::object::host (
   validate_string($object_hostname)
   validate_bool($is_template)
   if $templates {                   # https://tickets.puppetlabs.com/browse/PDB-170
-    if $templates.is_a(String) {
+    if is_string($templates) {
       $_templates = [ $templates ]
     } else {
       $_templates = $templates
