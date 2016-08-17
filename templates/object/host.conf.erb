@@ -11,7 +11,7 @@
  */
 
 <%- if @is_template -%>template<%- else -%>object<%- end -%> Host "<%= @object_hostname %>" {
-  <%- @templates.each do |t| -%>
+  <%- @_templates.each do |t| -%>
   <%- if t != @object_hostname -%>
   import "<%= t -%>"
   <%- end -%>

@@ -51,7 +51,13 @@ define icinga2::object::host (
 
   validate_string($object_hostname)
   validate_bool($is_template)
-  validate_array($templates)
+  if $templates {                   # https://tickets.puppetlabs.com/browse/PDB-170
+    if $templates.is_a(String) {
+      $_templates = [ $templates ]
+    } else {
+      $_templates = $templates
+    }
+  }
   validate_string($display_name)
   validate_string($ipv4_address)
   validate_array($groups)
