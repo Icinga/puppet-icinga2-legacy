@@ -1,6 +1,6 @@
 <%= scope.function_template(['icinga2/_header.erb']) -%>
 
-object Zone "<%= @name %>" {
+object Zone "<%= @zone_name %>" {
   <%- if @parent-%>
   parent = <%= scope.function_icinga2_config_value([@parent]) %>
   <%- end -%>

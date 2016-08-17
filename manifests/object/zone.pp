@@ -9,6 +9,7 @@
 # See the inline comments.
 #
 define icinga2::object::zone(
+  $zone_name  = $name,
   $endpoints  = undef,
   $global     = false,
   $parent     = undef,
@@ -58,4 +59,3 @@ define icinga2::object::zone(
   }
 
 }
-
