@@ -21,13 +21,16 @@ class icinga2::database {
   if $::icinga2::db_type == 'mysql' {
     include ::icinga2::feature::ido_mysql
 
-    # TODO: is there a better way?
-    Package['icinga2-ido-mysql'] ->
-    exec { 'mysql_schema_load':
-      user    => 'root',
-      path    => $::path,
-      command => "mysql -h '${::icinga2::db_host}' -u '${::icinga2::db_user}' -p'${::icinga2::db_pass}' '${::icinga2::db_name}' < '${db_schema}' && touch /etc/icinga2/mysql_schema_loaded.txt",
-      creates => '/etc/icinga2/mysql_schema_loaded.txt',
+
+    if $::osfamily != 'Debian' {
+      # on Debian / Ubuntu this is done with dbconfig-common as dependency from icinga2-ido-mysql
+      Package['icinga2-ido-mysql'] ->
+      exec { 'mysql_schema_load':
+        user    => 'root',
+        path    => $::path,
+        command => "mysql -h '${::icinga2::db_host}' -u '${::icinga2::db_user}' -p'${::icinga2::db_pass}' '${::icinga2::db_name}' < '${db_schema}' && touch /etc/icinga2/mysql_schema_loaded.txt",
+        creates => '/etc/icinga2/mysql_schema_loaded.txt',
+      }
     }
   }
   elsif $::icinga2::db_type == 'pgsql' {
