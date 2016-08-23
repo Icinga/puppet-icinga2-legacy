@@ -38,8 +38,18 @@ define icinga2::object::apply_notification_to_host (
   validate_array($templates)
   validate_string($command)
   validate_hash($vars)
-  validate_array($users)
-  validate_array($user_groups)
+  if ! is_string($users) {
+    validate_array($users)
+  }
+  if ! is_array($users) {
+    validate_string($users)
+  }
+  if ! is_string($user_groups) {
+    validate_array($user_groups)
+  }
+  if ! is_array($user_groups) {
+    validate_string($user_groups)
+  }
   validate_hash($times)
   if $interval {
     validate_string($interval)
