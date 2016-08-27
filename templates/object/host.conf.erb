@@ -16,7 +16,7 @@
   import "<%= t -%>"
   <%- end -%>
   <%- @raw_prepend.each do |line| -%>
-  <%= line -%>
+  <%= line %>
   <%- end -%>
   <%- end -%>
   <%- if @display_name -%>
@@ -100,6 +100,6 @@
   command_endpoint = "<%= @command_endpoint -%>"
   <%- end -%>
   <%- @raw_append.each do |line| -%>
-  <%= line -%>
+  <%= line %>
   <%- end -%>
 }
