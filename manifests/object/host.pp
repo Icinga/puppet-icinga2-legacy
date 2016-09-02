@@ -58,7 +58,9 @@ define icinga2::object::host (
       $_templates = [ $templates ]
     } else {
       $_templates = $templates
+
     }
+    validate_array($_templates)
   }
   validate_string($display_name)
   validate_string($ipv4_address)

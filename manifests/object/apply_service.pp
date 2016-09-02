@@ -52,7 +52,15 @@ define icinga2::object::apply_service (
 ) {
 
   validate_string($object_servicename)
-  validate_array($templates)
+  if $templates {                   # https://tickets.puppetlabs.com/browse/PDB-170
+    if is_string($templates) {
+      $_templates = [ $templates ]
+    } else {
+      $_templates = $templates
+
+    }
+    validate_array($_templates)
+  }
   validate_array($groups)
   validate_hash($vars)
   validate_string($target_dir)
@@ -62,7 +70,15 @@ define icinga2::object::apply_service (
   validate_string($target_file_mode)
   validate_bool($refresh_icinga2_service)
   validate_array($custom_prepend)
-  validate_array($custom_append)
+  if $custom_append {                   # https://tickets.puppetlabs.com/browse/PDB-170
+    if is_string($custom_append) {
+      $_custom_append = [ $custom_append ]
+    } else {
+      $_custom_append = $custom_append
+
+    }
+    validate_array($_custom_append)
+  }
 
   #If the refresh_icinga2_service parameter is set to true...
   if $refresh_icinga2_service == true {
