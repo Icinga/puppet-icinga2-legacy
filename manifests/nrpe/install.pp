@@ -31,12 +31,17 @@ class icinga2::nrpe::install::packages inherits icinga2::nrpe {
 
   include icinga2::nrpe
   #Install the packages we specified in the ::params class:
-  package {$icinga2::nrpe::params::icinga2_client_packages:
-    ensure          => installed,
-    provider        => $icinga2::nrpe::params::package_provider,
-    install_options => $icinga2::nrpe::params::client_plugin_package_install_options,
-  }
 
+  # solve duplicate declration issue on centos with base actual base module install
+  if $::osfamily == 'RedHat' {
+    ensure_packages ($icinga2::nrpe::params::icinga2_client_packages)
+  } else {
+      ensure_packages ($icinga2::nrpe::params::icinga2_client_packages, {
+        ensure          => installed,
+        provider        => $icinga2::nrpe::params::package_provider,
+        install_options => $icinga2::nrpe::params::client_plugin_package_install_options,
+      })
+  }
 }
 
 
