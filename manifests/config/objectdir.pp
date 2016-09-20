@@ -10,6 +10,7 @@
 #
 define icinga2::config::objectdir (
   $path = "/etc/icinga2/objects/${name}",
+  $purge = $::icinga2::purge_configs,
 ) {
 
   if ! defined(Class['icinga2']) {
@@ -23,9 +24,9 @@ define icinga2::config::objectdir (
     owner   => $::icinga2::config_owner,
     group   => $::icinga2::config_group,
     mode    => $::icinga2::config_mode,
-    purge   => $::icinga2::purge_configs,
-    recurse => $::icinga2::purge_configs,
-    force   => $::icinga2::purge_configs,
+    purge   => $purge,
+    recurse => $purge,
+    force   => $purge,
   }
 
 }
