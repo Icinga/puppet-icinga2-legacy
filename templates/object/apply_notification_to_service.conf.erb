@@ -54,4 +54,9 @@ apply Notification "<%= @object_notificationname %>" to Service {
   <%- if @states.empty? !=true -%>
   states = [ <% @states.each_with_index do |state, i| %><%= state -%><%= ', ' if i < (@states.size - 1) %><% end %> ]
   <%- end -%>
+  <%- if @_custom_append && Array(@_custom_append).size > 0 -%>
+    <%- Array(@_custom_append).each do |line| -%>
+  <%= line %>
+    <%- end -%>
+  <%- end -%>
 }

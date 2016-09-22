@@ -30,7 +30,8 @@ define icinga2::object::apply_notification_to_host (
   $target_file_owner       = $::icinga2::config_owner,
   $target_file_group       = $::icinga2::config_group,
   $target_file_mode        = $::icinga2::config_mode,
-  $refresh_icinga2_service = true
+  $refresh_icinga2_service = true,
+  $custom_append              = [],
 ) {
 
   #Do some validation of the class' parameters:
@@ -55,6 +56,15 @@ define icinga2::object::apply_notification_to_host (
   validate_string($target_file_group)
   validate_re($target_file_mode, '^\d{4}$')
   validate_bool($refresh_icinga2_service)
+  if $custom_append {                   # https://tickets.puppetlabs.com/browse/PDB-170
+    if is_string($custom_append) {
+      $_custom_append = [ $custom_append ]
+    } else {
+      $_custom_append = $custom_append
+
+    }
+    validate_array($_custom_append)
+  }
 
   #If the refresh_icinga2_service parameter is set to true...
   if $refresh_icinga2_service == true {
