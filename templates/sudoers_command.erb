@@ -6,4 +6,4 @@
 # **WILL** get overwritten!               #
 ###########################################
 
-<%= scope.lookupvar('icinga2::nrpe::nrpe_user') %> ALL = (<%= @sudo_user %>) NOPASSWD:<%= @nrpe_plugin_libdir %>/<%= @nrpe_plugin_name %><%= ' ' if @nrpe_plugin_args %><%= @nrpe_plugin_args %>
+<%= scope.lookupvar('icinga2::nrpe::nrpe_user') %> ALL = (<%= @sudo_user %>) NOPASSWD:<%= @nrpe_plugin_libdir %>/<%= @nrpe_plugin_name %><%= ' ' if @nrpe_plugin_args %><%= @nrpe_plugin_args.gsub(/([=!,:()\\\\])/) { |c| '\\' + c } if @nrpe_plugin_args %>
