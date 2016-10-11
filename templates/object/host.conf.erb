@@ -15,7 +15,7 @@
   <%- if t != @object_hostname -%>
   import "<%= t -%>"
   <%- end -%>
-  <%- @raw_prepend.each do |line| -%>
+  <%- @_raw_prepend.each do |line| -%>
   <%= line %>
   <%- end -%>
   <%- end -%>
@@ -99,7 +99,7 @@
   <%- if @command_endpoint -%>
   command_endpoint = "<%= @command_endpoint -%>"
   <%- end -%>
-  <%- @raw_append.each do |line| -%>
+  <%- @_raw_append.each do |line| -%>
   <%= line %>
   <%- end -%>
 }

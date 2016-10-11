@@ -12,7 +12,7 @@
 define icinga2::object::host (
   $object_hostname         = $name,
   $display_name            = $fqdn,
-  $ipv4_address            = $ipaddress,
+  $ipv4_address            = undef,
   $ipv6_address            = undef,
   $is_template             = false,
   $templates               = ['generic-host'],
@@ -53,17 +53,8 @@ define icinga2::object::host (
 
   validate_string($object_hostname)
   validate_bool($is_template)
-  if $templates {                   # https://tickets.puppetlabs.com/browse/PDB-170
-    if is_string($templates) {
-      $_templates = [ $templates ]
-    } else {
-      $_templates = $templates
-
-    }
-    validate_array($_templates)
-  }
+  $_templates = any2array($templates) # https://tickets.puppetlabs.com/browse/PDB-170
   validate_string($display_name)
-  validate_string($ipv4_address)
   validate_array($groups)
   validate_hash($vars)
   validate_string($target_dir)
@@ -74,8 +65,8 @@ define icinga2::object::host (
   validate_bool($refresh_icinga2_service)
   validate_string($zone)
   validate_string($command_endpoint)
-  validate_array($raw_append)
-  validate_array($raw_prepend)
+  $_raw_append = any2array($raw_append)
+  $_raw_prepend = any2array($raw_prepend)
 
   #If the refresh_icinga2_service parameter is set to true...
   if $refresh_icinga2_service == true {
