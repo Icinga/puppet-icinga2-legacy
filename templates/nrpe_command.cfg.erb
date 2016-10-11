@@ -12,4 +12,4 @@
 # **WILL** get overwritten!               #
 ###########################################
 
-command[<%= @command_name %>]=<% if @use_sudo -%><%= scope.lookupvar('icinga2::nrpe::sudo_file_path') -%> -n -u <%= @sudo_user %> <% end -%><%= @nrpe_plugin_libdir %>/<%= @nrpe_plugin_name %> <% if @nrpe_plugin_args -%><%= @nrpe_plugin_args.gsub(/[\'\"]/) { |c| '\\' + c } %><% end %>
+command[<%= @command_name %>]=<% if @use_sudo -%><%= scope.lookupvar('icinga2::nrpe::sudo_file_path') -%> -n -u <%= @sudo_user %> <% end -%><%= @nrpe_plugin_libdir %>/<%= @nrpe_plugin_name %> <% if @nrpe_plugin_args -%><%= @nrpe_plugin_args %><% end %>
