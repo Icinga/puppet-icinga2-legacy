@@ -34,6 +34,7 @@ define icinga2::object::apply_service (
   $event_command           = undef,
   #flapping_threshold is defined as a percentage, eg. 10%, 50%, etc.
   $flapping_threshold      = undef,
+  $for_loop                = undef,
   $volatile                = undef,
   $notes                   = undef,
   $notes_url               = undef,
@@ -52,15 +53,8 @@ define icinga2::object::apply_service (
 ) {
 
   validate_string($object_servicename)
-  if $templates {                   # https://tickets.puppetlabs.com/browse/PDB-170
-    if is_string($templates) {
-      $_templates = [ $templates ]
-    } else {
-      $_templates = $templates
-
-    }
-    validate_array($_templates)
-  }
+  $_templates = any2array($templates) # https://tickets.puppetlabs.com/browse/PDB-170
+  if $for_loop { validate_string($for_loop) }
   validate_array($groups)
   validate_hash($vars)
   validate_string($target_dir)
@@ -70,15 +64,7 @@ define icinga2::object::apply_service (
   validate_string($target_file_mode)
   validate_bool($refresh_icinga2_service)
   validate_array($custom_prepend)
-  if $custom_append {                   # https://tickets.puppetlabs.com/browse/PDB-170
-    if is_string($custom_append) {
-      $_custom_append = [ $custom_append ]
-    } else {
-      $_custom_append = $custom_append
-
-    }
-    validate_array($_custom_append)
-  }
+  $_custom_append = any2array($custom_append) # https://tickets.puppetlabs.com/browse/PDB-170
 
   #If the refresh_icinga2_service parameter is set to true...
   if $refresh_icinga2_service == true {

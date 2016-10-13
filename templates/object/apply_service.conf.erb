@@ -9,8 +9,11 @@
  * By default all *.conf files in this directory are included.
  *
  */
-
+<%- if @for_loop -%>
+apply Service for <%= @for_loop %> {
+<%- else -%>
 apply Service "<%= @object_servicename %>" <%= @apply %> {
+<%- end -%>
   <%- @_templates.each do |t| -%>
   import "<%= t -%>"
   <%- end -%>
@@ -26,13 +29,13 @@ apply Service "<%= @object_servicename %>" <%= @apply %> {
   host_name = "<%= @host_name -%>"
   <%- end -%>
   <%- if @assign_where -%>
-  assign where <%= @assign_where -%> 
+  assign where <%= @assign_where %>
   <%- end -%>
   <%- if @ignore_where -%>
-  ignore where <%= @ignore_where -%> 
+  ignore where <%= @ignore_where %>
   <%- end -%>
   <%- if @command_endpoint -%>
-  command_endpoint = <%= @command_endpoint -%> 
+  command_endpoint = <%= @command_endpoint %>
   <%- end -%>
   <%- if @groups.length != 0 -%>
   groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
