@@ -1,0 +1,26 @@
+<%= scope.function_template(['icinga2/_header.erb']) -%>
+
+library "perfdata"
+
+object InfluxdbWriter "influxdb" {
+  host = "<%= @host -%>"
+  port = <%= @port %>
+  database = "<%= @database -%>"
+  username = "<%= @user -%>"
+  password = "<%= @password -%>"
+  enable_send_thresholds = <%= @thresholds %>
+  enable_send_metadata = <%= @metadata %>
+  host_template = {
+    measurement = "$host.check_command$"
+    tags = {
+      hostname = "$host.name$"
+    }
+  }
+  service_template = {
+    measurement = "$service.check_command$"
+    tags = {
+      hostname = "$host.name$"
+      service = "$service.name$"
+    }
+  }
+}
