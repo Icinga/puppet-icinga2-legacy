@@ -31,7 +31,7 @@ define icinga2::object::checkcommand (
   $templates                             = ['plugin-check-command'],
   $timeout                               = undef,
   $vars                                  = {},
-  #$methods                               = undef, Need to get more details about this attribute
+  $raw_append                            = [],
 ) {
 
   #Do some validation of the class parameters:
@@ -55,7 +55,7 @@ define icinga2::object::checkcommand (
   validate_string($target_file_group)
   validate_re($target_file_mode, '^\d{4}$')
   validate_bool($refresh_icinga2_service)
-
+  $_raw_append = any2array($raw_append)
 
   #If the refresh_icinga2_service parameter is set to true...
   if $refresh_icinga2_service == true {

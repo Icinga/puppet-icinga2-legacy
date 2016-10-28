@@ -36,4 +36,7 @@ object CheckCommand "<%= @object_checkcommandname %>" {
 
   env += <%= scope.function_icinga2_config_value([@env]) %>
   <%- end -%>
+  <%- @_raw_append.each do |line| -%>
+  <%= line %>
+  <%- end -%>
 }
