@@ -1,6 +1,6 @@
 # == Class: icinga2::feature::influxdbwriter
 #
-# Manage and enable the IdoMySqlConnection of Icinga2
+# Manage and enable the InfluxDB writer of Icinga2
 #
 # Also see the defined type icinga2::object::influxdbwriter we are using.
 #
