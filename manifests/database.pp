@@ -22,11 +22,17 @@ class icinga2::database {
     include ::icinga2::feature::ido_mysql
 
     # TODO: is there a better way?
+    if $::icinga2::db_port {
+      $port = "-P ${::icinga2::db_port}"
+    } else {
+      $port = undef
+    }
+
     Package['icinga2-ido-mysql'] ->
     exec { 'mysql_schema_load':
       user    => 'root',
       path    => $::path,
-      command => "mysql -h '${::icinga2::db_host}' -u '${::icinga2::db_user}' -p'${::icinga2::db_pass}' '${::icinga2::db_name}' < '${db_schema}' && touch /etc/icinga2/mysql_schema_loaded.txt",
+      command => "mysql -h '${::icinga2::db_host}' ${port} -u '${::icinga2::db_user}' -p'${::icinga2::db_pass}' '${::icinga2::db_name}' < '${db_schema}' && touch /etc/icinga2/mysql_schema_loaded.txt",
       creates => '/etc/icinga2/mysql_schema_loaded.txt',
     }
   }
