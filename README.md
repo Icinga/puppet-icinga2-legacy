@@ -3,6 +3,9 @@ Icinga 2 Puppet module
 
 # Fair warning
 
+This repository will be renamed within the nex couple of weeks. 
+Please see https://github.com/Icinga/puppet-icinga2/issues/226 for more information.
+
 The GIT branch `develop` of this module is in a bit of flux at the moment.
 
 Please make sure to check:
