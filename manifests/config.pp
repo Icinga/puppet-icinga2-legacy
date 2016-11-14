@@ -47,6 +47,8 @@ class icinga2::config {
 
 
   $include_recursive = $::icinga2::include_recursive
+  $include = $::icinga2::include
+
   file { '/etc/icinga2/icinga2.conf':
     ensure  => file,
     content => template($::icinga2::config_template),
