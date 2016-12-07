@@ -18,6 +18,8 @@ class icinga2::feature::api (
   $hostname        = $::fqdn,
   $manage_zone     = true,
   $parent_zone     = undef,
+  $cipher_list     = undef,
+  $tls_protocolmin = undef,
 ) {
 
   validate_bool($accept_commands)

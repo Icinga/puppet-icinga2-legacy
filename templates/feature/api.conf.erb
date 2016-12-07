@@ -18,4 +18,11 @@ object ApiListener "api" {
   <%- if @ticket_salt -%>
   ticket_salt = TicketSalt
   <%- end -%>
+
+  <%- if @cipher_list -%>
+  cipher_list = <%= scope.function_icinga2_config_value([@cipher_list]) %>
+  <%- end -%>
+  <%- if @tls_protocolmin -%>
+  tls_protocolmin = <%= scope.function_icinga2_config_value([@tls_protocolmin]) %>
+  <%- end -%>
 }
