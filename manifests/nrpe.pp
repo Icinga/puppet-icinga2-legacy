@@ -5,7 +5,7 @@
 #
 
 class icinga2::nrpe (
-
+  $daemon_name                            = $icinga2::params::nrpe_daemon_name,
   $nrpe_listen_port                       = $icinga2::params::nrpe_listen_port,
   $nrpe_debug_level                       = $icinga2::params::nrpe_debug_level,
   $nrpe_log_facility                      = $icinga2::params::nrpe_log_facility,
@@ -14,7 +14,7 @@ class icinga2::nrpe (
   $nrpe_allowed_hosts                     = $icinga2::params::nrpe_allowed_hosts,
   $nrpe_allow_command_argument_processing = $icinga2::params::allow_command_argument_processing,
   $nrpe_purge_unmanaged                   = $icinga2::params::nrpe_purge_unmanaged,
-
+  $refresh_nrpe_service                   = $icinga2::params::refresh_nrpe_service,
 ) inherits icinga2::params {
 
   #Do some validation of the parameters that are passed in:

@@ -222,7 +222,7 @@ If you would like to install packages to make a `mail` command binary available 
 
 To manage the features that are enabled or disabled on an Icinga 2 server, you can specify them with the `server_enabled_features` and `server_disabled_features` parameters.
 
-The parameters should be given as arrays of single-quoted strings.  
+The parameters should be given as arrays of single-quoted strings.
 
 **Note:** Even if you're only specifying one feature, you will still need to specify it as an array.
 
@@ -277,6 +277,16 @@ class { 'icinga2::server':
 </pre>
 
 This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
+
+By default Puppet reloads the NRPE service when related config files are changed.
+To override this you can use the following snippet:
+
+```
+class { 'icinga2::nrpe':
+  refresh_nrpe_service => false, # default: true
+}
+```
+
 
 ### Check Plugins
 
