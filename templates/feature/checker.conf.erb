@@ -2,4 +2,8 @@
 
 library "checker"
 
-object CheckerComponent "checker" { }
+object CheckerComponent "checker" {
+  <%- if @concurrent_checks -%>
+  concurrent_checks = <%= @concurrent_checks %>
+  <%- end -%>
+}
