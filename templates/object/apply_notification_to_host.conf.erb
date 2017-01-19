@@ -27,10 +27,20 @@ apply Notification "<%= @object_notificationname %>" to Host {
   vars += <%= scope.function_icinga2_config_value([@vars]) %>
   <%- end -%>
   <%- if @users.empty? !=true -%>
+  <%- if @users.is_a?(Array) -%>
   users = [ <% @users.each_with_index do |usr, i| %>"<%= usr -%>"<%= ', ' if i < (@users.size - 1) %><% end %> ]
   <%- end -%>
+  <%- if @users.is_a?(String) -%>
+  users = <%= @users %>
+  <%- end -%>
+  <%- end -%>
   <%- if @user_groups.empty? !=true -%>
+  <%- if @user_groups.is_a?(Array) -%>
   user_groups = [ <% @user_groups.each_with_index do |u_grp, i| %>"<%= u_grp -%>"<%= ', ' if i < (@user_groups.size - 1) %><% end %> ]
+  <%- end -%>
+  <%- if @users.is_a?(String) -%>
+  user_groups = <%= @user_groups %>
+  <%- end -%>
   <%- end -%>
   <%- if @times.empty? != true -%>
   times = {
