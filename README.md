@@ -276,9 +276,9 @@ contain ::icinga2::pki::puppet
 
 ### Check Plugins
 
-Agents installed on nodes that Icinga is performing active checks against often require additional or custom check plugins. In order to deploy these check pluings on a node you can call the checkplugin defined resource.
+Agents installed on nodes that Icinga is performing active checks against often require additional or custom check plugins. In order to deploy these check plugins on a node you can call the checkplugin defined resource.
 
-The checkplugin defined resource can distribute files via both content (templates) and source (files).  By default the checkpluin resource will assume your distribution method is content (template) and that your template resides in the icinga2 module
+The checkplugin defined resource can distribute files via both content (templates) and source (files).  By default the checkplugin resource will assume your distribution method is content (template) and that your template resides in the icinga2 module
 
 To reference a template that resides in another module you can update the $checkplugin_template_module  parameter with the module your template resides
 
