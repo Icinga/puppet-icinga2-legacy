@@ -21,9 +21,6 @@ class icinga2::params {
   #Whether to install the plugin packages when the icinga2 class is applied:
   $install_nagios_plugins = true
 
-  #whether to install packages that provide the 'mail' binary
-  $install_mail_utils_package = false
-
   $config_template = 'icinga2/icinga2.conf.erb'
   $manage_service = true
 
