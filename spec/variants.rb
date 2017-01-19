@@ -31,6 +31,14 @@ class IcingaPuppet
         :path                      => '/dummy',
         :nrpe_daemon_name          => 'nrpe',
       },
+      'FreeBSD 10.2' => {
+          :osfamily                  => 'FreeBSD',
+          :operatingsystem           => 'FreeBSD',
+          :operatingsystemrelease    => '10.2-RELEASE',
+          :operatingsystemmajrelease => '10',
+          :path                      => '/dummy',
+          #:nrpe_daemon_name          => 'nrpe',
+      },
     }
   end
 end
