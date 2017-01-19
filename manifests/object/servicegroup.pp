@@ -14,7 +14,7 @@ define icinga2::object::servicegroup (
   $display_name             = $name,
   $templates                = [],
   $groups                   = [],
-  $target_dir               = '/etc/icinga2/objects/servicegroups',
+  $target_dir               = "${::icinga2::config_dir}/objects/servicegroups",
   $target_file_name         = "${name}.conf",
   $target_file_ensure       = file,
   $target_file_owner        = $::icinga2::config_owner,

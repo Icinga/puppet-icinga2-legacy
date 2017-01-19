@@ -17,7 +17,7 @@ define icinga2::config::objectdir {
   Class['icinga2::config'] ->
   file { "icinga2 objectdir ${name}":
     ensure  => directory,
-    path    => "/etc/icinga2/objects/${name}",
+    path    => "${::icinga2::config_dir}/objects/${name}",
     owner   => $::icinga2::config_owner,
     group   => $::icinga2::config_group,
     mode    => $::icinga2::config_mode,

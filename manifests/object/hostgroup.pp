@@ -14,7 +14,7 @@ define icinga2::object::hostgroup (
   $display_name            = $name,
   $templates               = [],
   $groups                  = [],
-  $target_dir              = '/etc/icinga2/objects/hostgroups',
+  $target_dir              = "${::icinga2::config_dir}/objects/hostgroups",
   $target_file_name        = "${name}.conf",
   $target_file_ensure      = file,
   $target_file_owner       = $::icinga2::config_owner,

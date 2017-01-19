@@ -14,7 +14,7 @@ define icinga2::object::icingastatuswriter (
   $object_name               = $name,
   $status_path               = undef,
   $update_interval           = undef,
-  $target_dir                = '/etc/icinga2/objects/icingastatuswriters',
+  $target_dir                = "${::icinga2::config_dir}/objects/icingastatuswriters",
   $target_file_name          = "${name}.conf",
   $target_file_owner         = $::icinga2::config_owner,
   $target_file_group         = $::icinga2::config_group,

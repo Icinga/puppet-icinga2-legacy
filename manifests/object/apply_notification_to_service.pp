@@ -25,7 +25,7 @@ define icinga2::object::apply_notification_to_service (
   $period                  = undef,
   $types                   = [],
   $states                  = [],
-  $target_dir              = '/etc/icinga2/objects/applys',
+  $target_dir              = "${::icinga2::config_dir}/objects/applys",
   $target_file_name        = "${name}.conf",
   $target_file_ensure      = file,
   $target_file_owner       = $::icinga2::config_owner,

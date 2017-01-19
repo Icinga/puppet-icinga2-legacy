@@ -19,7 +19,7 @@ define icinga2::object::eventcommand (
   $env                     = {},
   $vars                    = {},
   $timeout                 = undef,
-  $target_dir              = '/etc/icinga2/objects/eventcommands',
+  $target_dir              = "${::icinga2::config_dir}/objects/eventcommands",
   $target_file_name        = "${name}.conf",
   $target_file_ensure      = file,
   $target_file_owner       = $::icinga2::config_owner,

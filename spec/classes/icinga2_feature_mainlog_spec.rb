@@ -39,4 +39,19 @@ describe 'icinga2::feature::mainlog' do
     })}
   end
 
+  context "on #{default} with var_dir parameters" do
+    let :pre_condition do
+      "class { 'icinga2':
+        default_features => false,
+        var_dir          => '/var/opt',
+      }"
+    end
+
+    it { should contain_class('icinga2::feature::mainlog') }
+    it { should contain_icinga2__feature('mainlog') }
+    it { should contain_file('icinga2 feature mainlog').with({
+      :content => /severity = "information"\n\s+path = "\/var\/opt\/log\/icinga2\/icinga2\.log"/,
+    })}
+  end
+
 end
