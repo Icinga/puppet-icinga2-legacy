@@ -3,8 +3,8 @@
 # Manage and enable the default log of Icinga2
 #
 class icinga2::feature::mainlog (
-  $severity = 'information',
-  $path     = '/var/log/icinga2/icinga2.log'
+  $severity = $::icinga2::mainlog_severity,
+  $path     = $::icinga2::mainlog_path,
 ) {
 
   validate_string($severity)

@@ -37,6 +37,11 @@ class icinga2::params {
   $db_schema_mysql = '/usr/share/icinga2-ido-mysql/schema/mysql.sql'
   $db_schema_pgsql = '/usr/share/icinga2-ido-pgsql/schema/pgsql.sql'
 
+  #Log parameters
+  $mainlog_severity = 'information'
+  $mainlog_path     = '/var/log/icinga2/icinga2.log'
+  $syslog_severity  = 'warning'
+
   $pid_file = '/run/icinga2/icinga2.pid'
 
   $restart_cmd = undef
