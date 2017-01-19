@@ -3,8 +3,8 @@ Icinga 2 Puppet module
 
 # Fair warning
 
-This repository will be renamed within the nex couple of weeks. 
-Please see https://github.com/Icinga/puppet-icinga2/issues/226 for more information.
+This module is no longer maintained.
+Find the official Icinga 2 Puppet Module here: [puppet-icinga2](https://github.com/Icinga/puppet-icinga2)
 
 The GIT branch `develop` of this module is in a bit of flux at the moment.
 
