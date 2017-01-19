@@ -5,8 +5,9 @@
 class icinga2::pki::icinga (
   $ticket_salt,
   $icinga_ca_host,
+  $manage_ca = false,
   $icinga_ca_port = undef,
-  $hostname       = $::fqdn,
+  $hostname = $::fqdn,
 ) {
 
   validate_string($ticket_salt)
@@ -22,10 +23,12 @@ class icinga2::pki::icinga (
 
   $ticket_id = icinga2_ticket_id($::fqdn, $ticket_salt)
 
+  $ca_dir = '/var/lib/icinga2/ca'
   $pki_dir = '/etc/icinga2/pki'
   $ca = "${pki_dir}/ca.crt"
   $key = "${pki_dir}/${hostname}.key"
   $cert = "${pki_dir}/${hostname}.crt"
+  $csr = "${pki_dir}/${hostname}.csr"
   $trusted_cert = "${pki_dir}/trusted-cert.crt"
 
   Exec {
@@ -39,28 +42,50 @@ class icinga2::pki::icinga (
     mode   => '0644',
   }
 
-  exec { 'icinga2 pki create key':
-    command => "icinga2 pki new-cert --cn '${hostname}' --key '${key}' --cert '${cert}'",
-    creates => $key,
-  } ->
-  file {
-    $key:
-      mode => '0600';
-    $cert:
-  } ->
+  if $manage_ca {
+    # we are the master / ca host. set up our CA and sign our own server cert
+    exec { 'icinga2 pki create ca':
+      command => 'icinga2 pki new-ca',
+      creates => "${ca_dir}/ca.key",
+    } ->
+    exec { 'icinga2 pki create csr':
+      command => "icinga2 pki new-cert --cn '${hostname}' --key '${key}' --csr '${csr}'",
+      creates => $csr,
+    } ->
+    exec { 'icinga2 pki sign csr':
+      command => "icinga2 pki sign-csr --csr '${csr}' --cert '${cert}'",
+      creates => $cert,
+    } ->
+    file { $ca:
+      ensure => link,
+      target => "${ca_dir}/ca.crt"
+    }
+  } else {
 
-  exec { 'icinga2 pki get trusted-cert':
-    command => "icinga2 pki save-cert --host '${icinga_ca_host}'${_icinga_ca_port} --key '${key}' --cert '${cert}' --trustedcert '${trusted_cert}'",
-    creates => $trusted_cert,
-  } ->
-  file { $trusted_cert:
-  } ->
+    # we are a client, lets request our certificate
+    exec { 'icinga2 pki create key':
+      command => "icinga2 pki new-cert --cn '${hostname}' --key '${key}' --cert '${cert}'",
+      creates => $key,
+    } ->
+    file {
+      $key:
+        mode => '0600';
+      $cert:
+    } ->
 
-  exec { 'icinga2 pki request':
-    command => "icinga2 pki request --host '${icinga_ca_host}'${_icinga_ca_port} --ca '${ca}' --key '${key}' --cert '${cert}' --trustedcert '${trusted_cert}' --ticket '${ticket_id}'",
-    creates => $ca,
-  } ->
-  file { $ca:
+    exec { 'icinga2 pki get trusted-cert':
+      command => "icinga2 pki save-cert --host '${icinga_ca_host}'${_icinga_ca_port} --key '${key}' --cert '${cert}' --trustedcert '${trusted_cert}'",
+      creates => $trusted_cert,
+    } ->
+    file { $trusted_cert:
+    } ->
+
+    exec { 'icinga2 pki request':
+      command => "icinga2 pki request --host '${icinga_ca_host}'${_icinga_ca_port} --ca '${ca}' --key '${key}' --cert '${cert}' --trustedcert '${trusted_cert}' --ticket '${ticket_id}'",
+      creates => $ca,
+    } ->
+    file { $ca:
+    }
   }
 
   # ordering of this class

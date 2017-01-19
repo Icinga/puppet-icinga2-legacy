@@ -19,6 +19,7 @@ class icinga2 (
   $db_user                                = $::icinga2::params::db_user,
   $db_pass                                = $::icinga2::params::db_pass,
   $db_schema                              = undef,
+  $include_recursive                      = [ 'objects' , 'conf.d' , 'repository.d' ],
   $manage_database                        = false,
   $manage_repos                           = $::icinga2::params::manage_repos,
   $manage_service                         = $::icinga2::params::manage_service,
@@ -75,4 +76,3 @@ class icinga2 (
     }
   }
 }
-

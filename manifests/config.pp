@@ -45,6 +45,8 @@ class icinga2::config {
       force   => $::icinga2::purge_configs,
   }
 
+
+  $include_recursive = $::icinga2::include_recursive
   file { '/etc/icinga2/icinga2.conf':
     ensure  => file,
     content => template($::icinga2::config_template),
