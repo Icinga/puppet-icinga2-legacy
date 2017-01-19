@@ -473,6 +473,7 @@ Object types:
 * [icinga2::object::notificationcommand](#icinga2objectnotificationcommand)
 * [icinga2::object::perfdatawriter](#icinga2objectperfdatawriter)
 * [icinga2::object::opentsdbwriter](#icinga2objectopentsdbwriter)
+* [icinga2::object::influxdbwriter](#icinga2objectinfluxdbwriter)
 * [icinga2::object::scheduleddowntime](#icinga2objectscheduleddowntime)
 * [icinga2::object::service](#icinga2objectservice)
 * [icinga2::object::servicegroup](#icinga2objectservicegroup)
@@ -1011,6 +1012,49 @@ icinga2::object::opentsdbwriter { 'opentsdb_server':
   file_name  => 'opentsdb.conf',
   host       => '127.0.0.1',
   port       => 4242,
+}
+````
+####[`icinga2::object::influxdbwriter`](id:object_influxdbwriter)
+
+This defined type created **InfluxdbWriter** objects
+
+Example usage:
+````
+icinga2::object::influxdbwriter {'influxdb':
+  target_dir => '/etc/icinga2/features-enabled',
+  file_name  => 'influxdb.conf',
+  host       => '127.0.0.1',
+  port       => 8086,
+  database   => 'icinga',
+}
+````
+
+Advanced example, using the default host and service template:
+````
+$host_template = "{
+  measurement = \"\$host.check_command\$\"
+   tags = {
+   hostname = \"\$host.name\$\"
+ }
+}"
+$service_template = "{
+  measurement = \"\$service.check_command\$\"
+  tags = {
+    hostmae = \"\$host.name\$\"
+    service = \"\$service.name\$\"
+  }
+}"
+
+icinga2::object::influxdbwriter {'influxdb':
+  host                   => 'localhost',
+  port                   => 8086,
+  database               => 'icinga',
+  enable_send_thresholds => true,
+  enable_send_metadata   => true,
+  flush_threshold        => 100,
+  flush_interval         => 5,
+  host_template          => $host_template,
+  service_template       => $service_template,
 }
 ````
 
