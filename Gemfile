@@ -7,6 +7,10 @@ if RUBY_VERSION =~ /^1\.8\./
   gem 'nokogiri', '~> 1.5.0'
 end
 
+if RUBY_VERSION =~ /^1\.9\./ or RUBY_VERSION =~ /^1\.8\./
+  gem 'json_pure', '< 2.0.0'
+end
+
 gem 'puppet', ENV.key?('PUPPET_VERSION') ? "~> #{ENV['PUPPET_VERSION']}.0" : '>= 2.7'
 gem 'rspec-puppet', '~> 2.0'
 gem 'puppetlabs_spec_helper', '>= 0.1.0'
