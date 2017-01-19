@@ -3,13 +3,13 @@
 # Provide PKI certificates for Icinga2 from the Puppet agent.
 #
 class icinga2::pki::puppet(
-  $ca_path     = '/etc/icinga2/pki/ca.crt',
+  $ca_path     = "${::icinga2::config_dir}/pki/ca.crt",
   $ca_source   = "${::settings::ssldir}/certs/ca.pem",
-  $cert_path   = "/etc/icinga2/pki/${::fqdn}.crt",
+  $cert_path   = "${::icinga2::config_dir}/pki/${::fqdn}.crt",
   $cert_source = "${::settings::ssldir}/certs/${::fqdn}.pem",
-  $key_path    = "/etc/icinga2/pki/${::fqdn}.key",
+  $key_path    = "${::icinga2::config_dir}/pki/${::fqdn}.key",
   $key_source  = "${::settings::ssldir}/private_keys/${::fqdn}.pem",
-  $crl_path    = '/etc/icinga2/pki/crl.pem',
+  $crl_path    = "${::icinga2::config_dir}/pki/crl.pem",
   $crl_source  = "${::settings::ssldir}/crl.pem",
 ) {
 

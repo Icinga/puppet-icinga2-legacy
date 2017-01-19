@@ -15,7 +15,7 @@ define icinga2::object::timeperiod (
   $timeperiod_display_name       = undef,
   $methods                       = undef,
   $ranges                        = {},
-  $target_dir                    = '/etc/icinga2/objects/timeperiods',
+  $target_dir                    = "${::icinga2::config_dir}/objects/timeperiods",
   $target_file_name              = "${name}.conf",
   $target_file_ensure            = file,
   $target_file_owner             = $::icinga2::config_owner,

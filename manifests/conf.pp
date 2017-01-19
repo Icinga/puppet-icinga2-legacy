@@ -23,7 +23,7 @@ define icinga2::conf (
   $template          = undef,
   $options_hash      = undef,
   $ensure            = present,
-  $target_dir        = '/etc/icinga2/conf.d',
+  $target_dir        = "${::icinga2::config_dir}/conf.d",
   $target_file_name  = "${name}.conf",
   $target_file_owner = $::icinga2::config_owner,
   $target_file_group = $::icinga2::config_group,

@@ -19,7 +19,7 @@ define icinga2::object::perfdatawriter (
   $host_format_template      = undef,
   $service_format_template   = undef,
   $rotation_interval         = undef,
-  $target_dir                = '/etc/icinga2/objects/perfdatawriters',
+  $target_dir                = "${::icinga2::config_dir}/objects/perfdatawriters",
   $target_file_name          = "${name}.conf",
   $target_file_ensure        = file,
   $target_file_owner         = $::icinga2::config_owner,

@@ -13,7 +13,7 @@ define icinga2::object::apiuser (
   $password    = undef,
   $client_cn   = undef,
   $permissions = ['*'],
-  $target_dir  = '/etc/icinga2/objects/apiusers',
+  $target_dir  = "${::icinga2::config_dir}/objects/apiusers",
   $file_name   = "${name}.conf",
 ) {
 

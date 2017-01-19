@@ -24,7 +24,7 @@ define icinga2::object::notification (
   $period                  = undef,
   $types                   = [],
   $states                  = [],
-  $target_dir              = '/etc/icinga2/objects/notifications',
+  $target_dir              = "${::icinga2::config_dir}/objects/notifications",
   $target_file_name        = "${name}.conf",
   $target_file_ensure      = file,
   $target_file_owner       = $::icinga2::config_owner,

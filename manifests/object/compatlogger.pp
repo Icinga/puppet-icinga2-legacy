@@ -14,7 +14,7 @@ define icinga2::object::compatlogger (
   $object_compatloggername = $name,
   $log_dir                 = undef,
   $rotation_method         = undef,
-  $target_dir              = '/etc/icinga2/objects/compatloggers',
+  $target_dir              = "${::icinga2::config_dir}/objects/compatloggers",
   $target_file_name        = "${name}.conf",
   $target_file_ensure      = file,
   $target_file_owner       = $::icinga2::config_owner,

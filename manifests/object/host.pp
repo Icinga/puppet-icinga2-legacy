@@ -38,7 +38,7 @@ define icinga2::object::host (
   $action_url              = undef,
   $icon_image              = undef,
   $icon_image_alt          = undef,
-  $target_dir              = '/etc/icinga2/objects/hosts',
+  $target_dir              = "${::icinga2::config_dir}/objects/hosts",
   $target_file_name        = "${name}.conf",
   $target_file_ensure      = file,
   $target_file_owner       = $::icinga2::config_owner,

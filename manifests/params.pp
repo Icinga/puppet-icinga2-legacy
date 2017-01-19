@@ -33,10 +33,6 @@ class icinga2::params {
   $db_user = 'icinga2'
   $db_pass = 'password'
 
-  # the schema is currently not OS specific
-  $db_schema_mysql = '/usr/share/icinga2-ido-mysql/schema/mysql.sql'
-  $db_schema_pgsql = '/usr/share/icinga2-ido-pgsql/schema/pgsql.sql'
-
   $pid_file = '/run/icinga2/icinga2.pid'
 
   $restart_cmd = undef
@@ -118,4 +114,26 @@ class icinga2::params {
     #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
   }
+
+
+  unless $config_dir {
+    $config_dir = '/etc/icinga2'
+  }
+
+  unless $sbin_dir {
+    $sbin_dir = '/usr/sbin'
+  }
+
+  unless $share_dir {
+    $share_dir = '/usr/share'
+  }
+
+  unless $var_dir {
+    $var_dir = '/var'
+  }
+
+  # the schema is now using a set parameter for the os or the default.
+  $db_schema_mysql = "${share_dir}/icinga2-ido-mysql/schema/mysql.sql"
+  $db_schema_pgsql = "${share_dir}/icinga2-ido-pgsql/schema/pgsql.sql"
+
 }

@@ -16,7 +16,7 @@ define icinga2::object::livestatuslistener (
   $bind_port                      = undef,
   $socket_path                    = undef,
   $compat_log_path                = undef,
-  $target_dir                     = '/etc/icinga2/objects/livestatuslisteners',
+  $target_dir                     = "${::icinga2::config_dir}/objects/livestatuslisteners",
   $target_file_name               = "${name}.conf",
   $target_file_ensure             = file,
   $target_file_owner              = $::icinga2::config_owner,
