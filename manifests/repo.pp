@@ -10,6 +10,7 @@ class icinga2::repo {
     'Debian': {
       include icinga2::repo::apt
       Class['icinga2::repo::apt'] -> Class['icinga2::install']
+      Class['Apt::Update'] -> Package<|tag == 'icinga2'|>
     }
     'RedHat': {
       if $::operatingsystem == 'Amazon' {
