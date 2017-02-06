@@ -27,6 +27,5 @@ define icinga2::config::objectdir (
     purge   => $purge,
     recurse => $purge,
     force   => $purge,
-  }
-
+  } ~> Exec['icinga2 config stamp']
 }
