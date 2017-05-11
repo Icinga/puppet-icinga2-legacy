@@ -45,6 +45,7 @@ define icinga2::object::service (
   $target_file_mode        = $::icinga2::config_mode,
   $refresh_icinga2_service = true,
   $zone                    = undef,
+  $raw_append              = [],
 ) {
 
   validate_string($object_servicename)
@@ -62,6 +63,7 @@ define icinga2::object::service (
   validate_string($target_file_group)
   validate_string($target_file_mode)
   validate_bool($refresh_icinga2_service)
+  $_raw_append = any2array($raw_append)
 
   #If the refresh_icinga2_service parameter is set to true...
   if $refresh_icinga2_service == true {

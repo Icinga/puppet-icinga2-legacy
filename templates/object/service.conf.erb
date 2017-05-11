@@ -93,4 +93,7 @@
   <%- if @zone -%>
   zone = "<%= @zone -%>"
   <%- end -%>
+  <%- @_raw_append.each do |line| -%>
+  <%= line %>
+  <%- end -%>
 }
