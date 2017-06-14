@@ -13,6 +13,9 @@ module Puppet
         elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
           value
         else
+          if value.class == Fixnum
+            return value
+          end
           if value.class == String
             if value.match(/^\d+$/)
               return value.to_i
