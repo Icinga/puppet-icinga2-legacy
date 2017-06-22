@@ -35,6 +35,7 @@ define icinga2::object::apply_service (
   #flapping_threshold is defined as a percentage, eg. 10%, 50%, etc.
   $flapping_threshold      = undef,
   $for_loop                = undef,
+  $for_loop_prefix         = undef,
   $volatile                = undef,
   $notes                   = undef,
   $notes_url               = undef,
@@ -57,6 +58,9 @@ define icinga2::object::apply_service (
   if $for_loop { validate_string($for_loop) }
   validate_array($groups)
   validate_hash($vars)
+  if $for_loop_prefix {
+    validate_string($for_loop_prefix)
+  }
   validate_string($target_dir)
   validate_string($target_file_name)
   validate_string($target_file_owner)

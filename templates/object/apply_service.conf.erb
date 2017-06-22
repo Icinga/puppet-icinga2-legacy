@@ -10,8 +10,11 @@
  *
  */
 <%- if @for_loop -%>
-apply Service for <%= @for_loop %> {
+<%- if @for_loop_prefix -%>
+apply Service "<%= @for_loop_prefix %>" for <%= @for_loop %> {
 <%- else -%>
+apply Service for <%= @for_loop %> {
+<%- end else -%>
 apply Service "<%= @object_servicename %>" <%= @apply %> {
 <%- end -%>
   <%- @_templates.each do |t| -%>
