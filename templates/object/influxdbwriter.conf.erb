@@ -8,6 +8,7 @@ object InfluxdbWriter "influxdb" {
   database = "<%= @database -%>"
   username = "<%= @user -%>"
   password = "<%= @password -%>"
+  ssl_enable = <%= @ssl_enable %>
   enable_send_thresholds = <%= @thresholds %>
   enable_send_metadata = <%= @metadata %>
   host_template = {

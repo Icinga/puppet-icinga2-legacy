@@ -12,6 +12,7 @@ class icinga2::feature::influxdbwriter (
   $database             = 'icinga2',
   $thresholds           = true,
   $metadata             = true,
+  $ssl_enable           = true,
 ) {
 
   ::icinga2::object::influxdbwriter { 'influxdb':
@@ -22,11 +23,11 @@ class icinga2::feature::influxdbwriter (
     database         => $database,
     thresholds       => $thresholds,
     metadata         => $metadata,
+    ssl_enable       => $ssl_enable,
     target_file_name => 'influxdb.conf',
     target_dir       => '/etc/icinga2/features-available',
-  } ->
-
-  ::icinga2::feature { 'influxdb':
+  }
+  -> ::icinga2::feature { 'influxdb':
     manage_file => false,
   }
 }

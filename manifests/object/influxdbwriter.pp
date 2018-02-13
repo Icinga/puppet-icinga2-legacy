@@ -14,6 +14,7 @@ define icinga2::object::influxdbwriter (
   $target_file_name     = "${name}.conf",
   $target_dir           = '/etc/icinga2/objects/influxdbwriter',
   $refresh_service      = $::icinga2::manage_service,
+  Boolean $ssl_enable   = true,
 ) {
 
   if ! defined(Class['icinga2']) {
@@ -28,8 +29,8 @@ define icinga2::object::influxdbwriter (
   validate_bool($thresholds)
   validate_bool($metadata)
 
-  Class['icinga2::config'] ->
-  file { "${target_dir}/${target_file_name}":
+  Class['icinga2::config']
+  -> file { "${target_dir}/${target_file_name}":
     ensure  => file,
     owner   => $::icinga2::config_owner,
     group   => $::icinga2::config_group,
